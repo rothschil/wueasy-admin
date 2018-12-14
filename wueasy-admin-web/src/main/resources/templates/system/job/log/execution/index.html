@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space1">
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-card">
+  	 		<div class="layui-card-body">
+			  	 <div class="layui-form-query">
+					<form class="layui-form" id="query_form">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-mid">作业名称：</label>
+								<div class="layui-input-inline" style="width: 100px;">
+									<input type="text" name="jobName" autocomplete="off" class="layui-input"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">服务器ip：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<input type="text" name="ip" autocomplete="off" class="layui-input"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">执行结果：</label>
+								<div class="layui-input-inline" style="width: 100px;">
+									<select name="isSuccess">
+									  <option value="">全部</option>
+									  <option value="1">成功</option>
+									  <option value="0">失败</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">开始时间：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<input type="text" id="startDate" name="startDate" autocomplete="off" class="layui-input fsDate" dateType="datetime"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">完成时间：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<input type="text" id="endDate" name="endDate" autocomplete="off" class="layui-input fsDate" dateType="datetime"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<table id="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" class="fsDatagrid" funcNo="S1069" isPage="1" defaultForm="query_form" height="full-110"></table>
+		
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+				    <p field="jobName" title="作业名称" width="200" sort="true"/>
+				    <p field="ip" title="服务器IP" width="150"/>
+				    <p field="shardingItem" title="分片项" width="80"/>
+				    <p field="isSuccess" title="执行结果" width="100" dict="success"/>
+				    <p field="failureCause" title="失败原因" width="300"/>
+				    <p field="startTime" title="开始时间" width="180" formatType="datetime"/>
+				    <p field="completeTime" title="完成时间" width="180" formatType="datetime"/>
+				</div>
+			</div>
+		</div> 	
+  	 </div>
+  </div>
+</div>
+</body>
+</html>

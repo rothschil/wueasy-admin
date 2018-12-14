@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<link rel="stylesheet" th:href="@{/css/login.css}" >
+	<script th:if="${captchaType=='2'}" src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+	<script type="text/javascript" th:src="@{/scripts/login.js}" src="/scripts/login.js"></script> 
+</head>
+<body>
+<div class="login-back"></div>
+	<div class="layui-container">
+	<div class="logo"><!-- <img src="images/logo.png"> --></div>
+	<div class="logo-title">WuEasy管理系统</div>
+	<div class="logo-txt">wueasy management system</div>
+	<div class="layui-row login-box">
+	    <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+	      	<div class="login-img"><img src="images/login-left.png"></div>
+	    </div>
+	    <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+	      	<div class="login-tt">账户登录</div>
+	      	 <form class="layui-form" autocomplete="off">
+	      	 	<input type="hidden" id="captchaType" th:value="${captchaType}">
+	      	 	<input type="hidden" id="captchaAppId" th:value="${captchaAppId}">
+	      	<div class="login-form">
+	      		<input type="text" name="loginNo" placeholder="请输入用户名" class="layui-input login01" lay-verify="required" lay-verType="tips" autocomplete="off" value="" maxlength="50"> 
+	      		<input type="password" name="password" placeholder="请输入密码" class="layui-input login02" lay-verify="required" lay-verType="tips" autocomplete="new-password" value="">  
+	      		<div class="relative" th:if="${captchaType=='1'}">
+	      			<input type="text" placeholder="请输入验证码" id="validateCode" name="validateCode" lay-verify="required" lay-verType="tips" value="" autocomplete="off" maxlength="4" class="layui-input login03">   
+	      			<div class="yzm"><img id="captcha-image" src="" width="116" height="36"  title="点击刷新验证码"/></div>
+	      		</div>
+	      		<button  class="layui-btn login-btn" lay-submit="" lay-filter="login">登录</button>
+	      	</div> 
+	      	</form>
+	    </div>
+	</div>
+</div>
+</body>
+</html>

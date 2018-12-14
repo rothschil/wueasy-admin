@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.JobStatusTraceLogMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.JobStatusTraceLog">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="original_task_id" jdbcType="VARCHAR" property="originalTaskId" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="slave_id" jdbcType="VARCHAR" property="slaveId" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="execution_type" jdbcType="VARCHAR" property="executionType" />
+    <result column="sharding_item" jdbcType="VARCHAR" property="shardingItem" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, job_name, original_task_id, task_id, slave_id, source, execution_type, sharding_item, 
+    state, message, creation_time
+  </sql>
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job_status_trace_log
+    where 1=1 
+    <if test="jobName != null and jobName != ''">
+    	and job_name = #{jobName}
+    </if>
+    <if test="state != null and state != ''">
+    	and state = #{state}
+    </if>
+    <if test="startDate != null">
+    	and creation_time &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+    	and creation_time &lt;= #{endDate}
+    </if>
+    order by creation_time desc
+  </select>
+</mapper>

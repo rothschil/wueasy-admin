@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysEnumTypeMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysEnumType">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="enum_no" jdbcType="VARCHAR" property="enumNo" />
+    <result column="enum_name" jdbcType="VARCHAR" property="enumName" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="is_system" jdbcType="CHAR" property="isSystem" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, enum_no, enum_name,parent_id,is_system, description, created_by, created_time, modified_by, 
+    modified_time
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_enum_type
+    order by id asc
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_enum_type
+    where id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+   <select id="selectByEnumNo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_enum_type
+    where enum_no = #{enumNo}
+  </select>
+  
+  <delete id="delete">
+    delete from sys_enum_type
+    where id = #{id,typeHandler=LongTypeHandler}
+  </delete>
+  <insert id="insert">
+    insert into sys_enum_type (enum_no, enum_name, parent_id, 
+      is_system, description, created_by, 
+      created_time, modified_by, modified_time
+      )
+    values (#{enumNo,jdbcType=VARCHAR}, #{enumName,jdbcType=VARCHAR}, #{parentId,typeHandler=LongTypeHandler},
+      #{isSystem,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, #{createdBy,typeHandler=LongTypeHandler}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{modifiedBy,typeHandler=LongTypeHandler}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="update">
+    update sys_enum_type
+    set enum_no = #{enumNo,jdbcType=VARCHAR},
+      enum_name = #{enumName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      modified_by = #{modifiedBy,typeHandler=LongTypeHandler},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,typeHandler=LongTypeHandler}
+  </update>
+</mapper>

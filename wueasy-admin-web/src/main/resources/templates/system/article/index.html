@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body>
+  <div class="layui-fluid">  
+  <div class="layui-row layui-col-space10">
+    <div class="layui-col-md3">
+    	<div class="layui-card">
+    		<div class="layui-card-header">栏目列表</div>
+    		<div class="layui-card-body">
+       			<ul id="treeDemo" class="ztree fsTree" fs:authorize="" isRoot="0" funcNo="S1101" clickCallbackId="fsDatagrid" clickCallbackInputs="catalogId:,siteId:" treeIdKey="catalogId" treePIdKey="parentId" treeName="catalogName" ></ul>
+       			<div class="fsTreeRightMenu">
+       				<p function="refresh" icon="refresh" name="刷新"></p>
+       				<p function="submit" icon="fa-paper-plane-o" name="发布栏目" fs:authorize="" funcNo="S1102" isConfirm="1" confirmMsg="是否确定发布当前栏目下所有文章？" inputs="catalogId:" disabledType="rootNode"></p>
+       				<p function="submit" icon="fa-paper-plane-o" name="发布栏目及子栏目" fs:authorize="" funcNo="S1103" isConfirm="1" confirmMsg="是否确定发布当前栏目和子栏目所有文章？" inputs="catalogId:" disabledType="rootNode"></p>
+       			</div>
+    		</div>
+		  </div>
+    </div>
+    
+    
+    <div class="layui-col-md9">
+    	<div class="layui-card">
+    		<div class="layui-card-header">文章列表</div>
+    		<div class="layui-card-body">
+		    	<div class="layui-form-query">
+		    		<form id="query_form" class="layui-form">
+		    			<input type="hidden" id="catalogId" name="catalogId" value=""/>
+		    			<input type="hidden" id="siteId" name="siteId" value=""/>
+		    			<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-mid">文章标题：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="title" autocomplete="off" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-mid">状态：</label>
+							<div class="layui-input-inline" style="width: 100px;">
+								<select name="state" dict="publishState" class="fsDict" addNull="1"></select>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<div class="layui-input-inline">
+								<button class="layui-btn layui-btn-sm" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+							</div>
+						</div>
+					</div>
+		    		</form>
+		    	</div>
+		    	<div id="table_buttion_div">
+			    	<button class="layui-btn layui-btn-sm" function="top" fs:authorize="" selectTreeId="catalogId" th:topUrl="@{/frame/system-article-add}" topUrl="/frame/system-article-add" topWidth="700px" topHeight="490px" topTitle="新增文章信息" isMaximize="1" inputs="catalogId:#catalogId,siteId:#siteId">
+					  <i class="layui-icon">&#xe654;</i>新增
+					</button>
+					<button class="layui-btn layui-btn-sm" function="refresh" selectTreeId="catalogId">
+					  <i class="layui-icon">&#x1002;</i>刷新
+					</button>
+		    	</div>
+				<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" funcNo="S1098" isPage="1" isLoad="0" defaultForm="query_form" height="full-190">
+				</table>
+				
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+				    <p field="title" title="文章标题" width="500px;" templet="#titleTpl"/>
+				    <p field="state" title="状态" width="80px;" dict="publishState"/>
+				    <p field="publishDate" title="发布时间" width="160px;" formatType="datetime"/>
+				    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="230px;"/>
+				</div>
+				<script type="text/html" id="titleTpl">
+					{{#  if(d.isHead == '1'){ }}
+   						<span class="layui-badge">顶</span>
+ 					{{#  } }}
+					{{#  if(d.isHot == '1'){ }}
+   						<span class="layui-badge layui-bg-orange">荐</span>
+ 					{{#  } }}
+  					<span>{{d.title}}</span>
+				</script>
+				<script type="text/html" id="barDemo">
+				 {{#  if(d.state == '1'){ }}
+	  				 <a id="unPublish" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1100" inputs="articleId:,catalogId:">取消发布</a>
+				 {{#  } else { }}
+					 <a id="publish" class="layui-btn layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1099"  inputs="articleId:,catalogId:">发布</a>
+				 {{#  } }}
+				 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-article-edit}" topUrl="/frame/system-article-edit" topWidth="700px" topHeight="490px" topTitle="编辑文章信息" inputs="articleId:,catalogId:" isMaximize="1">编辑</a>
+  				 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1097" inputs="articleId:,catalogId:">删除</a>
+				 <a id="preview" class="layui-btn layui-btn-xs" fs:authorize="" th:topUrl="@{/preview/article}" topUrl="/preview/article" th:href="@{/preview/article?articleId={{d.articleId}}&amp;catalogId={{d.catalogId}}}" href="/preview/article?articleId={{d.articleId}}&amp;catalogId={{d.catalogId}}" target="_blank">预览</a>
+				</script>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

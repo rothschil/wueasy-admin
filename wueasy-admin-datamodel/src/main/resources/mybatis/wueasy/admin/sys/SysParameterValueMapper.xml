@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysParameterValueMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysParameterValue">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="param_type_id" jdbcType="BIGINT" property="paramTypeId" />
+    <result column="item_value" jdbcType="VARCHAR" property="itemValue" />
+    <result column="item_key" jdbcType="VARCHAR" property="itemKey" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="state" jdbcType="CHAR" property="state" />
+    <result column="encrypt" jdbcType="CHAR" property="encrypt" />
+    <result column="orderline" jdbcType="BIGINT" property="orderline" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, param_type_id, item_value, item_key, description, state, encrypt, orderline, 
+    created_by, created_time, modified_by, modified_time
+  </sql>
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_parameter_value
+    where id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_parameter_value
+    where param_type_id = #{paramTypeId,typeHandler=LongTypeHandler} 
+    order by orderline asc,id asc
+  </select>
+  
+  <select id="selectByParamTypeIdAndItemValue" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_parameter_value
+    where param_type_id = #{paramTypeId,typeHandler=LongTypeHandler} and item_key = #{itemKey}
+  </select>
+  
+  <select id="selectByParamTypeId" resultType="int">
+    select 
+     count(1)
+    from sys_parameter_value
+    where param_type_id = #{paramTypeId,typeHandler=LongTypeHandler}
+  </select>
+  
+  
+  <delete id="delete">
+    delete from sys_parameter_value
+    <bind name="ids" value="_parameter.get('id').split(',')" />
+    where 
+    <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+       id = #{item,typeHandler=LongTypeHandler}
+    </foreach>
+  </delete>
+  
+  <insert id="insert">
+    insert into sys_parameter_value (param_type_id, item_value, 
+      item_key, description, state, 
+      encrypt, orderline, created_by, 
+      created_time, modified_by, modified_time
+      )
+    values (#{paramTypeId,typeHandler=LongTypeHandler}, #{itemValue,jdbcType=VARCHAR}, 
+      #{itemKey,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, 
+      #{encrypt,jdbcType=CHAR}, #{orderline,typeHandler=LongTypeHandler}, #{createdBy,typeHandler=LongTypeHandler}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{modifiedBy,typeHandler=LongTypeHandler}, #{modifiedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <update id="update">
+    update sys_parameter_value
+    set 
+      item_value = #{itemValue,jdbcType=VARCHAR},
+      item_key = #{itemKey,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      state = #{state,jdbcType=CHAR},
+      encrypt = #{encrypt,jdbcType=CHAR},
+      orderline = #{orderline,typeHandler=LongTypeHandler},
+      modified_by = #{modifiedBy,typeHandler=LongTypeHandler},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,typeHandler=LongTypeHandler}
+  </update>
+  
+  <select id="queryValidList" resultType="DataMap">
+    select t1.param_no,t2.item_key,t2.item_value from sys_parameter_type t1,sys_parameter_value t2 where t1.id = t2.param_type_id and t2.state='1'
+  </select>
+</mapper>

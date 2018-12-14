@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<script type="text/javascript" th:src="@{/plugins/frame/js/main.js}" src="/plugins/frame/js/main.js"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+
+  <!-- 顶部 -->
+  <div class="layui-header">
+    <a th:href="@{/index}" href="/index" class="layui-hide-xs"><div class="layui-logo">wueasy</div></a>
+    <a href="javascript:;" class="layui-hide-xs"><div class="fsSwitchMenu"><i class="fa fa-outdent"></i></div></a>
+    
+    <!-- 顶部菜单 -->
+    <ul class="layui-nav layui-layout-left fsTopMenu" id="fsTopMenu" lay-filter="fsTopMenu">
+    </ul>
+    
+    <ul class="layui-nav layui-layout-right">
+       <li class="layui-nav-item layui-hide-xs" th:if="${not #lists.isEmpty(T(com.wueasy.base.web.util.SysUtil).getSession().getGroupList())}">
+       	<div style="display: none;" th:each="group,iterStat : ${T(com.wueasy.base.web.util.SysUtil).getSession().getGroupList()}" th:if="${iterStat.index} == 0">
+       		<input type="hidden" id="group_id_main" th:value="${group.groupId}"/>
+       	</div>
+        <a id="group_menu_html" href="javascript:;" th:each="group,iterStat : ${T(com.wueasy.base.web.util.SysUtil).getSession().getGroupList()}" th:if="${iterStat.index} == 0">
+         	<span th:text="${group.groupName}">后台管理系统</span>
+        </a>
+        <dl class="layui-nav-child" id="group_menu">
+          <dd th:each="group,iterStat : ${T(com.wueasy.base.web.util.SysUtil).getSession().getGroupList()}" th:attr="groupId=${group.groupId}"><a href="javascript:;"><span th:text="${group.groupName}"></span></a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+        	<img id="topUserHeadImage" th:if="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getHeadImage() !=''}" th:src="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getHeadImage()}" class="layui-nav-img"/>
+         	<span th:text="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getUsername()}"></span>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><li id="personal"><a href="javascript:;" th:dataUrl="@{/frame/system-user-center-index}" dataUrl="/frame/system-user-center-index"><i class="fa fa-address-card"></i> 个人中心</a></li></dd>
+          <dd><a id="updatePwd" href="javascript:;"><i class="fa fa-key"></i> 修改密码</a></dd>
+          <dd><a id="logout" href="javascript:;"><i class="fa fa-sign-out"></i> 退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- 左边菜单 -->
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree fsLeftMenu" lay-shrink="all" lay-filter="fsLeftMenu" id="fsLeftMenu">
+      </ul>
+    </div>
+  </div>
+
+  <!-- 右边内容区域 -->
+  <div class="layui-body layui-form">
+  	<div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
+  		
+  		<!-- 菜单导航 -->
+		<ul class="layui-tab-title" id="fsTabMenu">
+			<li class="layui-this" lay-id="111"><i class="layui-icon">&#xe68e;</i> <cite>控制台</cite><p class="layui-tab-close" style="display: none;"></p></li>
+		</ul>
+		
+		<!-- 内容 -->
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show" lay-id="1">
+				<iframe th:src="@{/home}" src="/home"></iframe>
+			</div>
+		</div>
+	</div>
+  </div>
+  
+  <div th:include="layout :: footer" th:remove="tag"></div>
+</div>
+
+<!-- 移动导航 -->
+<div class="site-tree-mobile layui-hide">
+  <i class="layui-icon">&#xe602;</i>
+</div>
+<div class="site-mobile-shade"></div>
+</body>
+</html>

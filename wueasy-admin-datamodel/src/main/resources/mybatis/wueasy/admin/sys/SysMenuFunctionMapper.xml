@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysMenuFunctionMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysMenuFunction">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
+    <result column="funcs" jdbcType="VARCHAR" property="funcs" />
+    <result column="orderline" jdbcType="BIGINT" property="orderline" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, menu_id, name, link_url, funcs, orderline, created_by, created_time, modified_by, 
+    modified_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu_function
+    where id = #{id,typeHandler=LongTypeHandler}
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap">
+  	 select 
+     <include refid="Base_Column_List" />
+     from sys_menu_function
+     where menu_id = #{menuId,typeHandler=LongTypeHandler}
+     order by id desc
+  </select>  
+  
+  <select id="queryMenuFunctionId" resultType="DataMap">
+  	<if test="id != null and id!=''">
+  		<bind name="ids" value="_parameter.get('id').split(',')" />
+  		 select t1.menu_id,t1.id from sys_menu_function t1 
+	  	 where 
+	   	<foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+	       id = #{item,typeHandler=LongTypeHandler}
+	  	</foreach>
+  	</if>
+  </select> 
+  
+  <select id="queryUserAuthMenuFunction" resultMap="BaseResultMap">
+	select t.link_url,t.funcs from sys_menu_function t 
+  	 where 
+   	<foreach collection="menuFunctionIdSet" item="item" index="index" open="" close="" separator="OR">
+       id = #{item,typeHandler=LongTypeHandler}
+  	</foreach>
+  </select> 
+  
+  <delete id="delete">
+    delete from sys_menu_function
+    where id = #{id,typeHandler=LongTypeHandler}
+  </delete>
+  
+  <insert id="insert">
+    insert into sys_menu_function (menu_id, name, 
+      link_url, funcs, orderline, 
+      created_by, created_time, modified_by, 
+      modified_time)
+    values (#{menuId,typeHandler=LongTypeHandler}, #{name,jdbcType=VARCHAR}, 
+      #{linkUrl,jdbcType=VARCHAR}, #{funcs,jdbcType=VARCHAR}, #{orderline,typeHandler=LongTypeHandler}, 
+      #{createdBy,typeHandler=LongTypeHandler}, #{createdTime,jdbcType=TIMESTAMP}, #{modifiedBy,typeHandler=LongTypeHandler}, 
+      #{modifiedTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="update">
+    update sys_menu_function
+    set 
+      name = #{name,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      funcs = #{funcs,jdbcType=VARCHAR},
+      orderline = #{orderline,typeHandler=LongTypeHandler},
+      modified_by = #{modifiedBy,typeHandler=LongTypeHandler},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where id = #{id,typeHandler=LongTypeHandler}
+  </update>
+</mapper>

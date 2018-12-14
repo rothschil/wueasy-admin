@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.JobExecutionLogMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.JobExecutionLog">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="hostname" jdbcType="VARCHAR" property="hostname" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="sharding_item" jdbcType="INTEGER" property="shardingItem" />
+    <result column="execution_source" jdbcType="VARCHAR" property="executionSource" />
+    <result column="failure_cause" jdbcType="VARCHAR" property="failureCause" />
+    <result column="is_success" jdbcType="INTEGER" property="isSuccess" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, job_name, task_id, hostname, ip, sharding_item, execution_source, failure_cause, 
+    is_success, start_time, complete_time
+  </sql>
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from job_execution_log
+    where 1=1 
+    <if test="jobName != null and jobName != ''">
+    	and job_name = #{jobName}
+    </if>
+    <if test="ip != null and ip != ''">
+    	and ip = #{ip}
+    </if>
+    <if test="isSuccess != null and isSuccess != ''">
+    	and is_success = #{isSuccess}
+    </if>
+    <if test="startDate != null">
+    	and start_time &gt;= #{startDate}
+    </if>
+    <if test="endDate != null">
+    	and complete_time &gt;= #{endDate}
+    </if> 
+    order by start_time desc
+  </select>
+</mapper>

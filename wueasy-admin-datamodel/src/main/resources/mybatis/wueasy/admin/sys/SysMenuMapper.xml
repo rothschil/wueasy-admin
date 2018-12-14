@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysMenuMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysMenu">
+    <id column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="state" jdbcType="CHAR" property="state" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
+    <result column="font_icon" jdbcType="VARCHAR" property="fontIcon" />
+    <result column="route" jdbcType="VARCHAR" property="route" />
+    <result column="orderline" jdbcType="BIGINT" property="orderline" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    menu_id, menu_name, description, state, parent_id, link_url, font_icon,route, 
+    orderline, created_by, created_time, modified_by, modified_time,group_id
+  </sql>
+  
+   <select id="queryMenuTreeList" resultMap="BaseResultMap">
+    select  group_id as menu_id,group_name as menu_name,0 as parent_id,0 as orderline,group_id from sys_group 
+	UNION All
+	select  menu_id, menu_name, parent_id,orderline,group_id  from sys_menu order by orderline asc,menu_id asc
+  </select>
+  
+  <select id="queryList" resultMap="BaseResultMap">
+    select  menu_id, menu_name, parent_id,orderline,group_id from sys_menu where group_id = #{groupId,typeHandler=LongTypeHandler}
+    order by orderline asc,menu_id asc
+  </select>
+  
+  <select id="queryValidList" resultMap="BaseResultMap">
+    select menu_id, menu_name,state, parent_id, link_url, font_icon,group_id from sys_menu 
+    where state = '1' 
+    <if test="menuIdSet != null">
+      and (
+		 <foreach collection="menuIdSet" item="item" index="index" open="" close="" separator="OR">
+	        menu_id = #{item,typeHandler=LongTypeHandler}
+	     </foreach>
+      )
+    </if>
+    order by orderline asc,menu_id asc
+  </select>
+  
+  <select id="findSysMenuByID" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" /> from sys_menu 
+    where menu_id = #{menuId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="findSysMenuChildrennum" resultType="int">
+    select  count(1) from sys_menu 
+    where parent_id = #{menuId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <update id="updateOrderline">
+    update sys_menu
+    set orderline = #{orderline,typeHandler=LongTypeHandler},parent_id = #{parentId,typeHandler=LongTypeHandler}
+    where menu_id = #{menuId,typeHandler=LongTypeHandler}
+  </update>
+  
+  <delete id="delete">
+    delete from sys_menu
+    where menu_id = #{menuId,typeHandler=LongTypeHandler}
+  </delete>
+  
+  
+  <insert id="insert">
+    insert into sys_menu (menu_name, description, 
+      state, parent_id, link_url, 
+      font_icon, route, 
+      orderline, created_by, created_time, 
+      modified_by, modified_time,group_id)
+    values (#{menuName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{state,jdbcType=CHAR}, #{parentId,typeHandler=LongTypeHandler}, #{linkUrl,jdbcType=VARCHAR}, 
+      #{fontIcon,jdbcType=VARCHAR},#{route,jdbcType=VARCHAR}, 
+      #{orderline,typeHandler=LongTypeHandler}, #{createdBy,typeHandler=LongTypeHandler}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{modifiedBy,typeHandler=LongTypeHandler}, #{modifiedTime,jdbcType=TIMESTAMP},#{groupId,typeHandler=LongTypeHandler})
+  </insert>
+  
+  
+  <update id="update">
+    update sys_menu
+    set menu_name = #{menuName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      state = #{state,jdbcType=CHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      font_icon = #{fontIcon,jdbcType=VARCHAR},
+      orderline = #{orderline,typeHandler=LongTypeHandler},
+      modified_by = #{modifiedBy,typeHandler=LongTypeHandler},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP}
+    where menu_id = #{menuId,typeHandler=LongTypeHandler}
+  </update>
+  
+  
+  <select id="queryMenuAll" resultType="DataMap">
+  	select * from (
+  	 select group_id as id,group_name as name,0 as parentid,group_id as orderline from sys_group 
+        UNION All     
+	 select menu_id as id,menu_name as name,parent_id as parentid,menu_id as orderline from sys_menu where state = '1'  
+	 ) t
+	 <if test="menuIdStr != null and menuIdStr!=''">
+	 	where 
+  		<bind name="menuIdStrs" value="_parameter.get('menuIdStr').split(',')" />
+  		  (
+   		 <foreach collection="menuIdStrs" item="item" index="index" open="" close="" separator="OR">
+            id = #{item,typeHandler=LongTypeHandler}
+         </foreach>
+         )
+  	</if>
+  	
+	  order by orderline asc 
+  </select>
+  
+  <select id="queryMenuAll2" resultType="DataMap">
+  	select * from (
+	  select  t1.menu_id, t1.id,t1.NAME as name,t1.menu_id as parentid,
+       id as orderline from sys_menu_function t1,sys_menu t2  
+      where t1.menu_id=t2.menu_id and t2.state = '1'   order by orderline asc
+      ) t
+	 <if test="menuFunctionIds != null and menuFunctionIds!=''">
+	 	where 
+  		<bind name="menuFunctionIdStrs" value="_parameter.get('menuFunctionIds').split(',')" />
+  		  (
+   		 <foreach collection="menuFunctionIdStrs" item="item" index="index" open="" close="" separator="OR">
+            id = #{item,typeHandler=LongTypeHandler}
+         </foreach>
+         )
+  	</if>
+  </select>
+  
+</mapper>

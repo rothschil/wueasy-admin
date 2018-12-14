@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body>
+  <div class="layui-fluid">  
+  <div class="layui-row layui-col-space10">
+    <div class="layui-col-md3">
+    	<div class="layui-card">
+    		<div class="layui-card-header">栏目列表</div>
+    		<div class="layui-card-body">
+       			<ul id="treeDemo" class="ztree fsTree" fs:authorize="" isRoot="0" funcNo="T1012" mode="right" clickCallbackId="catalog_form" clickCallDisabledType="rootNode" clickCallbackInputs="catalogId:" treeIdKey="catalogId" treePIdKey="parentId" treeName="catalogName" ></ul>
+       			<div class="fsTreeRightMenu">
+       				<p function="refresh" icon="refresh" name="刷新"></p>
+       				<p function="right" icon="add" name="新增" fs:authorize=""  funcNo="T1013" rightTitle="新增栏目信息" rightId="catalog_form" mode="add" inputs="parentId:$catalogId"></p>
+       				<p function="right" icon="edit" name="编辑" fs:authorize="" funcNo="T1014" rightTitle="编辑栏目信息" rightId="catalog_form" mode="edit" inputs="catalogId:" disabledType="rootNode"></p>
+       				<p function="top" icon="edit" name="调整栏目结构" fs:authorize="" th:topUrl="@{/frame/system-template-catalog-editCatalog}" topUrl="/frame/system-template-catalog-editCatalog" topWidth="500px" topHeight="400px" topTitle="调整栏目结构" inputs="siteId:"></p>
+       				<p function="submit" icon="del" name="删除" fs:authorize="" funcNo="T1016" isConfirm="1" confirmMsg="是否确定删除？" inputs="catalogId:" disabledType="parent|rootNode"></p>
+       			</div>
+    		</div>
+		  </div>
+    </div>
+    
+    <div class="layui-col-md9">
+    	<div class="layui-card">
+    		<div class="layui-card-header">栏目信息</div>
+    		<div class="layui-card-body">
+    			<form id="catalog_form" class="layui-form" isLoad="0" loadFuncNo="T1015">
+    			   
+    			 <div class="layui-collapse">
+    			 	<div class="layui-colla-item">
+    			 	<h2 class="layui-colla-title">基本信息</h2>
+  					<div class="layui-colla-content layui-show">
+					  <input type="hidden" name="parentId" required=""  lay-verType="tips" placeholder="" autocomplete="off" class="layui-input" disabled=""/>
+					  <input type="hidden" name="catalogId" required=""  lay-verType="tips" placeholder="" autocomplete="off" class="layui-input" disabled=""/>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label"><i class="required">*</i>栏目编号：</label>
+					    <div class="layui-input-inline">
+					      <input type="text" name="catalogNo" required=""  lay-verType="tips" lay-verify="required" placeholder="请输入栏目编号" autocomplete="off" class="layui-input"/>
+					    </div>
+					    <label class="layui-form-label"><i class="required">*</i>栏目名称：</label>
+					    <div class="layui-input-inline">
+					      <input type="text" name="catalogName" required=""  lay-verType="tips" lay-verify="required" placeholder="请输入栏目名称" autocomplete="off" class="layui-input"/>
+					    </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label"><i class="required">*</i>类型</label>
+					    <div class="layui-input-inline">
+					      <select name="fileType" class="fsDict" dict="catalogFileType"></select>
+					    </div>
+					    <label class="layui-form-label">目录链接</label>
+					    <div class="layui-input-inline">
+					      <input type="text" name="linkUrl"  autocomplete="off" class="layui-input"/>
+					    </div>
+					  </div>
+					  <div class="layui-form-item">
+					    <label class="layui-form-label"><i class="required">*</i>状态：</label>
+					    <div class="layui-input-inline">
+					      <input type="radio" name="state" value="1" title="有效" checked=""/>
+					      <input type="radio" name="state" value="0" title="无效"/>
+					    </div>
+					  </div>
+					  <div class="layui-form-item layui-form-text">
+					    <label class="layui-form-label">图标(大)</label>
+					    <div class="layui-input-inline">
+					      <input type="text" id="largeImage" name="largeImage" autocomplete="off" disabled="disabled" class="layui-input"/>
+					    </div>
+					    <div class="layui-input-inline">
+						   <button type="button"  class="layui-btn" function="upload" fileElem="#largeImage" fileAccept="images" fileExts="" fileSize="1024">上传图片</button>
+					    </div>
+					  </div>
+					  <div class="layui-form-item layui-form-text">
+					    <label class="layui-form-label">图标(小)</label>
+					    <div class="layui-input-inline">
+					      <input type="text" id="smallImage" name="smallImage" autocomplete="off" disabled="disabled" class="layui-input"/>
+					    </div>
+					    <div class="layui-input-inline">
+						   <button type="button"  class="layui-btn" function="upload" fileElem="#smallImage" fileAccept="images" fileExts="" fileSize="1024">上传图片</button>
+					    </div>
+					  </div>
+					  <div class="layui-form-item layui-form-text">
+					    <label class="layui-form-label">描述：</label>
+					    <div class="layui-input-block">
+					      <textarea name="description" placeholder="请输入描述" lay-verType="tips" class="layui-textarea"></textarea>
+					    </div>
+					  </div>
+					</div>
+				  </div>
+				  <div class="layui-colla-item">
+				  	<h2 class="layui-colla-title">SEO信息</h2>
+  					<div class="layui-colla-content">
+  					  <div class="layui-form-item">
+					    <label class="layui-form-label">标题：</label>
+					    <div class="layui-input-block">
+					      <input type="text" name="seoTitle" autocomplete="off" class="layui-input"/>
+					    </div>
+					 </div>
+					 <div class="layui-form-item">
+					    <label class="layui-form-label">meta关键字：</label>
+					    <div class="layui-input-block">
+					      <input type="text" name="seoKeywords" autocomplete="off" class="layui-input"/>
+					    </div>
+					  </div>
+					  <div class="layui-form-item layui-form-text">
+					    <label class="layui-form-label">meta描述：</label>
+					    <div class="layui-input-block">
+					      <textarea name="seoDescription" class="layui-textarea"></textarea>
+					    </div>
+					  </div>
+  					</div>
+  				  </div>
+  				  </div>
+				  <hr/>
+				  <div class="layui-form-item">
+				    <div class="layui-input-block">
+				      <button class="layui-btn fsAdd" lay-submit="" fs:authorize="" lay-filter="save" funcNo="T1013" isClose="0" treeId="treeDemo"  treeIdKey="parentId" isReset="1">新增</button>
+					  <button class="layui-btn fsEdit" lay-submit="" fs:authorize="" lay-filter="edit" funcNo="T1014" isClose="0" treeId="treeDemo" treeIdKey="catalogId">编辑</button>
+				    </div>
+				  </div>
+				</form>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2019 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<!--
+#####################################################################
+##                                                                 ##
+##         用于配置服务器需要动态加载的功能模块                 		       ##
+##                                                                 ##
+##         id     : 业务功能编号                                                                 ##
+##         type   : 业务类型(c:执行class,s:执行service,m:执行mapper) ##
+##         resource: 资源路径                  			        		    ##
+##         desc   :  功能描述信息                              					##
+##          service实现(serviceId.方法名称)                 	        ##
+##          dao实现(实现类路径.方法名称)       				        ##
+##                                                                  ##
+######################################################################
+-->
+
+<!-- 
+系统变量
+$id()：获取唯一主键id
+$date()：获取当前日期对象
+$dateStr()：获取当前日期字符串 yyyy-MM-dd
+$datetimeStr()获取当前日期字符串，格式为yyyy-MM-dd HH:mm:ss
+$timestamp()：当时时间的毫秒数
+$uuid():随机生成唯一的UUID
+$isSystem():是否超级管理员
+$authData():数据权限字符串
+
+#id 直接取参数值，#+参数属性
+
+
+#系统参数获取，配合前端使用
+
+$userId() 用户id
+$userName() 用户名称
+$loginNo()  获取登录名
+$ip() 获取ip
+	
+ -->
+
+<functions qps="">
+	<function id="S1001" type="s" qps="1000">
+		<params>
+			<param id="loginNo" name="用户名" notEmpty="1" maxLength="50" />
+			<param id="password" name="密码" notEmpty="1"/>
+			<param id="ip" name="ip" value="$ip()"/>
+		</params>
+		<resource>SysUserService.login</resource>
+		<desc>用户登录</desc>
+	</function>
+	
+	<function id="S1002" type="s">
+		<params>
+			<param id="userId" name="userId" notEmpty="1" value="$userId()"/>
+			<param id="loginNo" name="loginNo" notEmpty="1" value="$loginNo()"/>
+			<param id="oldPassword" name="旧密码" notEmpty="1"/>
+			<param id="newPassword" name="新密码" notEmpty="1"/>
+		</params>
+		<resource>SysUserService.updatePwd</resource>
+		<desc>修改密码</desc>
+	</function>
+	
+	<function id="S1003" type="s">
+		<resource>SysUserService.queryUserPage</resource>
+		<desc>查询用户分页列表</desc>
+	</function>
+	
+	<function id="S1004" type="s">
+		<params>
+			<param id="loginNo" name="用户名" notEmpty="1"/>
+			<param id="username" name="姓名" notEmpty="1"/>
+			<param id="password" name="密码" notEmpty="1"/>
+			<param id="state" name="状态" defaultValue="0"/>
+		    <param id="phone" name="手机号码"  verifyType="Mobile" />
+		    <param id="email" name="邮箱"  verifyType="Email" />
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysUserService.insertUser</resource>
+		<desc>新增用户信息</desc>
+	</function>
+	
+	
+	<function id="S1005" type="s">
+		<params>
+			<param id="userId" name="userId" notEmpty="1"/>
+			<param id="username" name="姓名" notEmpty="1"/>
+			<param id="phone" name="手机号码"  verifyType="Mobile" />
+		    <param id="email" name="邮箱"  verifyType="Email" />
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysUserService.updateUser</resource>
+		<desc>编辑用户信息</desc>
+	</function>
+	
+	<function id="S1006" type="m">
+		<params>
+			<param id="userId" name="userId" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysUserMapper.findByUserId</resource>
+		<desc>查询用户详细信息</desc>
+	</function>
+	
+	<function id="S1007" type="s">
+		<params>
+			<param id="userId" name="userId" notEmpty="1"/>
+			<param id="state" name="状态" value="1"/>
+		</params>
+		<resource>SysUserService.updateUserState</resource>
+		<desc>激活用户</desc>
+	</function>
+	
+	<function id="S1008" type="s">
+		<params>
+			<param id="userId" name="userId" notEmpty="1"/>
+			<param id="state" name="状态" value="3"/>
+		</params>
+		<resource>SysUserService.updateUserState</resource>
+		<desc>注销用户</desc>
+	</function>
+	
+	<function id="S1009" type="s">
+		<params>
+			<param id="userId" name="userId" notEmpty="1"/>
+			<param id="state" name="状态" value="2"/>
+		</params>
+		<resource>SysUserService.updateUserState</resource>
+		<desc>锁定用户</desc>
+	</function>
+	
+	<function id="S1010" type="s">
+		<params>
+			<param id="userId" name="userId" notEmpty="1"/>
+			<param id="sessionLoginNo" name="操作人" notEmpty="1" value="$loginNo()"/>
+			<param id="newPassword" name="新密码" notEmpty="1"/>
+		</params>
+		<resource>SysUserService.resetPwd</resource>
+		<desc>重置密码</desc>
+	</function>
+	
+	<function id="S1011" type="s">
+		<resource>SysUserService.queryUserLoginLog</resource>
+		<desc>查询用户登录日志</desc>
+	</function>
+	
+	<function id="S1012" type="m">
+		<resource>com.wueasy.admin.mapper.SysMenuMapper.queryMenuTreeList</resource>
+		<desc>查询菜单列表</desc>
+	</function>
+	
+	<function id="S1013" type="s">
+		<params>
+			<param id="menuName" name="菜单名称" notEmpty="1"/>
+			<param id="parentId" name="父菜单" notEmpty="1"/>
+			<param id="groupId" name="分组id" notEmpty="1"/>
+			<param id="orderline" name="orderline" value="$timestamp()"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysMenuService.addMenuInfo</resource>
+		<desc>新增菜单功能</desc>
+	</function>
+	
+	<function id="S1014" type="m">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+			<param id="menuName" name="菜单名称" notEmpty="1"/>
+			<param id="orderline" name="排序" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuMapper.update</resource>
+		<desc>编辑菜单功能</desc>
+	</function>
+	
+	<function id="S1015" type="m">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuMapper.findSysMenuByID</resource>
+		<desc>查询菜单详细信息</desc>
+	</function>
+	
+	<function id="S1016" type="s">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+		</params>
+		<resource>SysMenuService.deleteMenuInfo</resource>
+		<desc>删除菜单功能</desc>
+	</function>
+	
+	<function id="S1017" type="m">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuFunctionMapper.queryList</resource>
+		<desc>查询菜单功能号列表</desc>
+	</function>
+	
+	<function id="S1018" type="m">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuFunctionMapper.insert</resource>
+		<desc>新增菜单功能号</desc>
+	</function>
+	
+	<function id="S1019" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuFunctionMapper.update</resource>
+		<desc>编辑菜单功能号</desc>
+	</function>
+	
+	<function id="S1020" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuFunctionMapper.selectByPrimaryKey</resource>
+		<desc>查询菜单功能号详细信息</desc>
+	</function>
+	
+	<function id="S1021" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuFunctionMapper.delete</resource>
+		<desc>删除菜单功能号</desc>
+	</function>
+	
+	<function id="S1022" type="s">
+		<params>
+			<param id="userId" name="用户id" value="$userId()"/>
+		</params>
+		<resource>SysUserService.queryUserAuth</resource>
+		<desc>查询用户权限</desc>
+	</function>
+	
+	<function id="S1023" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="userId" name="用户id" value="$userId()"/>
+		</params>
+		<resource>SysRoleService.queryRoleList</resource>
+		<desc>查询角色列表</desc>
+	</function>
+	
+	<function id="S1024" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" value="#parentId" desc="判断权限使用"/>
+			<param id="roleName" name="角色名称" notEmpty="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysRoleService.insertRole</resource>
+		<desc>新增角色</desc>
+	</function>
+	
+	<function id="S1025" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+			<param id="roleName" name="角色名称" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysRoleService.updateRole</resource>
+		<desc>编辑角色</desc>
+	</function>
+	
+	<function id="S1026" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+		</params>
+		<resource>SysRoleService.selectRole</resource>
+		<desc>查询角色详细信息</desc>
+	</function>
+	
+	<function id="S1027" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+		</params>
+		<resource>SysRoleService.deleteRole</resource>
+		<desc>删除角色</desc>
+	</function>
+	
+	<function id="S1028" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" defaultValue="0"/>
+		</params>
+		<resource>SysRoleService.queryRoleUserList</resource>
+		<desc>查询角色用户列表</desc>
+	</function>
+	
+	<function id="S1029" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="userId" name="用户id" notEmpty="1"/>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+		</params>
+		<resource>SysRoleService.insertRoleUser</resource>
+		<desc>新增角色用户</desc>
+	</function>
+	
+	
+	<function id="S1030" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>SysRoleService.deleteRoleUser</resource>
+		<desc>删除角色用户</desc>
+	</function>
+	
+	
+	<function id="S1031" type="m" isPage="1">
+		<params>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+			<param id="startDate" name="开始时间" verifyType="DateTime" convertType="DateTime"/>
+			<param id="endDate" name="结束时间" verifyType="DateTime" convertType="DateTime"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysUserMapper.queryUserListByRoleId</resource>
+		<desc>查询角色下未分配用户列表</desc>
+	</function>
+	
+	<function id="S1032" type="s">
+		<params>
+			<param id="roleId" name="角色id" defaultValue="0"/>
+		</params>
+		<resource>SysRoleService.queryRoleMenu</resource>
+		<desc>查询所有的菜单和菜单按钮列表</desc>
+	</function>
+	
+	<function id="S1033" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" notEmpty="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysRoleService.insertOrUpdateRolePermission</resource>
+		<desc>保存角色权限</desc>
+	</function>
+	
+	<function id="S1034" type="s">
+		<params>
+			<param id="userId" name="用户id" value="$userId()"/>
+			<param id="verifyPwd" name="验证密码" notEmpty="1"/>
+		</params>
+		<resource>SysUserService.verifyPwd</resource>
+		<desc>验证密码</desc>
+	</function>
+	
+	<function id="S1035" type="m">
+		<resource>com.wueasy.admin.mapper.SysEnumTypeMapper.query</resource>
+		<desc>查询数据字典类型列表</desc>
+	</function>
+	
+	<function id="S1036" type="s">
+		<params>
+			<param id="enumNo" name="英文名称" notEmpty="1"/>
+			<param id="enumName" name="中文名称" notEmpty="1"/>
+			<param id="parentId" name="父id" notEmpty="1"/>
+			<param id="isSystem" name="是否系统参数" defaultValue="0"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysEnumService.insertEnumType</resource>
+		<desc>新增数据字典类型</desc>
+	</function>
+	
+	<function id="S1037" type="s">
+		<params>
+			<param id="id" name="类型id" notEmpty="1"/>
+			<param id="enumNo" name="英文名称" notEmpty="1"/>
+			<param id="enumName" name="中文名称" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysEnumService.updateEnumType</resource>
+		<desc>编辑数据字典类型</desc>
+	</function>
+	
+	<function id="S1038" type="m">
+		<resource>com.wueasy.admin.mapper.SysEnumTypeMapper.select</resource>
+		<desc>查询数据字典类型详细信息</desc>
+	</function>
+	
+	<function id="S1039" type="s">
+		<params>
+			<param id="id" name="类型id" notEmpty="1"/>
+		</params>
+		<resource>SysEnumService.deleteEnumType</resource>
+		<desc>删除数据字典类型</desc>
+	</function>
+	
+	<function id="S1040" type="m" isPage="1">
+		<params>
+			<param id="enumTypeId" name="字典类型" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysEnumValueMapper.query</resource>
+		<desc>查询枚举列表</desc>
+	</function>
+	
+	<function id="S1041" type="s">
+		<params>
+			<param id="enumTypeId" name="字典类型" notEmpty="1"/>
+			<param id="itemValue" name="枚举value" notEmpty="1"/>
+			<param id="itemKey" name="枚举key" notEmpty="1"/>
+			<param id="state" name="状态" defaultValue="0"/>
+			<param id="orderline" name="orderline" value="$timestamp()"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysEnumService.insertEnumValue</resource>
+		<desc>新增枚举信息</desc>
+	</function>
+	
+	<function id="S1042" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+			<param id="itemValue" name="枚举value" notEmpty="1"/>
+			<param id="itemKey" name="枚举key" notEmpty="1"/>
+			<param id="state" name="状态" defaultValue="0"/>
+			<param id="orderline" name="排序" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysEnumService.updateEnumValue</resource>
+		<desc>编辑枚举信息</desc>
+	</function>
+	
+	<function id="S1043" type="m">
+		<resource>com.wueasy.admin.mapper.SysEnumValueMapper.select</resource>
+		<desc>查询枚举详细信息</desc>
+	</function>
+	
+	<function id="S1044" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>SysEnumService.deleteEnumValue</resource>
+		<desc>删除枚举信息</desc>
+	</function>
+	
+	<function id="S1045" type="m">
+		<resource>com.wueasy.admin.mapper.SysParameterTypeMapper.query</resource>
+		<desc>查询系统参数类型列表</desc>
+	</function>
+	
+	<function id="S1046" type="s">
+		<params>
+			<param id="paramNo" name="英文名称" notEmpty="1"/>
+			<param id="paramName" name="中文名称" notEmpty="1"/>
+			<param id="parentId" name="父id" notEmpty="1"/>
+			<param id="isSystem" name="是否系统参数" defaultValue="0"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysParameterService.insertParameterType</resource>
+		<desc>新增系统参数类型</desc>
+	</function>
+	
+	<function id="S1047" type="s">
+		<params>
+			<param id="id" name="类型id" notEmpty="1"/>
+			<param id="paramNo" name="英文名称" notEmpty="1"/>
+			<param id="paramName" name="中文名称" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysParameterService.updateParameterType</resource>
+		<desc>编辑系统参数类型</desc>
+	</function>
+	
+	<function id="S1048" type="m">
+		<resource>com.wueasy.admin.mapper.SysParameterTypeMapper.select</resource>
+		<desc>查询系统参数类型详细信息</desc>
+	</function>
+	
+	<function id="S1049" type="s">
+		<params>
+			<param id="id" name="类型id" notEmpty="1"/>
+		</params>
+		<resource>SysParameterService.deleteParameterType</resource>
+		<desc>删除系统参数类型</desc>
+	</function>
+	
+	<function id="S1050" type="m" isPage="1">
+		<params>
+			<param id="paramTypeId" name="系统参数类型" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysParameterValueMapper.query</resource>
+		<desc>查询系统参数枚举列表</desc>
+	</function>
+	
+	<function id="S1051" type="s">
+		<params>
+			<param id="paramTypeId" name="系统参数类型" notEmpty="1"/>
+			<param id="itemValue" name="枚举value" notEmpty="1"/>
+			<param id="itemKey" name="枚举key" notEmpty="1"/>
+			<param id="state" name="状态" defaultValue="0"/>
+			<param id="encrypt" name="加密" defaultValue="0"/>
+			<param id="orderline" name="orderline" value="$timestamp()"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysParameterService.insertParameterValue</resource>
+		<desc>新增系统参数枚举信息</desc>
+	</function>
+	
+	<function id="S1052" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+			<param id="itemValue" name="枚举value" notEmpty="1"/>
+			<param id="itemKey" name="枚举key" notEmpty="1"/>
+			<param id="state" name="状态" defaultValue="0"/>
+			<param id="orderline" name="排序" notEmpty="1"/>
+			<param id="encrypt" name="加密" defaultValue="0"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysParameterService.updateParameterValue</resource>
+		<desc>编辑系统参数枚举信息</desc>
+	</function>
+	
+	<function id="S1053" type="m">
+		<resource>com.wueasy.admin.mapper.SysParameterValueMapper.select</resource>
+		<desc>查询系统参数枚举详细信息</desc>
+	</function>
+	
+	<function id="S1054" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>SysParameterService.deleteParameterValue</resource>
+		<desc>删除系统参数枚举信息</desc>
+	</function>
+	
+	<function id="S1055" type="s">
+		<resource>SysLogService.queryPage</resource>
+		<desc>查询系统日志列表</desc>
+	</function>
+	
+	<function id="S1056" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysLogMapper.selectById</resource>
+		<desc>查询系统日志详细信息</desc>
+	</function>
+	
+	<function id="S1057" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysLogMapper.delete</resource>
+		<desc>删除系统日志</desc>
+	</function>
+	
+	<function id="S1058" type="s">
+		<params>
+			<param id="menuList" name="菜单" notEmpty="1"/>
+		</params>
+		<resource>SysMenuService.updateMenuOrderline</resource>
+		<desc>修改菜单目录结构</desc>
+	</function>
+	
+	<function id="S1059" type="m">
+		<params>
+			<param id="groupId" name="分组id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysMenuMapper.queryList</resource>
+		<desc>查询菜单排序列表</desc>
+	</function>
+	
+	
+	<function id="S1060" type="m">
+		<resource>com.wueasy.admin.mapper.SysOrgMapper.queryList</resource>
+		<desc>查询组织机构列表</desc>
+	</function>
+	
+	<function id="S1061" type="s">
+		<params>
+			<param id="orgNo" name="机构编号" notEmpty="1"/>
+			<param id="orgName" name="机构名称" notEmpty="1"/>
+			<param id="parentId" name="父id" notEmpty="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysOrgService.insert</resource>
+		<desc>新增组织机构</desc>
+	</function>
+	
+	<function id="S1062" type="s">
+		<params>
+			<param id="id" name="类型id" notEmpty="1"/>
+			<param id="orgNo" name="机构编号" notEmpty="1"/>
+			<param id="orgName" name="机构名称" notEmpty="1"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>SysOrgService.update</resource>
+		<desc>编辑组织机构</desc>
+	</function>
+	
+	<function id="S1063" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysOrgMapper.select</resource>
+		<desc>查询组织机构详细信息</desc>
+	</function>
+	
+	<function id="S1064" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>SysOrgService.delete</resource>
+		<desc>删除组织机构</desc>
+	</function>
+	
+	<function id="S1065" type="m" isPage="1">
+		<params>
+			<param id="orgId" name="机构id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysOrgUserMapper.query</resource>
+		<desc>查询机构用户列表</desc>
+	</function>
+	
+	<function id="S1066" type="m" isPage="1">
+		<params>
+			<param id="orgId" name="机构id" notEmpty="1"/>
+			<param id="startDate" name="开始时间" verifyType="DateTime" convertType="DateTime"/>
+			<param id="endDate" name="结束时间" verifyType="DateTime" convertType="DateTime"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysUserMapper.queryUserListByOrgId</resource>
+		<desc>查询机构下未分配用户列表</desc>
+	</function>
+	
+	<function id="S1067" type="s">
+		<params>
+			<param id="userId" name="用户id" notEmpty="1"/>
+			<param id="orgId" name="机构id" notEmpty="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+		</params>
+		<resource>SysOrgService.insertOrgUser</resource>
+		<desc>新增机构用户</desc>
+	</function>
+	
+	<function id="S1068" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysOrgUserMapper.deleteMultiple</resource>
+		<desc>删除机构用户</desc>
+	</function>
+	
+	<function id="S1069" type="m" isPage="1">
+		<params>
+			<param id="startDate" name="开始时间" verifyType="DateTime" convertType="DateTime"/>
+			<param id="endDate" name="结束时间" verifyType="DateTime" convertType="DateTime"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.JobExecutionLogMapper.query</resource>
+		<desc>查询定时任务历史轨迹列表</desc>
+	</function>
+	
+	<function id="S1070" type="m" isPage="1">
+		<params>
+			<param id="startDate" name="开始时间" verifyType="DateTime" convertType="DateTime"/>
+			<param id="endDate" name="结束时间" verifyType="DateTime" convertType="DateTime"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.JobStatusTraceLogMapper.query</resource>
+		<desc>查询定时任务历史状态列表</desc>
+	</function>
+	
+	<function id="S1071" type="s">
+		<resource>JobManageService.queryJobs</resource>
+		<desc>查询定时任务作业维度列表</desc>
+	</function>
+	
+	<function id="S1072" type="s">
+		<resource>JobManageService.queryServers</resource>
+		<desc>查询定时任务服务器维度列表</desc>
+	</function>
+	
+	<function id="S1073" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.queryJobConfig</resource>
+		<desc>获取作业配置</desc>
+	</function>
+	
+	<function id="S1074" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.removeJobConfig</resource>
+		<desc>删除作业配置</desc>
+	</function>
+	
+	<function id="S1075" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="cron" name="Cron表达式" notEmpty="1"/>
+			<param id="shardingTotalCount" name="作业分片总数" notEmpty="1" verifyType="Numeric"/>
+		</params>
+		<resource>JobManageService.updateJobConfig</resource>
+		<desc>修改作业配置</desc>
+	</function>
+	
+	<function id="S1076" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.triggerJob</resource>
+		<desc>触发作业</desc>
+	</function>
+	
+	<function id="S1077" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.disableJob</resource>
+		<desc>禁用作业</desc>
+	</function>
+	
+	<function id="S1078" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.enableJob</resource>
+		<desc>启用作业</desc>
+	</function>
+	
+	<function id="S1079" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.shutdownJob</resource>
+		<desc>终止作业</desc>
+	</function>
+	
+	<function id="S1080" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.getShardingInfo</resource>
+		<desc>获取分片列表</desc>
+	</function>
+	
+	<function id="S1081" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="item" name="分片项" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.disableSharding</resource>
+		<desc>禁用分片</desc>
+	</function>
+	
+	<function id="S1082" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="item" name="分片项" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.enableSharding</resource>
+		<desc>启用分片</desc>
+	</function>
+	
+	<function id="S1083" type="s">
+		<params>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.disableServer</resource>
+		<desc>禁用服务器全部作业</desc>
+	</function>
+	
+	<function id="S1084" type="s">
+		<params>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.enableServer</resource>
+		<desc>启用服务器全部作业</desc>
+	</function>
+	
+	<function id="S1085" type="s">
+		<params>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.shutdownServer</resource>
+		<desc>终止服务器全部作业</desc>
+	</function>
+	
+	<function id="S1086" type="s">
+		<params>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.removeServer</resource>
+		<desc>清理服务器全部作业</desc>
+	</function>
+	
+	<function id="S1087" type="s">
+		<params>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.getServerJobs</resource>
+		<desc>获取该服务器上注册的作业列表</desc>
+	</function>
+	
+	<function id="S1088" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.disableServerJob</resource>
+		<desc>禁用服务器作业</desc>
+	</function>
+	
+	<function id="S1089" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.enableServerJob</resource>
+		<desc>启用服务器作业</desc>
+	</function>
+	
+	<function id="S1090" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.shutdownServerJob</resource>
+		<desc>终止服务器作业</desc>
+	</function>
+	
+	<function id="S1091" type="s">
+		<params>
+			<param id="jobName" name="作业名称" notEmpty="1"/>
+			<param id="serverIp" name="服务器IP地址" notEmpty="1"/>
+		</params>
+		<resource>JobManageService.removeServerJob</resource>
+		<desc>清理服务器作业</desc>
+	</function>
+	
+	<function id="S1092" type="s">
+		<resource>SysUserService.queryUserLoginLog</resource>
+		<desc>导出用户登录日志</desc>
+	</function>
+	
+	<function id="S1093" type="s">
+		<params>
+			<param id="title" name="文章标题" notEmpty="1"/>
+			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
+			<param id="isHead" name="设为头条" defaultValue="0"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="siteId" name="站点id" notEmpty="1"/>
+			<param id="state" name="状态" value="0"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>ArticleService.addArticle</resource>
+		<desc>保存文章信息</desc>
+	</function>
+	
+	<function id="S1094" type="s">
+		<params>
+			<param id="title" name="文章标题" notEmpty="1"/>
+			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
+			<param id="isHead" name="设为头条" defaultValue="0"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="siteId" name="站点id" notEmpty="1"/>
+			<param id="state" name="状态" value="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="publishDate" name="发布时间" value="#createdTime"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>ArticleService.addArticle</resource>
+		<desc>发布文章信息</desc>
+	</function>
+	
+	<function id="S1095" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="title" name="文章标题" notEmpty="1"/>
+			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
+			<param id="isHead" name="设为头条" defaultValue="0"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>ArticleService.updateArticle</resource>
+		<desc>修改文章信息</desc>
+	</function>
+	
+	<function id="S1096" type="m">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysArticleContentMapper.select</resource>
+		<desc>查询文章信息</desc>
+	</function>
+	
+	<function id="S1097" type="s">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>ArticleService.deleteArticle</resource>
+		<desc>删除文章信息</desc>
+	</function>
+	
+	<function id="S1098" type="m" isPage="1">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysArticleMapper.query</resource>
+		<desc>查询文章列表</desc>
+	</function>
+	
+	<function id="S1099" type="s">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="state" name="状态" value="1"/>
+			<param id="publishDate" name="发布时间" value="$date()"/>
+		</params>
+		<resource>ArticleService.updateArticleState</resource>
+		<desc>发布文章</desc>
+	</function>
+	
+	<function id="S1100" type="s">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="state" name="状态" value="0"/>
+		</params>
+		<resource>ArticleService.updateArticleState</resource>
+		<desc>取消发布文章</desc>
+	</function>
+	
+	<function id="S1101" type="s">
+		<params>
+			<param id="isSystem" name="是否管理员" value="$isSystem()"/>
+			<param id="authDataStr" name="数据权限" value="$authData()"/>
+		</params>
+		<resource>ArticleService.queryCatalogList</resource>
+		<desc>查询文章栏目列表</desc>
+	</function>
+	
+	<function id="S1102" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>ArticleService.publishCatalog</resource>
+		<desc>发布当前栏目文章</desc>
+	</function>
+	
+	<function id="S1103" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>ArticleService.publishCatalogRecursion</resource>
+		<desc>发布当前栏目及子栏目文章</desc>
+	</function>
+	
+	<function id="S1104" type="m">
+		<params>
+			<param id="userId" name="用户id" value="$userId()"/>
+			<param id="headImage" name="用户头像" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.mapper.SysUserMapper.updateHeadImage</resource>
+		<desc>修改头像</desc>
+	</function>
+	
+	<function id="S1105" type="s">
+		<params>
+			<param id="modelId" name="模型id" notEmpty="1" />
+			<param id="roleId" name="角色id" defaultValue="0" />
+		</params>
+		<resource>TemplateService.queryRoleDataPermission</resource>
+		<desc>查询角色下数据权限列表</desc>
+	</function>
+	
+	<function id="S1106" type="s">
+		<params>
+			<param id="isSystem" name="是否超级管理员" value="$isSystem()"/>
+			<param id="_userId" name="当前登录用户id" value="$userId()"/>
+			<param id="roleId" name="角色id" notEmpty="1" />
+			<param id="modelId" name="模型id" notEmpty="1" />
+			<param id="createdTime" name="创建时间" value="$date()" />
+			<param id="createdBy" name="创建人" value="$userId()" />
+			<param id="modifiedTime" name="修改时间" value="#createdTime" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.insertOrUpdateRoleDataPermission</resource>
+		<desc>保存数据权限</desc>
+	</function>
+	
+	<function id="S1107" type="s">
+		<resource>TemplateService.queryAuthDataModel</resource>
+		<desc>查询数据权限模型列表</desc>
+	</function>
+</functions>

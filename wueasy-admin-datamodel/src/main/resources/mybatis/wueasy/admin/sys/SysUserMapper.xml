@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysUser">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="login_no" jdbcType="VARCHAR" property="loginNo" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="state" jdbcType="CHAR" property="state" />
+    <result column="is_system" jdbcType="CHAR" property="isSystem" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="login_count" jdbcType="BIGINT" property="loginCount" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
+    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="head_image" jdbcType="VARCHAR" property="headImage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, login_no, username, password, state, is_system, salt, login_count, last_time, 
+    last_ip, created_by, created_time, modified_by, modified_time,phone,email,head_image
+  </sql>
+  
+  
+  <select id="findByLoginNo" resultMap="BaseResultMap">
+    select user_id, login_no, username, password, state, is_system, salt,login_count,last_time,last_ip,phone,email,head_image
+    from sys_user
+    where login_no = #{loginNo}
+  </select>
+  
+  <select id="findByPhone" resultMap="BaseResultMap">
+    select user_id, login_no, username, password, state, is_system, salt,login_count,last_time,last_ip,phone,email,head_image
+    from sys_user
+    where phone = #{phone}
+  </select>
+  
+  <select id="findByEmail" resultMap="BaseResultMap">
+    select user_id, login_no, username, password, state, is_system, salt,login_count,last_time,last_ip,phone,email,head_image
+    from sys_user
+    where email = #{email}
+  </select>
+  
+  <select id="findDetailByUserId" resultMap="BaseResultMap">
+     select user_id, login_no, username, password, state, is_system, salt,login_count,last_time,last_ip,phone,email,head_image
+    from sys_user
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <update id="updateByLoginCountAndLastTime">
+    update sys_user
+    set 
+      login_count = login_count + 1 ,
+      last_time = #{lastTime},
+      last_ip = #{lastIp}
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </update>
+  
+  <select id="queryPage" resultMap="BaseResultMap">
+  	
+    select t.user_id,t.login_no,t.username,t.state,t.login_count,t.last_time,t.last_ip,t.created_by,t.created_time,t.is_system,phone,email,head_image from sys_user t where 1=1 
+     <if test="loginNo != null and loginNo != ''">
+     	 <bind name="pattern_loginNo" value="'%' + _parameter.get('loginNo') + '%'" />
+         and login_no  LIKE #{pattern_loginNo}
+     </if>
+     <if test="username != null and username != ''">
+     	 <bind name="pattern_username" value="'%' + _parameter.get('username') + '%'" />
+         and username  LIKE #{pattern_username}
+     </if>
+     <if test="phone != null and phone != ''">
+         and phone = #{phone}
+     </if>
+     <if test="email != null and email != ''">
+         and email = #{email}
+     </if>
+     <if test="state != null and state != ''">
+         and state = #{state}
+     </if>
+     
+     <if test="startDate != null">
+         and last_time &gt;= #{startDate}
+     </if>
+     
+     <if test="endDate != null">
+         and last_time &lt;= #{endDate}
+     </if>
+     order by user_id desc
+  </select>
+  
+  <select id="queryUserListByRoleId" resultMap="BaseResultMap">
+  	
+    select t.user_id,t.login_no,t.username,t.state,t.login_count,t.last_ip,t.last_time from sys_user t
+     where t.user_id not in (select t2.user_id from sys_role_user t2 where t2.role_id=#{roleId,typeHandler=LongTypeHandler}) 
+     <if test="loginNo != null and loginNo != ''">
+     	 <bind name="pattern_loginNo" value="'%' + _parameter.get('loginNo') + '%'" />
+         and t.login_no  LIKE #{pattern_loginNo}
+     </if>
+     <if test="username != null and username != ''">
+     	 <bind name="pattern_username" value="'%' + _parameter.get('username') + '%'" />
+         and t.username  LIKE #{pattern_username}
+     </if>
+     
+     <if test="state != null and state != ''">
+         and t.state = #{state}
+     </if>
+     
+     <if test="startDate != null">
+         and t.last_time &gt;= #{startDate}
+     </if>
+     
+     <if test="endDate != null">
+         and t.last_time &lt;= #{endDate}
+     </if>
+     order by t.user_id desc
+  </select>
+  
+  
+   <select id="queryUserListByOrgId" resultMap="BaseResultMap">
+  	
+    select t.user_id,t.login_no,t.username,t.state,t.login_count,t.last_ip,t.last_time,t.phone,t.email,t.head_image from sys_user t
+     where t.user_id not in (select t2.user_id from sys_org_user t2 where t2.org_id=#{orgId,typeHandler=LongTypeHandler}) 
+     <if test="loginNo != null and loginNo != ''">
+     	 <bind name="pattern_loginNo" value="'%' + _parameter.get('loginNo') + '%'" />
+         and t.login_no  LIKE #{pattern_loginNo}
+     </if>
+     <if test="username != null and username != ''">
+     	 <bind name="pattern_username" value="'%' + _parameter.get('username') + '%'" />
+         and t.username  LIKE #{pattern_username}
+     </if>
+     
+     <if test="state != null and state != ''">
+         and t.state = #{state}
+     </if>
+     
+     <if test="startDate != null">
+         and t.last_time &gt;= #{startDate}
+     </if>
+     
+     <if test="endDate != null">
+         and t.last_time &lt;= #{endDate}
+     </if>
+     order by t.user_id desc
+  </select>
+  
+  <select id="findByUserId" resultMap="BaseResultMap">
+    select t.user_id,t.login_no,t.username,t.state, is_system,phone,email,head_image from sys_user t
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <insert id="insert">
+    insert into sys_user (login_no, username, 
+      password, state, is_system, 
+      salt, login_count,
+      created_by, created_time, modified_by, 
+      modified_time,phone,email,head_image)
+    values (#{loginNo}, #{username}, 
+      #{password}, #{state},0, 
+      #{salt},0, 
+      #{createdBy,typeHandler=LongTypeHandler}, #{createdTime}, #{modifiedBy,typeHandler=LongTypeHandler}, 
+      #{modifiedTime},#{phone},#{email},#{headImage})
+  </insert>
+  
+  <update id="update">
+    update sys_user
+    set username = #{username},
+      phone = #{phone},
+      email = #{email},
+      modified_by = #{modifiedBy,typeHandler=LongTypeHandler},
+      modified_time = #{modifiedTime}
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </update>
+  
+  <update id="updateState">
+    update sys_user
+    set state = #{state}
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </update>
+  
+  
+  <update id="updatePassword">
+    update sys_user
+    set salt = #{salt},password = #{password}
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </update>
+  
+  <update id="updateHeadImage">
+    update sys_user
+    set head_image = #{headImage}
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </update>
+  
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysRoleUserMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysRoleUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="login_no" jdbcType="VARCHAR" property="loginNo" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, role_id, created_by, created_time
+  </sql>
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_user
+    where id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="queryByUserId" resultType="Long">
+    select 
+    role_id
+    from sys_role_user
+    where user_id = #{userId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="queryRoleUserCount" resultType="Long">
+    select 
+    count(1)
+    from sys_role_user
+    where role_id = #{roleId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select t.id, t.user_id, t.role_id, t.created_by, t.created_time,t2.login_no,t2.username 
+    from sys_role_user t,sys_user t2 
+    where t.user_id = t2.user_id and t.role_id = #{roleId,typeHandler=LongTypeHandler} 
+      <if test="loginNo != null and loginNo != ''">
+     	 <bind name="pattern_loginNo" value="'%' + _parameter.get('loginNo') + '%'" />
+         and t2.login_no  LIKE #{pattern_loginNo}
+     </if>
+     <if test="username != null and username != ''">
+     	 <bind name="pattern_username" value="'%' + _parameter.get('username') + '%'" />
+         and t2.username  LIKE #{pattern_username}
+     </if>
+    order by t.id desc
+  </select>
+  
+  <delete id="delete">
+    <if test="id != null and id!=''">
+  		<bind name="ids" value="_parameter.get('id').split(',')" />
+  		 delete from sys_role_user
+   		 where role_id = #{roleId,typeHandler=LongTypeHandler} and (
+   		 <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+            id = #{item,typeHandler=LongTypeHandler}
+         </foreach>
+         )
+  	</if>
+  </delete>
+  
+  <insert id="insert">
+    insert into sys_role_user (user_id, role_id, 
+      created_by, created_time)
+    values (#{userId,typeHandler=LongTypeHandler}, #{roleId,typeHandler=LongTypeHandler}, 
+      #{createdBy,typeHandler=LongTypeHandler}, #{createdTime,jdbcType=TIMESTAMP})
+  </insert>
+
+</mapper>

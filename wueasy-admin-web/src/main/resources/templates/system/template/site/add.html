@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body>
+
+<div class="layui-fluid">  
+<div class="layui-card">
+<div class="layui-card-body">
+<form class="layui-form" isLoad="0" loadFuncNo="">
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>站点编号：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="siteNo" required="" lay-verType="tips" lay-verify="required" placeholder="请输入站点编号" autocomplete="off" class="layui-input"/>
+    </div>
+     <div class="layui-word-aux">必须字母开头,字幕下划线或数字组成,<br/>最小3位,最大20位</div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>站点名称：</label>
+    <div class="layui-input-block">
+      <input type="text" name="siteName" required="" lay-verType="tips" lay-verify="required" placeholder="请输入站点名称" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>状态：</label>
+    <div class="layui-input-block">
+      <input type="checkbox" name="state" lay-skin="switch" lay-text="有效|无效" checked="checked" value="1"/>
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">描述：</label>
+    <div class="layui-input-block">
+      <textarea name="description" placeholder="请输入描述" lay-verType="tips" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <hr/>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit="" lay-filter="submit" funcNo="T1002">新增</button>
+      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

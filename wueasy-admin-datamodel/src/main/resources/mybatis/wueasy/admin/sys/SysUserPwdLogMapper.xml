@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysUserPwdLogMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysUserPwdLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, password, salt, type, created_time
+  </sql>
+  
+  <select id="selectNewByUserId" resultMap="BaseResultMap">
+    select id,user_id,type,created_time from sys_user_pwd_log t where id = 
+	(select max(id) from sys_user_pwd_log t where t.user_id = #{userId,typeHandler=LongTypeHandler})
+  </select>
+  
+  <insert id="insert" parameterType="com.wueasy.admin.entity.SysUserPwdLog">
+    insert into sys_user_pwd_log (user_id, password, 
+      salt, type, created_time
+      )
+    values (#{userId,typeHandler=LongTypeHandler}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+</mapper>

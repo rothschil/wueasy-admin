@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-row layui-col-space1">
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-card">
+  	 		<div class="layui-card-body">
+			  	 <div class="layui-form-query">
+					<form class="layui-form" id="query_form">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-mid">作业名称：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<input type="text" name="jobName" autocomplete="off" class="layui-input"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">状态：</label>
+								<div class="layui-input-inline" style="width: 100px;">
+									<select name="status" class="fsSelect" dict="jobWdState" addNull="1">
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<table id="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" class="fsDatagrid" funcNo="S1071" isPage="1" defaultForm="query_form" height="full-110"></table>
+		
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+				    <p field="jobName" title="作业名称" width="200" sort="true"/>
+				    <p field="shardingTotalCount" title="作业分片总数" width="200"/>
+				    <p field="cron" title="cron表达式" width="200"/>
+				    <p field="description" title="作业描述信息" width="200"/>
+				    <p field="status" title="状态" width="200" dict="jobWdState"/>
+				    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="350"/>
+				</div>
+				<script type="text/html" id="barDemo">
+				 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-job-jobs-edit}" topUrl="/frame/system-job-jobs-edit" topWidth="1300px" topHeight="570px" isSelect="1" topTitle="修改作业信息" inputs="jobName:">修改</a>
+ 				 {{#  if(d.status == 'OK'){ }}
+					 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-job-jobs-shardingList}" topUrl="/frame/system-job-jobs-shardingList" topWidth="900px" topHeight="500px" isSelect="1" topTitle="分片列表" inputs="jobName:">详情</a>
+  				     <a id="cf" class="layui-btn layui-bg-blue layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1076" inputs="jobName:">触发</a>
+					 <a id="sx" class="layui-btn layui-bg-orange layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1077" inputs="jobName:">失效</a>
+					 <a id="zz" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1079" inputs="jobName:">终止</a>
+ 				 {{#  } else if(d.status == 'DISABLED') { }}
+					 <a id="qy" class="layui-btn layui-bg-green layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1078" inputs="jobName:">生效</a>
+				 {{#  } else { }}
+					 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1074" inputs="jobName:">删除</a>
+ 				 {{#  } }}
+				</script>
+			</div>
+		</div> 	
+  	 </div>
+  </div>
+</div>
+</body>
+</html>

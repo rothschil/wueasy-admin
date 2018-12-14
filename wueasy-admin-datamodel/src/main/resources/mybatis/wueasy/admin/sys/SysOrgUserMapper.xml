@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysOrgUserMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysOrgUser">
+    <id column="id" property="id" />
+    <result column="org_id" property="orgId" />
+    <result column="user_id" property="userId" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="login_no" property="loginNo" />
+    <result column="username" property="username" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+  	id
+  	,org_id
+  	,user_id
+  	,created_by
+  	,created_time
+  </sql>
+  
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_org_user where 
+     id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="queryUserCount" resultType="Integer">
+    select count(1)
+    from sys_org_user where 
+     org_id = #{orgId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select t1.id,t1.org_id,t1.user_id,t1.created_by,t1.created_time,t2.login_no,t2.username from sys_org_user t1,sys_user t2 where t1.user_id = t2.user_id 
+      and t1.org_id = #{orgId,typeHandler=LongTypeHandler}
+      <if test="userId != null and userId != ''">
+        and t1.user_id = #{userId,typeHandler=LongTypeHandler}
+      </if>
+      <if test="loginNo != null and loginNo != ''">
+     	 <bind name="pattern_loginNo" value="'%' + _parameter.get('loginNo') + '%'" />
+         and t2.login_no  LIKE #{pattern_loginNo}
+     </if>
+     <if test="username != null and username != ''">
+     	 <bind name="pattern_username" value="'%' + _parameter.get('username') + '%'" />
+         and t2.username  LIKE #{pattern_username}
+     </if>
+      order by t1.id asc
+  </select>
+  
+  <delete id="delete">
+    delete from sys_org_user
+    where 
+       id = #{id,typeHandler=LongTypeHandler}
+  </delete>
+  
+  
+  <delete id="deleteMultiple">
+    delete from sys_org_user
+    where 
+    <bind name="ids" value="_parameter.get('id').split(',')" />
+    
+    <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+      id = #{item,typeHandler=LongTypeHandler}
+    </foreach>
+  </delete>
+  
+  
+  <insert id="insert">
+    insert into sys_org_user (
+  	org_id
+  	,user_id
+  	,created_by
+  	,created_time
+    )
+    values (
+  	 #{orgId,typeHandler=LongTypeHandler}
+  	, #{userId,typeHandler=LongTypeHandler}
+  	, #{createdBy,typeHandler=LongTypeHandler}
+  	, #{createdTime}
+    )
+  </insert>
+</mapper>

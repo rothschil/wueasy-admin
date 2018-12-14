@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysLogMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="func_no" jdbcType="VARCHAR" property="funcNo" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="func_name" jdbcType="VARCHAR" property="funcName" />
+    <result column="datetime" jdbcType="BIGINT" property="datetime" />
+    <result column="request_id" jdbcType="VARCHAR" property="requestId" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="error_no" jdbcType="BIGINT" property="errorNo" />
+    <result column="error_info" jdbcType="VARCHAR" property="errorInfo" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="in_param" jdbcType="LONGVARCHAR" property="inParam" />
+    <result column="out_param" jdbcType="LONGVARCHAR" property="outParam" />
+    <result column="system_info" property="systemInfo" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, func_no, version, func_name, datetime, request_id, ip, error_no, error_info, 
+    created_by, created_time
+  </sql>
+  <sql id="Blob_Column_List">
+    in_param, out_param,system_info
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap">
+     select  
+     <include refid="Base_Column_List" /> 
+     from sys_log where 1=1 
+     <if test="funcNo != null and funcNo != ''">
+     	 <bind name="pattern_funcNo" value="'%' + _parameter.get('funcNo') + '%'" />
+         and func_no  LIKE #{pattern_funcNo}
+     </if>
+     
+     <if test="funcName != null and funcName != ''">
+     	 <bind name="pattern_funcName" value="'%' + _parameter.get('funcName') + '%'" />
+         and func_name  LIKE #{pattern_funcName}
+     </if>
+     
+     <if test="version != null and version != ''">
+         and version = #{version}
+     </if>
+     
+     <if test="errorNo != null and errorNo != ''">
+         and error_no = #{errorNo}
+     </if>
+     
+     <if test="errorInfo != null and errorInfo != ''">
+     	 <bind name="pattern_errorInfo" value="'%' + _parameter.get('errorInfo') + '%'" />
+         and error_info  LIKE #{pattern_errorInfo}
+     </if>
+     
+     <if test="startDate != null">
+         and created_time &gt;= #{startDate}
+     </if>
+     
+     <if test="endDate != null">
+         and created_time &lt;= #{endDate}
+     </if>
+     order by id desc
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_log
+    where id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+  <delete id="delete">
+  	<if test="id != null and id!=''">
+  		<bind name="ids" value="_parameter.get('id').split(',')" />
+  		 delete from sys_log
+   		 where 
+   		 <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+            id = #{item,typeHandler=LongTypeHandler}
+         </foreach>
+  	</if>
+  </delete>
+  
+  <insert id="insert">
+    insert into sys_log (func_no, version, 
+      func_name, datetime, request_id, 
+      ip, error_no, error_info, 
+      created_by, created_time, in_param, 
+      out_param,system_info)
+    values (#{funcNo,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{funcName,jdbcType=VARCHAR}, #{datetime,typeHandler=LongTypeHandler}, #{requestId,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{errorNo,typeHandler=LongTypeHandler}, #{errorInfo,jdbcType=VARCHAR}, 
+      #{createdBy,typeHandler=LongTypeHandler}, #{createdTime,jdbcType=TIMESTAMP}, #{inParam,jdbcType=LONGVARCHAR}, 
+      #{outParam,jdbcType=LONGVARCHAR},#{systemInfo})
+  </insert>
+</mapper>

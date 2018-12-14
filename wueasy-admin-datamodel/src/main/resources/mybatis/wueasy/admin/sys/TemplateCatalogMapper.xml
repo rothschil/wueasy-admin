@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.TemplateCatalogMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.TemplateCatalog">
+    <id column="catalog_id" property="catalogId" />
+    <result column="parent_id" property="parentId" />
+    <result column="site_id" property="siteId" />
+    <result column="catalog_no" property="catalogNo" />
+    <result column="catalog_name" property="catalogName" />
+    <result column="state" property="state" />
+    <result column="orderline" property="orderline" />
+    <result column="description" property="description" />
+    <result column="link_url" property="linkUrl" />
+    <result column="file_type" property="fileType" />
+    <result column="route" property="route" />
+    <result column="small_image" property="smallImage" />
+    <result column="large_image" property="largeImage" />
+    <result column="seo_title" property="seoTitle" />
+    <result column="seo_keywords" property="seoKeywords" />
+    <result column="seo_description" property="seoDescription" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+  	catalog_id
+  	,parent_id
+  	,site_id
+  	,catalog_no
+  	,catalog_name
+  	,state
+  	,orderline
+  	,description
+  	,link_url
+  	,file_type
+  	,route
+  	,small_image
+  	,large_image
+  	,seo_title
+  	,seo_keywords
+  	,seo_description
+  	,created_by
+  	,created_time
+  	,modified_by
+  	,modified_time
+  </sql>
+  
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template_catalog where 
+     catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="selectByNo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template_catalog where 
+     site_id = #{siteId,typeHandler=LongTypeHandler} and catalog_no = #{catalogNo}
+  </select>
+  
+  <select id="selectBySiteId" resultType="java.lang.String">
+    select t1.site_id as site_id from template_site t1 where t1.site_id = #{catalogId,typeHandler=LongTypeHandler}
+	UNION All
+	select t2.site_id from template_catalog  t2 where t2.catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="queryList" resultMap="BaseResultMap">
+    select 
+    catalog_id,catalog_name,parent_id
+    from template_catalog where 
+     site_id = #{siteId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select t1.site_id as catalog_id,t1.site_name as catalog_name,0 as parent_id,t1.site_id as orderline,t1.site_id from template_site t1 where t1.state='1'
+	UNION All
+	select t2.catalog_id,t2.catalog_name,t2.parent_id,t2.orderline,t2.site_id from template_catalog  t2 where t2.site_id in (select t3.site_id from template_site t3)
+	order by orderline asc,catalog_id asc
+  </select>
+  
+  <select id="queryValid" resultMap="BaseResultMap">
+    select t1.site_id as catalog_id,t1.site_name as catalog_name,0 as parent_id,t1.site_id as orderline,t1.site_id from template_site t1 where t1.state='1'
+    <if test="siteId != null and siteId != ''">
+         and t1.site_id = #{siteId,typeHandler=LongTypeHandler}
+    </if>
+    <if test="authDataStr != null and authDataStr != ''">
+         and t1.site_id in (${authDataStr})
+    </if>
+	UNION All
+	select t2.catalog_id,t2.catalog_name,t2.parent_id,t2.orderline,t2.site_id from template_catalog  t2 where t2.state='1' and t2.site_id in (select t3.site_id from template_site t3)
+	and (t2.parent_id in (select t4.catalog_id from template_catalog  t4 where t4.state='1' ) or t2.parent_id in (select t5.site_id from template_site  t5 where t5.state='1' ) )
+	<if test="siteId != null and siteId != ''">
+         and t2.site_id = #{siteId,typeHandler=LongTypeHandler}
+    </if>
+    <if test="authDataStr != null and authDataStr != ''">
+        and t2.catalog_id in (${authDataStr})
+    </if>
+	order by orderline asc,catalog_id asc 
+  </select>
+  
+   <select id="queryChildCatalogCount" resultType="java.lang.Integer">
+    SELECT count(1) from template_catalog where parent_id = #{catalogId,typeHandler=LongTypeHandler}
+  </select>
+  
+  <delete id="delete">
+    delete from template_catalog
+    where 
+       catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+  </delete>
+  
+  
+  <delete id="deleteMultiple">
+    delete from template_catalog
+    where 
+    <bind name="catalogIds" value="_parameter.get('catalogId').split(',')" />
+    
+    <foreach collection="catalogIds" item="item" index="index" open="" close="" separator="OR">
+      catalog_id = #{item,typeHandler=LongTypeHandler}
+    </foreach>
+  </delete>
+  
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="catalogId">
+    insert into template_catalog (
+  	parent_id
+  	,site_id
+  	,catalog_no
+  	,catalog_name
+  	,state
+  	,orderline
+  	,description
+  	,link_url
+  	,file_type
+  	,route
+  	,small_image
+  	,large_image
+  	,seo_title
+  	,seo_keywords
+  	,seo_description
+  	,created_by
+  	,created_time
+  	,modified_by
+  	,modified_time
+    )
+    values (
+  	#{parentId,typeHandler=LongTypeHandler}
+  	, #{siteId,typeHandler=LongTypeHandler}
+  	, #{catalogNo}
+  	, #{catalogName}
+  	, #{state}
+  	, #{orderline,typeHandler=LongTypeHandler}
+  	, #{description}
+  	, #{linkUrl}
+  	, #{fileType}
+  	, #{route}
+  	, #{smallImage}
+  	, #{largeImage}
+  	, #{seoTitle}
+  	, #{seoKeywords}
+  	, #{seoDescription}
+  	, #{createdBy,typeHandler=LongTypeHandler}
+  	, #{createdTime}
+  	, #{modifiedBy,typeHandler=LongTypeHandler}
+  	, #{modifiedTime}
+    )
+  </insert>
+  
+  <update id="update">
+    update template_catalog
+    set 
+        catalog_no = #{catalogNo}
+      , catalog_name = #{catalogName}
+      , state = #{state}
+      , orderline = #{orderline,typeHandler=LongTypeHandler}
+      , description = #{description}
+      , link_url = #{linkUrl}
+      , file_type = #{fileType}
+      , route = #{route}
+      , small_image = #{smallImage}
+      , large_image = #{largeImage}
+      , seo_title = #{seoTitle}
+      , seo_keywords = #{seoKeywords}
+      , seo_description = #{seoDescription}
+      , modified_by = #{modifiedBy,typeHandler=LongTypeHandler}
+      , modified_time = #{modifiedTime}
+    where
+       catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+  </update>
+  
+  <update id="updateRoute">
+    update template_catalog
+    set 
+      route = #{route}
+    where
+       catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+  </update>
+  
+  <update id="updateOrderline">
+    update template_catalog
+    set orderline = #{orderline,typeHandler=LongTypeHandler},parent_id = #{parentId,typeHandler=LongTypeHandler},route = #{route}
+    where catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+  </update>
+  
+  
+  <select id="queryCatalogList" resultMap="BaseResultMap">
+    select 
+    catalog_id
+  	,parent_id
+  	,site_id
+  	,catalog_no
+  	,catalog_name
+  	,state
+  	,orderline
+  	,description
+  	,link_url
+  	,file_type
+  	,route
+  	,small_image
+  	,large_image
+  	,seo_title
+  	,seo_keywords
+  	,seo_description
+     from template_catalog  t2 where t2.state='1' and t2.site_id in (select t3.site_id from template_site t3)
+	and (t2.parent_id in (select t4.catalog_id from template_catalog  t4 where t4.state='1' ) or t2.parent_id in (select t5.site_id from template_site  t5 where t5.state='1' ) )
+	order by orderline asc,catalog_id asc 
+  </select>
+  
+</mapper>

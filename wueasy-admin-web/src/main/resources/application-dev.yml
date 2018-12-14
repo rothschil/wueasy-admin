@@ -1,0 +1,71 @@
+# wueasy - A Java Distributed Rapid Development Platform.
+# Copyright (C) 2017-2019 wueasy.com
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+spring : 
+  redis : 
+    database : 1 #数据库索引（默认为0）
+    host : 127.0.0.1 #服务器地址
+    port : 6379 #服务器连接端口
+    password : 123456  #服务器连接密码（默认为空）
+    pool : #连接池配置
+      max-idle : 8 # 连接池中的最大空闲连接，默认值也是8。
+      min-idle : 0 #连接池中的最小空闲连接，默认值也是0。
+      max-active : 2000 # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+      max-wait : 1000 # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+    timeout : 3000 #连接超时时间（毫秒）
+
+
+wueasy : 
+  file : 
+    upload : #上传配置
+      type: 1 #上传类型 1 本地上传 默认 ，2 腾讯对象存储 ，3 阿里云对象存储
+      rootPath: D:/file #文件上传根目录
+      maxSize: 50 #文件最大大小，单位M
+      httpAccessPath: https://hao54.oss-cn-hangzhou.aliyuncs.com  #http访问的路径
+      funcNo: MALL2006,MALL2008
+    cos : #腾讯对象存储配置
+      secretId : 
+      secretKey : 
+      bucketName : test-1251238510 #bucket 的命名规则为{name}-{appid} ，此处填写的存储桶名称必须为此格式
+      region : ap-shanghai #设置bucket的区域, COS地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
+#    cos : #阿里云对象存储配置
+#      secretId : 
+#      secretKey : 
+#      bucketName : hao54 #bucket 的命名规则为{name} ，此处填写的存储桶名称必须为此格式
+#      region :  https://oss-cn-hangzhou.aliyuncs.com #设置bucket的区域, COS地域的简称请参照 https://help.aliyun.com/document_detail/31837.html?spm=a2c4g.11186623.6.571.3ac87f5e7vtneC
+  security :
+    xss : #不需要xss清理的配置
+     - funcNo : T1021,T1022 #功能号，多个逗号分隔
+       field : content #字段，多个逗号分隔
+     - funcNo : T1008,T1009 
+       field : itemValue 
+  zk : #zookeeper注册中心地址
+    servers : 127.0.0.1:2181
+    sessionTimeout : 3000
+    connectionTimeout : 5000
+  bus : 
+    #客户端配置
+    client : 
+      base : #默认客户端配置
+        group : wueasy-admin
+        minClientConnection : 5 #client最小连接数
+        maxClientConnection : 20 #client最大连接数
+        requestTimeout : 60000 #请求超时时间(毫秒)
+      taskClient : #定时任务客户端
+        group : wueasy-task
+        minClientConnection : 5 #client最小连接数
+        maxClientConnection : 20 #client最大连接数
+        requestTimeout : 60000 #请求超时时间(毫秒)

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body>
+  <div class="layui-fluid">  
+  <div class="layui-row layui-col-space10">
+    <div class="layui-col-md3">
+    	<div class="layui-card">
+    		<div class="layui-card-header">分类管理</div>
+    		<div class="layui-card-body">
+    			<ul id="treeDemo" class="ztree fsTree" fs:authorize="" funcNo="S1045" clickCallbackId="fsDatagrid" clickCallbackInputs="paramTypeId:$id" treeIdKey="id" treePIdKey="parentId" treeName="paramName"></ul>
+<!--          	鼠标右键菜单配置 -->
+       			<div class="fsTreeRightMenu">
+       				<p function="refresh" icon="refresh" name="刷新"></p>
+       				<p function="top" icon="add" name="新增" fs:authorize="" th:topUrl="@{/frame/system-parameter-addType}" topUrl="/frame/system-parameter-addType" topWidth="700px" topHeight="425px" topTitle="新增参数分类" inputs="parentId:$id"></p>
+       				<p function="top" icon="edit" name="编辑" fs:authorize="" th:topUrl="@{/frame/system-parameter-editType}" topUrl="/frame/system-parameter-editType" topWidth="700px" topHeight="380px" topTitle="编辑参数分类" inputs="id:" disabledType="rootNode"></p>
+       				<p function="submit" icon="del" name="删除" fs:authorize="" funcNo="S1049" isConfirm="1" confirmMsg="是否确定删除？" inputs="id:" disabledType="parent|rootNode"></p>
+       			</div>
+    		
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="layui-col-md9">
+    	<div class="layui-card">
+    		<div class="layui-card-header">参数管理</div>
+    		<div class="layui-card-body">
+    			<div>
+		    		<form id="query_form" style="display: none;">
+		    			<input type="text" id="paramTypeId" name="paramTypeId" value=""/>
+		    		</form>
+			    	<button class="layui-btn layui-btn-sm" fs:authorize="" function="top" selectTreeId="paramTypeId" th:topUrl="@{/frame/system-parameter-add}" topUrl="/frame/system-parameter-add" topWidth="800px" topHeight="430px" topTitle="新增系统参数信息" inputs="paramTypeId:#paramTypeId">
+					  <i class="layui-icon">&#xe654;</i>新增
+					</button>
+					<button class="layui-btn layui-btn-sm layui-btn-danger" fs:authorize="" selectTreeId="paramTypeId" function="submit" funcNo="S1054" isMutiDml="1" isConfirm="1" inputs="id:">
+					  <i class="layui-icon">&#xe640;</i>删除
+					</button>
+					<button class="layui-btn layui-btn-sm" function="refresh" selectTreeId="paramTypeId">
+					  <i class="layui-icon">&#x1002;</i>刷新
+					</button>
+		    	</div>
+		    	<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" funcNo="S1050" isPage="1" isLoad="0" defaultForm="query_form" height="full-120">
+				</table>
+				
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+					<p checkbox="true"/>
+				    <p field="itemKey" title="枚举key" width="200" sort="true"/>
+				    <p field="itemValue" title="枚举value" width="200"/>
+				    <p field="state" title="状态" width="100" templet="#stateTpl"/>
+				    <p field="orderline" title="排序值" width="100"/>
+				    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="100"/>
+				</div>
+				<script type="text/html" id="stateTpl">
+  					{{#  if(d.state == '1'){ }}
+   					 <span style="color: #5FB878">有效</span>
+ 					{{#  } else { }}
+   					 <span style="color: #FF5722;">无效</span>
+ 					{{#  } }}
+				</script>
+				<script type="text/html" id="barDemo">
+				 <a id="edit" class="layui-btn layui-btn-xs" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-parameter-edit}" topUrl="/frame/system-parameter-edit" topWidth="800px" topHeight="430px" isSelect="1" topTitle="编辑系统参数信息" inputs="id:">编辑</a>
+				</script>
+		    	
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

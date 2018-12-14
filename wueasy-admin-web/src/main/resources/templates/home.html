@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: echarts" th:remove="tag"/>
+</head>
+<body>
+<div class="layui-fluid">  
+	<div class="layui-row layui-col-space10 panel_box" id="shortcut_div">
+		<div fs:authorize="" th:url="@{/frame/system-menu-index}" url="/frame/system-menu-index" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+			<a th:href="@{/index#1012}" href="/index#1012" target="_top">
+				<div class="panel_icon layui-bg-green">
+					<i class="layui-anim fa fa-navicon" style="position: relative;margin-top: 20px;"></i>
+				</div>
+				<div class="panel_word">
+					<span>菜单管理</span>
+				</div>
+			</a>
+		</div>
+		<div fs:authorize="" th:url="@{/frame/system-article-index}" url="/frame/system-article-index" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+			<a th:href="@{/index#1043}" href="/index#1043" target="_top">
+				<div class="panel_icon layui-bg-black">
+					<i class="layui-anim layui-icon">&#xe60a;</i>
+				</div>
+				<div class="panel_word">
+					<span>文章管理</span>
+					<cite></cite>
+				</div>
+			</a>
+		</div>
+		<div fs:authorize="" th:url="@{/frame/system-user-loginlog-index}" url="/frame/system-user-loginlog-index" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+			<a th:href="@{/index#1011}" href="/index#1011" target="_top">
+				<div class="panel_icon layui-bg-red">
+					<i class="layui-anim fa fa-address-card" style="position: relative;margin-top: 20px;"></i>
+				</div>
+				<div class="panel_word">
+					<span>登录日志</span>
+					<cite></cite>
+				</div>
+			</a>
+		</div>
+		<div fs:authorize="" th:url="@{/frame/system-log-index}" url="/frame/system-log-index" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+			<a th:href="@{/index#1017}" href="/index#1017" target="_top">
+				<div class="panel_icon layui-bg-orange">
+					<i class="layui-anim fa fa-commenting" style="position: relative;margin-top: 20px;"></i>
+				</div>
+				<div class="panel_word userAll">
+					<span>操作日志</span>
+				</div>
+			</a>
+		</div>
+		<div fs:authorize="" th:url="@{/frame/system-user-account-index}" url="/frame/system-user-account-index" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+			<a th:href="@{/index#1010}" href="/index#1010" target="_top">
+				<div class="panel_icon layui-bg-cyan">
+					<i class="layui-anim fa fa-user-o" style="position: relative;margin-top: 20px;"></i>
+				</div>
+				<div class="panel_word outIcons">
+					<span>用户管理</span>
+				</div>
+			</a>
+		</div>
+		<div fs:authorize="" th:url="@{/frame/system-role-index}" url="/frame/system-role-index" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+			<a th:href="@{/index#1013}" href="/index#1013" target="_top">
+				<div class="panel_icon layui-bg-blue">
+					<i class="layui-anim fa fa-shield" style="position: relative;margin-top: 20px;"></i>
+				</div>
+				<div class="panel_word">
+					<span>权限管理</span>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="layui-row layui-col-space10">
+		<div class="layui-col-md6">
+			<div class="layui-card">
+	    		<div class="layui-card-header">一天用电量分布</div>
+	    		<div class="layui-card-body">
+	    			<div id="main1" style="width: 100%;height:300px;"></div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="layui-col-md6">
+			<div class="layui-card">
+	    		<div class="layui-card-header">多 X 轴示例</div>
+	    		<div class="layui-card-body">
+	    			<div id="main2" style="width: 100%;height:300px;"></div>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+	<div class="layui-row layui-col-space10">
+		 <div class="layui-col-md12">
+			<div class="layui-card">
+	    		<div class="layui-card-header">系统功能清单</div>
+	    		<div class="layui-card-body">
+	    			<ul class="layui-timeline">
+					  <li class="layui-timeline-item">
+				        <i class="layui-icon layui-timeline-axis"></i>
+				        <div class="layui-timeline-content layui-text">
+				          <ul>
+				            <li>用户登录、退出</li>
+				            <li>精细化权限控制，控制到按钮的显示</li>
+				            <li>数据权限控制</li>
+				            <li>菜单管理</li>
+				            <li>用户管理（锁定、注销、激活、重置密码、新增用户）</li>
+				            <li>权限管理中心（角色管理、权限分配、数据权限）</li>
+				            <li>系统参数管理</li>
+				            <li>数据字典管理</li>
+				            <li>登录日志</li>
+				            <li>操作日志</li>
+				            <li>导出excel</li>
+				            <li>用户安全控制（密码安全加密、用户登录异常锁定、修改密码等）</li>
+				            <li>拦截器控制（权限拦截器、token拦截器、操作密码验证拦截器）</li>
+				            <li>定时任务管理</li>
+				            <li>文章管理</li>
+				            <li>站点模板管理</li>
+				            <li>上传功能（附件上传，图片上传，上次进度）</li>
+				            <li>兼容多种主流数据库（MySQL，PostgreSQL，SQL Server，MariaDB）</li>
+				          </ul>
+				        </div>
+				      </li>
+					 
+					</ul>
+	    		</div>
+	    	</div>
+		<div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" th:src="@{/scripts/home/index.js}" src="/scripts/home/index.js"></script>
+</body>
+</html>
