@@ -51,7 +51,7 @@ public class ApplicationTests {
 	 */
 	@Test
     public void testObj() {
-		String tableName = "wueasy_demo";
+		String tableName = "sys_log_content";
 		String entityPackage = "com.wueasy.admin.entity";
 		String mapperPackage = "com.wueasy.admin.mapper";
 		

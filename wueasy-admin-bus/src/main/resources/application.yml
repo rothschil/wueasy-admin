@@ -34,7 +34,7 @@ spring:
 
 wueasy : 
   log : 
-#    writeDb : 0 #是否输入db日志，1是，0否，默认0
+    writeDb : 1 #是否输入db日志，1是，0否，默认0
     sensitiveParam : password,loginPassword,newPassword,verifyPwd,oldPassword,password2  #敏感参数
     notWriteFuncNo : S1055,S1056 #不输出日志的功能号
     maxValueLength : 256 #日志最大长度配置

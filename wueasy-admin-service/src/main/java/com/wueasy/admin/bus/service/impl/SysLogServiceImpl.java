@@ -22,8 +22,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wueasy.admin.entity.SysLog;
+import com.wueasy.admin.entity.SysLogContent;
+import com.wueasy.admin.mapper.SysLogContentMapper;
 import com.wueasy.admin.mapper.SysLogMapper;
 import com.wueasy.base.bus.server.service.SysLogService;
 import com.wueasy.base.entity.DataMap;
@@ -42,8 +45,12 @@ public class SysLogServiceImpl implements SysLogService {
 	
 	@Autowired
 	private SysLogMapper sysLogMapper;
+	
+	@Autowired
+	private SysLogContentMapper sysLogContentMapper;
 
 	@Override
+	@Transactional
 	public void add(String funcNo, String funcName, String version,String requestId, Long datetime, String ip,
 			Long userId, String inParam, String outParam, int errorNo, String errorInfo,String systemInfo) {
 		SysLog sysLog = new SysLog();
@@ -54,13 +61,17 @@ public class SysLogServiceImpl implements SysLogService {
 		sysLog.setDatetime(datetime);
 		sysLog.setIp(ip);
 		sysLog.setCreatedBy(userId);
-		sysLog.setInParam(inParam);
-		sysLog.setOutParam(outParam);
 		sysLog.setErrorNo(Long.valueOf(errorNo));
 		sysLog.setErrorInfo(errorInfo);
 		sysLog.setCreatedTime(new Date());
-		sysLog.setSystemInfo(systemInfo);
 		sysLogMapper.insert(sysLog);
+		
+		SysLogContent sysLogContent = new SysLogContent();
+		sysLogContent.setId(sysLog.getId());
+		sysLogContent.setInParam(inParam);
+		sysLogContent.setOutParam(outParam);
+		sysLogContent.setSystemInfo(systemInfo);
+		sysLogContentMapper.insert(sysLogContent);
 	}
 
 	@Override

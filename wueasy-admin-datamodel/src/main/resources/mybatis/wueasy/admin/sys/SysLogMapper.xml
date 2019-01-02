@@ -40,9 +40,6 @@
     id, func_no, version, func_name, datetime, request_id, ip, error_no, error_info, 
     created_by, created_time
   </sql>
-  <sql id="Blob_Column_List">
-    in_param, out_param,system_info
-  </sql>
   
   <select id="query" resultMap="BaseResultMap">
      select  
@@ -83,11 +80,8 @@
   
   <select id="selectById" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from sys_log
-    where id = #{id,typeHandler=LongTypeHandler}
+    t1.*,t2.in_param,t2.out_param,t2.system_info
+    from sys_log t1,sys_log_content t2 where t1.id=t2.id and t1.id = #{id,typeHandler=LongTypeHandler}
   </select>
   
   <delete id="delete">
@@ -101,16 +95,14 @@
   	</if>
   </delete>
   
-  <insert id="insert">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
     insert into sys_log (func_no, version, 
       func_name, datetime, request_id, 
       ip, error_no, error_info, 
-      created_by, created_time, in_param, 
-      out_param,system_info)
+      created_by, created_time)
     values (#{funcNo,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
       #{funcName,jdbcType=VARCHAR}, #{datetime,typeHandler=LongTypeHandler}, #{requestId,jdbcType=VARCHAR}, 
       #{ip,jdbcType=VARCHAR}, #{errorNo,typeHandler=LongTypeHandler}, #{errorInfo,jdbcType=VARCHAR}, 
-      #{createdBy,typeHandler=LongTypeHandler}, #{createdTime,jdbcType=TIMESTAMP}, #{inParam,jdbcType=LONGVARCHAR}, 
-      #{outParam,jdbcType=LONGVARCHAR},#{systemInfo})
+      #{createdBy,typeHandler=LongTypeHandler}, #{createdTime,jdbcType=TIMESTAMP})
   </insert>
 </mapper>

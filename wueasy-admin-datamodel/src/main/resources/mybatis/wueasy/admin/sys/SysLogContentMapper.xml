@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2019 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.mapper.SysLogContentMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysLogContent">
+	 <id column="id" property="id" />
+	 <result column="in_param" property="inParam" />
+	 <result column="out_param" property="outParam" />
+	 <result column="system_info" property="systemInfo" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+	id
+	,in_param
+	,out_param
+	,system_info
+  </sql>
+  
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log_content where 
+	 id =  #{id,typeHandler=LongTypeHandler} 
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log_content where 1=1 
+      <if test="id != null">
+        and id =  #{id,typeHandler=LongTypeHandler} 
+      </if>
+      <if test="inParam != null and inParam != ''">
+        and in_param = #{inParam}
+      </if>
+      <if test="outParam != null and outParam != ''">
+        and out_param = #{outParam}
+      </if>
+      <if test="systemInfo != null and systemInfo != ''">
+        and system_info = #{systemInfo}
+      </if>
+
+	  order by id desc
+  </select>
+  
+  <delete id="delete">
+    delete from sys_log_content
+    where 
+	  id =  #{id,typeHandler=LongTypeHandler} 
+  </delete>
+  
+  
+  <delete id="deleteMultiple">
+    delete from sys_log_content
+    where 
+    <bind name="ids" value="_parameter.get('id').split(',')" />
+    
+    <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+      id = #{item,typeHandler=LongTypeHandler} 
+    </foreach>
+  </delete>
+  
+  
+  	<insert id="insert">
+    insert into sys_log_content (
+	id
+	,in_param
+	,out_param
+	,system_info
+    )
+    values (
+	  #{id,typeHandler=LongTypeHandler} 
+	, #{inParam}
+	, #{outParam}
+	, #{systemInfo}
+    )
+  </insert>
+  
+  <update id="update">
+    update sys_log_content
+    set 
+	 in_param = #{inParam}
+	, out_param = #{outParam}
+	, system_info = #{systemInfo}
+    where
+   id =  #{id,typeHandler=LongTypeHandler} 
+  </update>
+  
+  
+</mapper>

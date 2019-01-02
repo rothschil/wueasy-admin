@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>com.wueasy</groupId>
 			<artifactId>wueasy-cache</artifactId>
-			<version>1.1.2</version>
+			<version>1.1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.wueasy.admin</groupId>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>com.wueasy</groupId>
 			<artifactId>wueasy-bus-server</artifactId>
-			<version>1.1.2</version>
+			<version>1.1.4</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.curator</groupId>

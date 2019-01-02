@@ -123,7 +123,7 @@ fieldset { min-width: 100px; }
 
 .layui-form-label .required{margin-right:4px;color: #FF5722;font-size: 15px;font-style:normal;}
 
-.layui-nav .layui-nav-item a{padding:0 10px;}
+.layui-nav .layui-nav-item a{padding:0 15px;}
 
 /**收缩样式**/
 .fsShrink{/* float: right; */top: 10px;cursor:pointer;color: #01AAED;}
