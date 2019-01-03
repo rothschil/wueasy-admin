@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wueasy.base.entity.Result;
 import com.wueasy.base.util.JsonHelper;
-import com.wueasy.base.util.SpringHelper;
 import com.wueasy.base.web.security.service.SessionService;
+import com.wueasy.base.web.security.util.SessionUtil;
 import com.wueasy.base.web.util.ResponseHelper;
 import com.wueasy.base.web.util.SysUtil;
 
@@ -79,7 +79,7 @@ public class IndexController {
     @ResponseBody
     public String menulist(HttpServletRequest request){
     	Result result = new Result();
-    	SessionService sessionService = SpringHelper.getBean(SessionService.class);
+    	SessionService sessionService = SessionUtil.getSessionService();
     	result.setResult(sessionService.getSession(SysUtil.getToken(request)).getMenuList());
         return JsonHelper.toJSONString(result);
     }

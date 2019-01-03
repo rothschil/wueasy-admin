@@ -29,6 +29,8 @@ spring :
 
 
 wueasy : 
+  session: #session配置
+    type: local #类型 local 本地session 默认，redis ，guava 
   file : 
     upload : #上传配置
       type: 1 #上传类型 1 本地上传 默认 ，2 腾讯对象存储 ，3 阿里云对象存储
