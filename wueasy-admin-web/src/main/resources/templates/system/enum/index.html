@@ -33,13 +33,13 @@
 		    			<input type="text" id="enumTypeId" name="enumTypeId" value=""/>
 		    		</form>
 			    	<button class="layui-btn layui-btn-sm" fs:authorize="" function="top" selectTreeId="enumTypeId" th:topUrl="@{/frame/system-enum-addEnum}" topUrl="/frame/system-enum-addEnum" topWidth="800px" topHeight="430px" topTitle="新增字典枚举信息" inputs="enumTypeId:#enumTypeId">
-					  <i class="layui-icon">&#xe654;</i>新增
+					  <i class="layui-icon layui-icon-add-1"></i>新增
 					</button>
 					<button class="layui-btn layui-btn-sm layui-btn-danger" fs:authorize="" selectTreeId="enumTypeId" function="submit" funcNo="S1044" isMutiDml="1" isConfirm="1" inputs="id:">
-					  <i class="layui-icon">&#xe640;</i>删除
+					  <i class="layui-icon layui-icon-delete"></i>删除
 					</button>
 					<button class="layui-btn layui-btn-sm" function="refresh" selectTreeId="enumTypeId">
-					  <i class="layui-icon">&#x1002;</i>刷新
+					  <i class="layui-icon layui-icon-refresh-1"></i>刷新
 					</button>
 		    	</div>
 		    	<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" funcNo="S1040" isPage="1" isLoad="0" defaultForm="query_form" height="full-120">
@@ -63,7 +63,7 @@
  					{{#  } }}
 				</script>
 				<script type="text/html" id="barDemo">
-					<a id="edit" class="layui-btn layui-btn-xs" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-enum-editEnum}" topUrl="/frame/system-enum-editEnum" topWidth="800px" topHeight="430px" isSelect="1" topTitle="编辑字典枚举信息" inputs="id:">编辑</a>
+					<a id="edit" class="layui-btn layui-btn-xs" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-enum-editEnum}" topUrl="/frame/system-enum-editEnum" topWidth="800px" topHeight="430px" isSelect="1" topTitle="编辑字典枚举信息" inputs="id:"><i class="layui-icon layui-icon-edit"></i>编辑</a>
 				</script>
     		</div>
     	</div>

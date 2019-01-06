@@ -47,19 +47,19 @@
 							</div>
 							<div class="layui-inline">
 								<div class="layui-input-inline">
-									<button class="layui-btn layui-btn-sm" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+									<button class="layui-btn layui-btn-sm" type="button" function="query"><i class="layui-icon layui-icon-search"></i>查询</button>
 								</div>
 							</div>
 						</div>
 		    		</form>
 			    	<button class="layui-btn layui-btn-sm" fs:authorize="" function="top" selectTreeId="orgId" th:topUrl="@{/frame/system-org-userList}" topUrl="/frame/system-org-userList" topWidth="800px" topHeight="430px" topTitle="用户列表" inputs="orgId:#orgId">
-					  <i class="layui-icon">&#xe654;</i>选择用户
+					  <i class="layui-icon layui-icon-add-1"></i>选择用户
 					</button>
 					<button class="layui-btn layui-btn-sm layui-btn-danger" fs:authorize="" selectTreeId="orgId" function="submit" funcNo="S1068" isMutiDml="1" isConfirm="1" inputs="id:">
-					  <i class="layui-icon">&#xe640;</i>删除用户
+					  <i class="layui-icon layui-icon-delete"></i>删除用户
 					</button>
 					<button class="layui-btn layui-btn-sm" function="refresh" selectTreeId="orgId">
-					  <i class="layui-icon">&#x1002;</i>刷新
+					  <i class="layui-icon layui-icon-refresh-1"></i>刷新
 					</button>
 		    	</div>
 		    	<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" funcNo="S1065" isPage="1" isLoad="0" defaultForm="query_form" height="full-180">

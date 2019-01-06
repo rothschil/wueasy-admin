@@ -56,16 +56,16 @@
 										</div>
 										<div class="layui-inline">
 											<div class="layui-input-inline">
-												<button class="layui-btn layui-btn-sm" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+												<button class="layui-btn layui-btn-sm" type="button" function="query"><i class="layui-icon layui-icon-search"></i>查询</button>
 											</div>
 										</div>
 									</div>
 					    		</form>
 						    	<button class="layui-btn layui-btn-sm" fs:authorize="" function="top" selectTreeId="roleId" th:topUrl="@{/frame/system-role-userList}" topUrl="/frame/system-role-userList" topWidth="800px" topHeight="450px" topTitle="用户列表" inputs="roleId:#roleId">
-								  <i class="layui-icon">&#xe654;</i>选择用户
+								  <i class="layui-icon layui-icon-add-1"></i>选择用户
 								</button>
 								<button class="layui-btn layui-btn-sm" function="refresh" selectTreeId="roleId">
-								  <i class="layui-icon">&#x1002;</i>刷新
+								  <i class="layui-icon layui-icon-refresh-1"></i>刷新
 								</button>
 					    	</div>
 					    </div>
@@ -80,7 +80,7 @@
 							    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="100"/>
 							</div>
 							<script type="text/html" id="barDemo">
-								<a id="del" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" funcNo="S1030" isConfirm="1" inputs="id:,roleId:">删除</a>
+								<a id="del" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" funcNo="S1030" isConfirm="1" inputs="id:,roleId:"><i class="layui-icon layui-icon-delete"></i>删除</a>
 							</script>
 					    </div>
 					  </div>
