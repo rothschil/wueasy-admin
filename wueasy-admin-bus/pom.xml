@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.wueasy.admin</groupId>
 	<artifactId>wueasy-admin-bus</artifactId>
-	<version>1.1.2.SNAPSHOT</version>
+	<version>1.0.0.SNAPSHOT</version>
 	<packaging>jar</packaging>
   
    <parent>
@@ -16,6 +16,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
+		<wueasy.version>1.2.0.SNAPSHOT</wueasy.version>
 		<skipTests>true</skipTests>
 	</properties>
 
@@ -23,7 +24,17 @@
 		<dependency>
 			<groupId>com.wueasy.admin</groupId>
 			<artifactId>wueasy-admin-service</artifactId>
-			<version>1.1.2.SNAPSHOT</version>
+			<version>1.0.0.SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.wueasy</groupId>
+			<artifactId>wueasy-bus-zipkin</artifactId>
+			<version>${wueasy.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>5.2</version>
 		</dependency>
     </dependencies>
 

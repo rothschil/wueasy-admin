@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.wueasy.admin</groupId>
     <artifactId>wueasy-admin-web</artifactId>
-    <version>1.1.0</version>
+    <version>1.0.0.SNAPSHOT</version>
     <packaging>jar</packaging>
   
 	<!-- 继承父包 -->
@@ -17,6 +17,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<java.version>1.8</java.version>
+		<wueasy.version>1.2.0.SNAPSHOT</wueasy.version>
 		<thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
 		<skipTests>true</skipTests>
 	</properties>
@@ -26,12 +27,17 @@
     	<dependency>
 			<groupId>com.wueasy</groupId>
 			<artifactId>wueasy-base-web</artifactId>
-			<version>1.1.5.SNAPSHOT</version>
+			<version>${wueasy.version}</version>
+		</dependency>
+    	<dependency>
+			<groupId>com.wueasy</groupId>
+			<artifactId>wueasy-bus-client</artifactId>
+			<version>${wueasy.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.wueasy.admin</groupId>
 			<artifactId>wueasy-admin-datamodel</artifactId>
-			<version>1.1.2.SNAPSHOT</version>
+			<version>1.0.0.SNAPSHOT</version>
 			<exclusions>
 	            <exclusion>
 	                <groupId>com.alibaba</groupId>
@@ -53,6 +59,17 @@
 		    <groupId>nz.net.ultraq.thymeleaf</groupId>
 		    <artifactId>thymeleaf-layout-dialect</artifactId>
 		    <version>2.3.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.wueasy</groupId>
+			<artifactId>wueasy-bus-zipkin</artifactId>
+			<version>${wueasy.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>5.2</version>
 		</dependency>
     </dependencies>
 

@@ -11,7 +11,7 @@
     
     <!-- 数据权限模型 -->
     <cache name="authDataModel"
-           maxEntriesLocalHeap="10"
+           maxEntriesLocalHeap="100"
            timeToLiveSeconds="3600">
     </cache>
 </ehcache>

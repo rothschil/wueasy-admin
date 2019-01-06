@@ -16,6 +16,8 @@
 
 #日志配置
 logging: 
+  pattern: 
+    console: "%d %-5level [%X{requestId} - %X{traceId} - %X{spanId}] [%thread]   %logger{36} - %msg%n"
   file: ./logs/wueasy-admin-web.log
   level: 
     root: INFO
@@ -88,3 +90,7 @@ wueasy:
       tempPath: conf/temp/excel/loginLog.xls
       fileName: 用户登录记录
       fileExtName: xls
+  log : 
+    sensitiveParam : password,loginPassword,newPassword,verifyPwd,oldPassword,password2  #敏感参数
+    notWriteFuncNo : S1055,S1056 #不输出日志的功能号
+    maxValueLength : 256 #日志最大长度配置

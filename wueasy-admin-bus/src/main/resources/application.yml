@@ -16,6 +16,8 @@
 
 #日志配置
 logging: 
+  pattern: 
+    console: "%d %-5level [%X{requestId} - %X{traceId} - %X{spanId}] [%thread]   %logger{36} - %msg%n"
   file: ./logs/wueasy-admin-bus.log
   level: 
     root: INFO
