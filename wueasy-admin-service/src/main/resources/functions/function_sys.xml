@@ -262,7 +262,7 @@ $ip() 获取ip
 	
 	<function id="S1022" type="s">
 		<params>
-			<param id="userId" name="用户id" value="$userId()"/>
+			<param id="userId" name="用户id" notEmpty="1"/>
 		</params>
 		<resource>SysUserService.queryUserAuth</resource>
 		<desc>查询用户权限</desc>

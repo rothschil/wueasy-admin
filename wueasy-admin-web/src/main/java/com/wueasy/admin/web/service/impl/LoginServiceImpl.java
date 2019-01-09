@@ -34,6 +34,7 @@ import com.wueasy.admin.entity.SysMenu;
 import com.wueasy.admin.entity.SysMenuFunction;
 import com.wueasy.admin.entity.SysUser;
 import com.wueasy.base.bus.client.Client;
+import com.wueasy.base.bus.plugin.sysparameter.filter.SysParameterContext;
 import com.wueasy.base.entity.DataMap;
 import com.wueasy.base.entity.Result;
 import com.wueasy.base.exception.InvokeException;
@@ -71,7 +72,7 @@ public class LoginServiceImpl implements LoginService
         DataMap paramMap = new DataMap();
         paramMap.put("loginNo", loginNo);
         paramMap.put("password", password);
-        Result result = client.invoke("S1001", paramMap,SysUtil.getSystemParamMap(request));
+        Result result = client.invoke("S1001", paramMap);
         if( 0 != result.getErrorNo() )//登录失败
         {
         	throw new InvokeException(result.getErrorNo(),result.getErrorInfo());
@@ -97,8 +98,11 @@ public class LoginServiceImpl implements LoginService
         
         
         if(result.getErrorNo() == 0){
+        	
         	//查询权限
-        	Result result3 = new Client().invoke("S1022",null, null,SysUtil.getSystemParamMap(request,session));
+        	paramMap = new DataMap();
+        	paramMap.set("userId", user.getUserId());
+        	Result result3 = new Client().invoke("S1022",paramMap);
         	if(result3.getErrorNo() == 0){
         		
         		//处理权限session

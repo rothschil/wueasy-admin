@@ -31,7 +31,7 @@ spring :
 wueasy : 
   zipkin: 
     enabled: true #是否启用，默认false
-    url: http://127.0.0.1:9411/api/v2/spans
+    url: http://zipkin.wueasy.com:9411/api/v2/spans
   session: #session配置
     type: local #类型 local 本地session 默认，redis ，guava 
   file : 

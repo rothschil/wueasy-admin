@@ -17,7 +17,7 @@
 spring:
   datasource : 
     druid : 
-      url : jdbc:mysql://localhost:3306/easy_data?useSSL=false&useUnicode=true&characterEncoding=utf-8
+      url : jdbc:mysql://localhost:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8
       username : easyadmin
       password : easyadmin
 #      url : jdbc:postgresql://localhost:5432/wueasydb
@@ -46,7 +46,7 @@ spring:
 wueasy : 
   zipkin: 
     enabled: true #是否启用，默认false
-    url: http://127.0.0.1:9411/api/v2/spans
+    url: http://zipkin.wueasy.com:9411/api/v2/spans
 #  localIp : 127.0.0.1 #指定本机ip地址
   zk : 
     servers : 127.0.0.1:2181

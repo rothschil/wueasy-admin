@@ -27,11 +27,6 @@
 			<version>1.0.0.SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.wueasy</groupId>
-			<artifactId>wueasy-bus-zipkin</artifactId>
-			<version>${wueasy.version}</version>
-		</dependency>
-		<dependency>
 			<groupId>net.logstash.logback</groupId>
 			<artifactId>logstash-logback-encoder</artifactId>
 			<version>5.2</version>

@@ -55,7 +55,7 @@ public class UserController
     {
     	DataMap dataMap = new DataMap();
     	dataMap.set("headImage", headImage);
-        Result result = new Client().invoke("S1104", dataMap,SysUtil.getSystemParamMap(request));
+        Result result = new Client().invoke("S1104", dataMap);
         if(result.getErrorNo() == 0){
         	//执行成功后，更新session中的地址
         	SessionService sessionService = SpringHelper.getBean(SessionService.class);
