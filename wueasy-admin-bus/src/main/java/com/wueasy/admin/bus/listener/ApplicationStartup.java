@@ -23,25 +23,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.weibo.api.motan.common.MotanConstants;
-import com.weibo.api.motan.util.MotanSwitcherUtil;
-import com.wueasy.admin.bus.ShutdownHook;
-
 /**
  * 
  * @author: fallsea
  * @version 1.0
  */
 @Component
-@Order(1)
+@Order(2)
 public class ApplicationStartup implements CommandLineRunner {
 	
 	private static Logger logger = LoggerFactory.getLogger(ApplicationStartup.class);
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		MotanSwitcherUtil.setSwitcherValue(MotanConstants.REGISTRY_HEARTBEAT_SWITCHER, true);
-    	Runtime.getRuntime().addShutdownHook(new ShutdownHook());
     	logger.warn("启动成功...");
 	}
 

@@ -32,6 +32,8 @@ wueasy :
   zipkin: 
     enabled: true #是否启用，默认false
     url: http://zipkin.wueasy.com:9411/api/v2/spans
+  elk: #elk日志管理
+    url: elk.wueasy.com:5000
   session: #session配置
     type: local #类型 local 本地session 默认，redis ，guava 
   file : 

@@ -44,9 +44,11 @@ spring:
       time-between-eviction-runs-millis : 60000  #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
 
 wueasy : 
-  zipkin: 
+  zipkin: #链路跟踪配置
     enabled: true #是否启用，默认false
     url: http://zipkin.wueasy.com:9411/api/v2/spans
+  elk: #elk日志管理
+    url: elk.wueasy.com:5000
 #  localIp : 127.0.0.1 #指定本机ip地址
   zk : 
     servers : 127.0.0.1:2181
