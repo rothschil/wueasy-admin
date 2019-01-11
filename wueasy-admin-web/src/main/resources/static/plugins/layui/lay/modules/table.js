@@ -709,6 +709,8 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','fsConfig'], function
         data = JSON.stringify(data);
       }
 
+      var indexAjax = layer.load(0,{shade:[0.1,'#FAFBF']});
+      
       $.ajax({
         type: options.method || 'get'
         ,url: options.url
@@ -749,7 +751,11 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util','fsConfig'], function
           that.renderForm();
           that.setColsWidth();
           that.layMain.append('<div class="'+ NONE +'">数据接口请求异常</div>');
-        }
+        },
+        complete : function(XMLHttpRequest, textStatus) {
+			//关闭加载层
+			layer.close(indexAjax);
+		}
       });
     } else if(options.data && options.data.constructor === Array){ //已知数据
       var res = {}
