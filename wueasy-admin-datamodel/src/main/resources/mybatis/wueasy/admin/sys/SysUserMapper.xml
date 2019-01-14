@@ -173,19 +173,37 @@
       password, state, is_system, 
       salt, login_count,
       created_by, created_time, modified_by, 
-      modified_time,phone,email,head_image)
+      modified_time
+     <if test="phone != null and phone != ''">
+         ,phone
+     </if>
+     <if test="email != null and email != ''">
+         ,email
+     </if>
+      ,head_image)
     values (#{loginNo}, #{username}, 
       #{password}, #{state},0, 
       #{salt},0, 
       #{createdBy,typeHandler=LongTypeHandler}, #{createdTime}, #{modifiedBy,typeHandler=LongTypeHandler}, 
-      #{modifiedTime},#{phone},#{email},#{headImage})
+      #{modifiedTime}
+      <if test="phone != null and phone != ''">
+         ,#{phone}
+     </if>
+     <if test="email != null and email != ''">
+         ,#{email}
+     </if>
+      ,#{headImage})
   </insert>
   
   <update id="update">
     update sys_user
     set username = #{username},
-      phone = #{phone},
-      email = #{email},
+      <if test="phone != null and phone != ''">
+         phone = #{phone},
+     </if>
+     <if test="email != null and email != ''">
+         email = #{email},
+     </if>
       modified_by = #{modifiedBy,typeHandler=LongTypeHandler},
       modified_time = #{modifiedTime}
     where user_id = #{userId,typeHandler=LongTypeHandler}
