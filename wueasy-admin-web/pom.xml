@@ -31,7 +31,7 @@
 		</dependency>
     	<dependency>
 			<groupId>com.wueasy</groupId>
-			<artifactId>wueasy-bus-client</artifactId>
+			<artifactId>wueasy-bus-client-dubbo</artifactId>
 			<version>${wueasy.version}</version>
 		</dependency>
 		<dependency>

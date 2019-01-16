@@ -21,6 +21,11 @@
 	</properties>
 
     <dependencies>
+    	<dependency>
+			<groupId>com.wueasy</groupId>
+			<artifactId>wueasy-bus-server-dubbo</artifactId>
+			<version>${wueasy.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.wueasy.admin</groupId>
 			<artifactId>wueasy-admin-service</artifactId>

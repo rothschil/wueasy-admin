@@ -28,9 +28,9 @@ import com.wueasy.base.bus.client.Client;
 import com.wueasy.base.entity.DataMap;
 import com.wueasy.base.entity.Result;
 import com.wueasy.base.util.JsonHelper;
-import com.wueasy.base.util.SpringHelper;
 import com.wueasy.base.web.security.pojo.Session;
 import com.wueasy.base.web.security.service.SessionService;
+import com.wueasy.base.web.security.util.SessionUtil;
 import com.wueasy.base.web.util.SysUtil;
 
 /**
@@ -58,7 +58,8 @@ public class UserController
         Result result = new Client().invoke("S1104", dataMap);
         if(result.getErrorNo() == 0){
         	//执行成功后，更新session中的地址
-        	SessionService sessionService = SpringHelper.getBean(SessionService.class);
+        	
+        	SessionService sessionService = SessionUtil.getSessionService();
         	Session session = sessionService.getSession(SysUtil.getToken(request));
         	
         	session.getUser().setHeadImage(headImage);
