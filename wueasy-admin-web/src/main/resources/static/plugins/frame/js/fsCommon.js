@@ -41,9 +41,6 @@ layui.define([ 'layer', 'form', 'fsConfig', 'fsButtonCommon' ], function(exports
 
 		/**错误msg提示 */
 		errorMsg : function(text,time) {
-			if($.isEmpty(time)){
-				time = 5000;
-			}
 			if (notifyType == "toastr") {
 				/**
 				 * toastr提醒配置
@@ -58,7 +55,7 @@ layui.define([ 'layer', 'form', 'fsConfig', 'fsButtonCommon' ], function(exports
 				  "onclick": null,
 				  "showDuration": "300",
 				  "hideDuration": "1000",
-				  "timeOut": time,
+				  "timeOut": 5000,
 				  "extendedTimeOut": "1000",
 				  "showEasing": "swing",
 				  "hideEasing": "linear",
@@ -75,9 +72,6 @@ layui.define([ 'layer', 'form', 'fsConfig', 'fsButtonCommon' ], function(exports
 		},
 		/**成功 msg提示 */
 		successMsg : function(text,time) {
-			if($.isEmpty(time)){
-				time = 5000;
-			}
 			if (notifyType == "toastr") {
 				/**
 				 * toastr提醒配置
@@ -92,7 +86,7 @@ layui.define([ 'layer', 'form', 'fsConfig', 'fsButtonCommon' ], function(exports
 				  "onclick": null,
 				  "showDuration": "300",
 				  "hideDuration": "1000",
-				  "timeOut": time,
+				  "timeOut": 5000,
 				  "extendedTimeOut": "1000",
 				  "showEasing": "swing",
 				  "hideEasing": "linear",
@@ -109,9 +103,6 @@ layui.define([ 'layer', 'form', 'fsConfig', 'fsButtonCommon' ], function(exports
 		},
 		/**警告弹出提示*/
 		warnMsg : function(text,time) {
-			if($.isEmpty(time)){
-				time = 5000;
-			}
 			if (notifyType == "toastr") {
 				/**
 				 * toastr提醒配置
@@ -126,7 +117,7 @@ layui.define([ 'layer', 'form', 'fsConfig', 'fsButtonCommon' ], function(exports
 				  "onclick": null,
 				  "showDuration": "300",
 				  "hideDuration": "1000",
-				  "timeOut": time,
+				  "timeOut": 5000,
 				  "extendedTimeOut": "1000",
 				  "showEasing": "swing",
 				  "hideEasing": "linear",

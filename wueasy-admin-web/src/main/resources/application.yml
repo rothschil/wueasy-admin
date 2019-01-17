@@ -72,17 +72,22 @@ wueasy:
       privateKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAPOU85trI4PWmu0mWgNhLZgKP8VeU3Q9efGIyOAccEtYnXwovnxD9JAJ/HRpIWRTid/lABl4kOn7QAvOu0iTdjh9SpLGhFOM5+F5Izp78dLrr73sE6HDiKrHJjChkMwB3hBKL7uxuEFY1gqckWhaCNrO+/VmhSnMXlaeHqf5aE9NAgMBAAECgYEA8ot9T2MNyDenqUEpHHhlmCGMgpF8dCDLDlFwBIkM4Fnq5zkDBGX+XnczJQ+SKn5sqb8zrCk702FV0uwV3RzI92GkJIsSC+l5l8oQ7Qn3QMuT3pbsvrjI9FmisQyu/2IKfU1Ee6lXQEmqvzVnRUxjS2NhByxPUi9SnNJCFIcOpQECQQD8gwAFLaY0Eh8cFBjtAqtJyBgFPd+adfLRSg2c+Tvlz2SKFHVzGJvhCnxTp5OE8ft5BAkUKsCuGB8WWqA6hTptAkEA9vJfC/kiyNfjaUmyDPO10XqlXXU9s7OVg91NmXUssxDIs8odLjTn7QvZOiVQufjU8ADHYufkQ1uwtHuwZuZcYQJBAOYiOlV92jkgvuunQWRZB2VSENpOHsk2cBvggvGqkLWMw5O4u6YvKnn6RX80fhUvOUJ8tA2GPV8tqr+Dzv4myC0CQQDoRxn33SNG3ypcwqDjZelDXKVmvvyGpwifu+1dxsWAuOzPj/DaoZD1ewuckbTY+KDyDwl8kro2UWxol19ZqpyBAkAwmZru/OA/jG2ZoFJNQwVu+C/GWNP6i3fq5ZFhiDNAPoaIHNAZBtoPkAQsPuBzPSsoDtELG5DtlezF3gFPE3m/
   interceptor:
     security:
+      enabled: true #是否启用，默认false
       visitor: /,/login,/logout,/error,/captcha-image,/fsbus/DEMO*,/upload #游客权限
       login: /home,/menulist,/index,/fsbus/S1002,/user/**,/fsbus/D*,/frame/system-user-center-index,/frame/system-user-account-updatePwd #登录权限
       permissions: /** #需要权限控制的地址，默认全部需要
     verifyPwd:
+      enabled: true #是否启用，默认false
       url: 
       funcNo: S1010
     csrf:
+      enabled: true #是否启用，默认false
       notValidate: /,/index,/home,GET /login,/logout,/captcha-image,/frame/**,/download/**,/preview/**,/upload/**,/fsbus/DEMO*,/upload
     rsa:
+      enabled: true #是否启用，默认false
       funcNo: S1002:oldPassword|newPassword|password2,S1010:newPassword|password2,S1004:password|password2
     captcha: 
+      enabled: true #是否启用，默认false
       url: POST /login
   download:
     excel:

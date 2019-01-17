@@ -1042,7 +1042,7 @@ $ip() 获取ip
 	
 	<function id="S1105" type="s">
 		<params>
-			<param id="modelId" name="模型id" notEmpty="1" />
+			<param id="modelId" name="模型id" defaultValue="0"/>
 			<param id="roleId" name="角色id" defaultValue="0" />
 		</params>
 		<resource>TemplateService.queryRoleDataPermission</resource>

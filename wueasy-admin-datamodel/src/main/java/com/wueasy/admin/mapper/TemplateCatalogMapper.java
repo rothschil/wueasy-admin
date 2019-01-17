@@ -48,7 +48,7 @@ public interface TemplateCatalogMapper {
      * @param catalogId
      * @return
      */
-    String selectBySiteId(@Param("catalogId")Long catalogId);
+    List<String> selectBySiteId(@Param("catalogId")Long catalogId);
     
     /**
      * 查询站点下栏目列表

@@ -17,7 +17,7 @@
 spring:
   datasource : 
     druid : 
-      url : jdbc:mysql://localhost:3306/test?useSSL=false&useUnicode=true&characterEncoding=utf-8
+      url : jdbc:mysql://localhost:3306/easy_data?useSSL=false&useUnicode=true&characterEncoding=utf-8
       username : easyadmin
       password : easyadmin
 #      url : jdbc:postgresql://localhost:5432/wueasydb

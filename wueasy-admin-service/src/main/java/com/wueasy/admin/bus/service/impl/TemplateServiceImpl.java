@@ -149,12 +149,14 @@ public class TemplateServiceImpl implements TemplateService,AuthDataService {
 	public void insertCatalog(DataMap paramMap) {
 		
 		Long parentId = paramMap.getLong("parentId");
-		String siteId = templateCatalogMapper.selectBySiteId(parentId);
-		if(StringHelper.isEmpty(siteId)){
+		List<String> siteIdList = templateCatalogMapper.selectBySiteId(parentId);
+		if(null==siteIdList || siteIdList.isEmpty()){
 			throw new InvokeException(-101301,"父栏目不存在!");
 		}
+		String siteId = siteIdList.get(0);
 		
 		paramMap.set("siteId", siteId);
+		
 		
 		String catalogNo = paramMap.getString("catalogNo");
 		
