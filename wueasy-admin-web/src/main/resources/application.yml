@@ -85,7 +85,11 @@ wueasy:
       notValidate: /,/index,/home,GET /login,/logout,/captcha-image,/frame/**,/download/**,/preview/**,/upload/**,/fsbus/DEMO*,/upload
     rsa:
       enabled: true #是否启用，默认false
-      funcNo: S1002:oldPassword|newPassword|password2,S1010:newPassword|password2,S1004:password|password2
+      rule: 
+      - funcNo: S1002,S1010
+        field: oldPassword,newPassword,password2
+      - funcNo: S1004
+        field: password,password2
     captcha: 
       enabled: true #是否启用，默认false
       url: POST /login

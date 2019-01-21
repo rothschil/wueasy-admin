@@ -34,7 +34,6 @@ import com.wueasy.admin.entity.SysMenu;
 import com.wueasy.admin.entity.SysMenuFunction;
 import com.wueasy.admin.entity.SysUser;
 import com.wueasy.base.bus.client.Client;
-import com.wueasy.base.bus.plugin.sysparameter.filter.SysParameterContext;
 import com.wueasy.base.entity.DataMap;
 import com.wueasy.base.entity.Result;
 import com.wueasy.base.exception.InvokeException;
@@ -45,7 +44,6 @@ import com.wueasy.base.web.security.pojo.Menu;
 import com.wueasy.base.web.security.pojo.Session;
 import com.wueasy.base.web.security.pojo.User;
 import com.wueasy.base.web.security.service.LoginService;
-import com.wueasy.base.web.util.SysUtil;
 
 /**
  * 登录接口
