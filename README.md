@@ -1,4 +1,13 @@
 # wueasy-admin
+
+[![](https://img.shields.io/github/stars/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/stargazers)
+[![](https://img.shields.io/github/forks/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/network/members)
+[![](https://img.shields.io/github/release/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/releases)
+[![](https://img.shields.io/github/issues/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/issues)
+[![](https://img.shields.io/badge/License-AGPL3.0-yellow.svg?style=flat-square)](https://github.com/wueasy/wueasy-admin/blob/master/LICENSE)
+[![star](https://gitee.com/wueasy/wueasy-admin/badge/star.svg?theme=dark)](https://gitee.com/wueasy/wueasy-admin/stargazers)
+[![fork](https://gitee.com/wueasy/wueasy/badge/fork.svg?theme=dark)](https://gitee.com/wueasy/wueasy-admin/members)
+
 wueasy后台管理系统
 
 ## 社区
