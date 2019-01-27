@@ -8,7 +8,28 @@
 [![star](https://gitee.com/wueasy/wueasy-admin/badge/star.svg?theme=dark)](https://gitee.com/wueasy/wueasy-admin/stargazers)
 [![fork](https://gitee.com/wueasy/wueasy/badge/fork.svg?theme=dark)](https://gitee.com/wueasy/wueasy-admin/members)
 
-wueasy后台管理系统
+`wueasy admin` 是一个java分布式的后台管理系统。
+
+平台实现了通用的基础功能、 权限验证、 安全验证、基础功能， 为中小型企业提供稳定、 高效、 安全、 便捷的一体式框架。
+
+## 案例
+
+* 后端管理系统
+
+  https://admin.wueasy.com/login
+
+	账号：wueasy
+	密码：wueasy
+
+* ELK日志分析系统
+
+  https://elk.wueasy.com
+
+
+* 调用链路跟踪系统
+
+  https://zipkin.wueasy.com
+
 
 ## 社区
 
