@@ -14,36 +14,29 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-spring:
-  datasource : 
-    druid : 
-      url : jdbc:mysql://localhost:3306/easy_data?useSSL=false&useUnicode=true&characterEncoding=utf-8
-      username : easyadmin
-      password : easyadmin
-#      url : jdbc:postgresql://localhost:5432/wueasydb
-#      username : wueasy
-#      password : wueasy
-#      url : jdbc:sqlserver://47.100.224.143:1433; DatabaseName=wueasy_data
-#      username : sa
-#      password : xx@123456
-#      url : jdbc:mariadb://47.100.224.143:3306/easy_data
-#      username : wueasy
-#      password : wueasy
-      #连接池配置
-      initial-size : 10  #初始化大小
-      min-idle : 10  #最小连接
-      max-active : 20  #最大连接
-      max-wait : 60000  #配置获取连接等待超时的时间
-      pool-prepared-statements : true  #打开PSCache，并且指定每个连接上PSCache的大小(如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。)
-      max-pool-prepared-statement-per-connection-size : 20
-#      validation-query : SELECT 1 from dual 
-      test-on-borrow : false 
-      test-on-return : false
-      test-while-idle : true
-      min-evictable-idle-time-millis : 300000  #配置一个连接在池中最小生存的时间，单位是毫秒
-      time-between-eviction-runs-millis : 60000  #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-
 wueasy : 
+  datasource : 
+    easyadmin : 
+      mybatis:
+        basePackage: com.wueasy.*.mapper
+        mapperLocations: classpath*:mybatis/wueasy/**/*.xml
+      connection: 
+        url : jdbc:mysql://localhost:3306/easy_data?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username : easyadmin
+        password : easyadmin
+        #连接池配置
+        initialSize : 10  #初始化大小
+        minIdle : 10  #最小连接
+        maxActive : 20  #最大连接
+        maxWait : 60000  #配置获取连接等待超时的时间
+        timeBetweenEvictionRunsMillis : 2000  #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        minEvictableIdleTimeMillis : 600000  #配置一个连接在池中最小生存的时间，单位是毫秒
+        maxEvictableIdleTimeMillis : 600000  #配置一个连接在池中最大生存的时间，单位是毫秒
+        validationQuery : SELECT 1 from dual 
+        testWhileIdle : true
+        testOnBorrow : false
+        testOnReturn : false
+        keepAlive : true
   zipkin: #链路跟踪配置
     enabled: true #是否启用，默认false
     url: http://zipkin.wueasy.com:9411/api/v2/spans

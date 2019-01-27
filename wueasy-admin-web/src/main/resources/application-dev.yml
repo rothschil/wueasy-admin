@@ -14,20 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-spring : 
-  redis : 
-    database : 1 #数据库索引（默认为0）
-    host : 127.0.0.1 #服务器地址
-    port : 6379 #服务器连接端口
-    password : 123456  #服务器连接密码（默认为空）
-    pool : #连接池配置
-      max-idle : 8 # 连接池中的最大空闲连接，默认值也是8。
-      min-idle : 0 #连接池中的最小空闲连接，默认值也是0。
-      max-active : 2000 # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
-      max-wait : 1000 # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
-    timeout : 3000 #连接超时时间（毫秒）
-
-
 wueasy : 
   zipkin: 
     enabled: true #是否启用，默认false
@@ -35,7 +21,19 @@ wueasy :
   elk: #elk日志管理
     url: elk.wueasy.com:5000
   session: #session配置
-    type: local #类型 local 本地session 默认，redis ，guava 
+    type: redis #类型 local 本地session 默认，redis ，guava 
+  redis: #redis配置
+    session: #session连接配置
+      database : 11 #数据库索引（默认为0）
+      host : 127.0.0.1 #服务器地址
+      port : 6379 #服务器连接端口
+      password : 123456  #服务器连接密码（默认为空）
+      pool : #连接池配置
+        maxIdle : 8 # 连接池中的最大空闲连接，默认值也是8。
+        minIdle : 0 #连接池中的最小空闲连接，默认值也是0。
+        maxTotal : 2000 # 如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。
+        maxWaitMillis : 1000 # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。如果超过等待时间，则直接抛出JedisConnectionException
+      timeout : 3000 #连接超时时间（毫秒）
   file : 
     upload : #上传配置
       type: 1 #上传类型 1 本地上传 默认 ，2 腾讯对象存储 ，3 阿里云对象存储

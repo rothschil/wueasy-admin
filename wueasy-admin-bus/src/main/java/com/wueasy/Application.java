@@ -17,9 +17,13 @@
  */
 package com.wueasy;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -28,10 +32,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author: fallsea
  * @version 1.0
  */
-@SpringBootApplication//开启组件扫描和自动配置
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class,DataSourceTransactionManagerAutoConfiguration.class,RedisAutoConfiguration.class,RedisRepositoriesAutoConfiguration.class})//开启组件扫描和自动配置
 @EnableTransactionManagement //启动注解事务管理 
 @EnableAsync  //启动异步调用
-@MapperScan(basePackages = {"com.wueasy.*.mapper"})
 public class Application
 {
     public static void main(String[] args)
