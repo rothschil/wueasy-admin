@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+  <div class="layui-row layui-col-space10">
+    <div class="layui-col-md3">
+    	<div class="layui-card">
+    		<div class="layui-card-header">栏目列表</div>
+    		<div class="layui-card-body">
+       			<ul id="treeDemo" class="ztree fsTree" fs:authorize="" isRoot="0" funcNo="T1019" clickCallbackId="fsDatagrid" clickCallbackInputs="catalogId:,siteId:" treeIdKey="catalogId" treePIdKey="parentId" treeName="catalogName" ></ul>
+    		</div>
+		  </div>
+    </div>
+    
+    <div class="layui-col-md9">
+    	<div class="layui-card">
+    		<div class="layui-card-header">模板列表</div>
+    		<div class="layui-card-body">
+		    	<div id="table_buttion_div">
+		    		<form id="query_form" style="display: none;">
+		    			<input type="text" id="catalogId" name="catalogId" value=""/>
+		    			<input type="text" id="siteId" name="siteId" value=""/>
+		    		</form>
+			    	<button class="layui-btn layui-btn-sm layui-btn-blue" function="top" fs:authorize="" selectTreeId="catalogId" th:topUrl="@{/frame/system-template-template-add}" topUrl="/frame/system-template-template-add" topWidth="700px" topHeight="490px" topTitle="新增模板信息" inputs="catalogId:#catalogId,siteId:#siteId">
+					  <i class="layui-icon layui-icon-add-1"></i>新增
+					</button>
+					<button class="layui-btn layui-btn-sm layui-btn-blue" function="refresh" selectTreeId="catalogId">
+					  <i class="layui-icon layui-icon-refresh-1"></i>刷新
+					</button>
+		    	</div>
+				<table id="fsDatagrid" class="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" funcNo="T1020" isPage="0" isLoad="0" defaultForm="query_form" height="full-130">
+				</table>
+				
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+				    <p field="name" title="模板名称" width="30%"/>
+				    <p field="type" title="类型" width="10%" dict="templatetype"/>
+				    <p field="state" title="状态" width="10%" dict="state"/>
+				    <p field="encoding" title="编码" width="10%" dict="encoding"/>
+				    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="220px;"/>
+				</div>
+				
+				<script type="text/html" id="barDemo">
+				 <a id="edit" class="layui-btn layui-btn-xs layui-btn-blue" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-template-template-edit}" topUrl="/frame/system-template-template-edit" topWidth="700px" topHeight="490px" topTitle="编辑模板信息" inputs="id:"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+  				 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="T1024" inputs="id:"><i class="layui-icon layui-icon-delete"></i>删除</a>
+				 <a id="preview" class="layui-btn layui-btn-xs layui-btn-blue" th:topUrl="@{/preview/template}" topUrl="/preview/template" th:href="@{/preview/template?templateId={{d.id}}}" href="/preview/template?templateId={{d.id}}" target="_blank" fs:authorize=""><i class="layui-icon layui-icon-read"></i>预览</a>
+				</script>
+    		</div>
+    	</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

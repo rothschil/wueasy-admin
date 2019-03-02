@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+  <div class="layui-row layui-col-space1">
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-card">
+  	 		<div class="layui-card-body">
+			  	 <div class="layui-form-query">
+					<form class="layui-form" id="query_form">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-mid">服务器ip：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<input type="text" name="serverIp" autocomplete="off" class="layui-input"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<button class="layui-btn layui-btn-blue" type="button" function="query"><i class="layui-icon layui-icon-search"></i>查询</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<table id="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" class="fsDatagrid" funcNo="S1072" isPage="0" defaultForm="query_form" height="full-110"></table>
+		
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+					<p field="serverIp" title="服务器ip" width="200"/>
+				    <p field="instancesNum" title="运行实例数量" width="200"/>
+				    <p field="jobsNum" title="作业总数" width="200"/>
+				    <p field="disabledJobsNum" title="禁止作业数" width="200"/>
+				    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="160"/>
+				</div>
+				<script type="text/html" id="barDemo">
+ 				 {{#  if(d.instancesNum == 0){ }}
+					 <a id="del" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1086" inputs="jobName:">删除</a>
+ 				 {{#  } else if(d.disabledJobsNum > 0) { }}
+					 <a id="edit" class="layui-btn layui-btn-xs layui-btn-blue" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-job-servers-serverList}" topUrl="/frame/system-job-servers-serverList" topWidth="900px" topHeight="500px" isSelect="1" topTitle="作业列表" inputs="serverIp:">详情</a>
+					 <a id="qy" class="layui-btn layui-bg-green layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1084" inputs="serverIp:">生效</a>
+					 <a id="zz" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1085" inputs="serverIp:">终止</a>
+				 {{#  } else if(d.instancesNum > 0) { }}
+					 <a id="edit" class="layui-btn layui-btn-xs layui-btn-blue" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-job-servers-serverList}" topUrl="/frame/system-job-servers-serverList" topWidth="900px" topHeight="500px" isSelect="1" topTitle="作业列表" inputs="serverIp:">详情</a>
+					 <a id="sx" class="layui-btn layui-bg-orange layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1083" inputs="serverIp:">失效</a>
+					 <a id="zz" class="layui-btn layui-btn-danger layui-btn-xs" fs:authorize="" lay-event="submit" isConfirm="1" funcNo="S1085" inputs="serverIp:">终止</a>
+ 				 {{#  } }}
+				</script>
+			</div>
+		</div> 	
+  	 </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd">
+	
+	<diskStore path="F:/ehcache/"></diskStore>
+
+	<!-- session信息 -->
+    <cache name="session"
+           maxEntriesLocalHeap="20000"
+           timeToLiveSeconds="120">
+    </cache>
+    
+    <!-- 数据权限模型 -->
+    <cache name="authDataModel"
+           maxEntriesLocalHeap="100"
+           timeToLiveSeconds="3600">
+    </cache>
+</ehcache>

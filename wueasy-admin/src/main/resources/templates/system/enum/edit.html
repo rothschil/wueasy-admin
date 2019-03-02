@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+<div class="layui-card">
+<div class="layui-card-body">
+<form class="layui-form" isLoad="1" loadFuncNo="S1038">
+	<input type="text" style="display: none;" name="id"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>英文名称：</label>
+    <div class="layui-input-block">
+      <input type="text" name="enumNo" required="" lay-verType="tips" lay-verify="required" placeholder="请输入英文名称" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>中文名称：</label>
+    <div class="layui-input-block">
+      <input type="text" name="enumName" required="" lay-verType="tips" lay-verify="required" placeholder="请输入中文名称" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">描述：</label>
+    <div class="layui-input-block">
+      <textarea name="description" placeholder="请输入描述" lay-verType="tips" class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <hr/>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-blue" lay-submit="" lay-filter="submit" fs:authorize="" funcNo="S1037"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

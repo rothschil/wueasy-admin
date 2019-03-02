@@ -1,0 +1,79 @@
+{
+
+
+    "title": "wueasy后端管理系统表结构",
+    "author": "fallsea",
+    "description": "",
+    "language": "zh-hans",
+    "links" : {
+        "sidebar" : {
+            "社区提问" : "https://github.com/wueasy/wueasy-admin/issues"
+        }
+    },
+    "plugins": [
+        "-sharing",
+        "-lunr",
+        "-search",
+        "search-plus",
+        "prism",
+        "prism-themes",
+        "-highlight",
+        "include-codeblock",
+        "splitter",
+        "emphasize",
+        "advanced-emoji",
+        "tbfed-pagefooter",
+        "expandable-chapters-small",
+        "alerts",
+        "chart",
+        "simple-page-toc",
+        "anchor-navigation-ex"
+    ],
+    "pluginsConfig": {
+        "theme-default": {
+            "showLevel": false
+        },
+        "prism": {
+            "css": [
+                "prism-themes/themes/prism-base16-ateliersulphurpool.light.css"
+            ]
+        },
+        "include-codeblock": {
+            "template": "ace",
+            "unindent": true,
+            "theme": "monokai"
+        },
+        "tbfed-pagefooter": {
+            "copyright":"Copyright &copy wueasy.com 2019",
+            "modify_label": "该文件修订时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "chart": {
+            "type": "c3"
+        },
+        "anchor-navigation-ex": {
+            "showLevel":false,
+            "isShowTocTitleIcon": true,
+            "tocLevel1Icon": "fa fa-hand-o-right",
+            "tocLevel2Icon": "fa fa-hand-o-right",
+            "tocLevel3Icon": "fa fa-hand-o-right"
+        },
+        "expandable-chapters-small":{},
+        "simple-page-toc": {
+            "maxDepth": 3,
+            "skipFirstH1": true
+        }
+    },
+    "pdf": {
+        "pageNumbers": true,
+        "fontFamily": "Arial",
+        "fontSize": 14,
+        "paperSize": "a4",
+        "margin": {
+            "right": 62,
+            "left": 62,
+            "top": 56,
+            "bottom": 56
+        }
+    }
+}

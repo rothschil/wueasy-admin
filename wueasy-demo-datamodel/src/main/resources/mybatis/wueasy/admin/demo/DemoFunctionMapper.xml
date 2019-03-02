@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wueasy.demo.mapper.DemoFunctionMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.demo.entity.DemoFunction">
+    <id column="id" property="id" />
+    <result column="func_no" property="funcNo" />
+    <result column="version" property="version" />
+    <result column="type" property="type" />
+    <result column="func_name" property="funcName" />
+    <result column="func_type" property="funcType" />
+    <result column="description" property="description" />
+    <result column="state" property="state" />
+    <result column="resource" property="resource" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, func_no, func_name, type,func_type, version, description, state, resource, created_by, created_time, 
+    modified_by, modified_time
+  </sql>
+  
+  <select id="queryPage" resultMap="BaseResultMap">
+     select  
+     <include refid="Base_Column_List" /> 
+     from demo_function where 1=1 
+     <if test="funcNo != null and funcNo != ''">
+     	 <bind name="pattern_funcNo" value="'%' + _parameter.get('funcNo') + '%'" />
+         and func_no  LIKE #{pattern_funcNo}
+     </if>
+     <if test="funcName != null and funcName != ''">
+     	 <bind name="pattern_funcName" value="'%' + _parameter.get('funcName') + '%'" />
+         and func_name  LIKE #{pattern_funcName}
+     </if>
+     
+     <if test="funcType != null and funcType != ''">
+         and func_type = #{funcType}
+     </if>
+     
+     <if test="type != null and type != ''">
+         and type = #{type}
+     </if>
+     
+     <if test="state != null and state != ''">
+         and state = #{state}
+     </if>
+     
+     <if test="version != null and version != ''">
+         and version = #{version}
+     </if>
+     
+     <if test="startDate != null and startDate != ''">
+         and created_time &gt;= #{startDate}
+     </if>
+     
+     <if test="endDate != null and endDate != ''">
+         and created_time &lt;= #{endDate}
+     </if>
+     order by id desc
+  </select>
+  
+  <select id="selectByFuncNo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from demo_function
+    where func_no = #{funcNo} and version = #{version}
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from demo_function
+    where id = #{id} 
+  </select>
+  
+  
+  <delete id="delete">
+    delete from demo_function
+    where id = #{id}
+  </delete>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into demo_function (func_no, type,func_type, version, 
+      description, state, resource, 
+      func_name, created_by, created_time, 
+      modified_by, modified_time)
+    values (#{funcNo}, #{type},#{funcType}, #{version}, 
+      #{description}, #{state}, #{resource}, 
+      #{funcName}, #{createdBy}, #{createdTime}, 
+      #{modifiedBy}, #{modifiedTime})
+  </insert>
+ 
+  <update id="update">
+    update demo_function
+    set func_type = #{funcType},
+      func_name = #{funcName},
+      version = #{version},
+      description = #{description},
+      state = #{state},
+      resource = #{resource},
+      modified_by = #{modifiedBy},
+      modified_time = #{modifiedTime}
+    where id = #{id}
+  </update>
+</mapper>

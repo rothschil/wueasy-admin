@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+<div class="layui-card">
+<div class="layui-card-body">
+<form class="layui-form" isLoad="1" loadFuncNo="T1028" id="form">
+	<input type="text" style="display: none;" name="id"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width: 120px;"><i class="required">*</i>cron表达式：</label>
+    <div class="layui-input-block" style="margin-left:160px;">
+      <input type="text" name="cron" required="" lay-verType="tips"  lay-verify="required" placeholder="请输入cron表达式" autocomplete="off" class="layui-input"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width: 120px;"><i class="required">*</i>是否发布子栏目</label>
+    <div class="layui-input-block" style="margin-left:160px;">
+      <input type="checkbox" name="recursion" lay-verType="tips" lay-skin="switch" lay-text="是|否" value="1"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width: 120px;"><i class="required">*</i>站点：</label>
+    <div class="layui-input-block" style="margin-left:160px;">
+       <select name="siteId" class="fsDict" lay-filter="siteId" lay-verType="tips"  lay-verify="required" dict="templateSite" addNull="1"></select>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label" style="width: 120px;"><i class="required">*</i>栏目：</label>
+    <div class="layui-input-block" style="margin-left:160px;">
+       <input type="hidden" id="catalogId" name="catalogId"  autocomplete="off" class="layui-input"/>
+       <ul id="treeDemo" class="ztree fsTree" fs:authorize="" isRoot="0" isLoad="1" funcNo="T1019" clickCallbackId="form" clickCallbackType="setValue" clickCallbackInputs="catalogId:" treeIdKey="catalogId" treePIdKey="parentId" treeName="catalogName" inputs="siteId:"></ul>
+    </div>
+  </div>
+  <hr/>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-blue" lay-submit="" lay-filter="submit" fs:authorize="" funcNo="T1027"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+layui.fsCallback.form.form = function(thisForm){
+	layui.form.on('select(siteId)', function(data){
+	  $("#catalogId").val("");
+	  var param = {};
+	  param["siteId"] = data.value;
+	  thisForm.getTree("treeDemo").query(param);
+	});
+};
+
+
+layui.fsCallback.tree.treeDemo = function(_this){
+	
+	_this.setCheckData($("#catalogId").val());
+};
+</script>
+</body>
+</html>

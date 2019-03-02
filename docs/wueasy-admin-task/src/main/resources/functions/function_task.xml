@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!--
+##################################################################
+##                                                              ##
+##         用于配置服务器需要动态加载的功能模块                 				##
+##                                                              ##
+##         id     : 业务功能编号                                                                 ##
+##         type   : 业务类型(c:执行class,s:执行service,m:执行mapper)##
+##         resource: 资源路径                  			        		##
+##         desc   :  功能描述信息                              					##
+##          service实现(serviceId.方法名称)                 	##
+##          dao实现(实现类路径.方法名称)       				##
+##                                                              ##
+##################################################################
+-->
+
+<!-- 
+系统变量
+#$id()：获取唯一主键id
+$date()：获取当前日期对象
+$dateStr()：获取当前日期字符串 yyyy-MM-dd
+$datetimeStr()获取当前日期字符串，格式为yyyy-MM-dd HH:mm:ss
+$timestamp()：当时时间的毫秒数
+$uuid():随机生成唯一的UUID
+
+#id 直接取参数值，#+参数属性
+
+
+#系统参数获取，配合前端使用
+
+$userId() 用户id
+$userName() 用户名称
+$loginNo()  获取登录名
+$ip() 获取ip
+	
+ -->
+
+<functions>
+
+	<function id="TASK1001" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+		</params>
+		<resource>TemplatePublishService.previewArticle</resource>
+		<desc>预览文章</desc>
+	</function>
+	
+	<function id="TASK1002" type="s">
+		<params>
+			<param id="templateId" name="模板id" notEmpty="1"/>
+		</params>
+		<resource>TemplatePublishService.previewTemplate</resource>
+		<desc>预览模板</desc>
+	</function>
+	
+	<function id="TASK1003" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>TemplatePublishService.previewCatalog</resource>
+		<desc>预览栏目</desc>
+	</function>
+	
+</functions>

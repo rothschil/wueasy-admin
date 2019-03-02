@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: editor" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+	<form class="layui-form" isLoad="0" loadFuncNo="">
+	<input type="hidden" name="catalogId"/>
+	<input type="hidden" name="siteId"/>
+	<div class="layui-row layui-col-space10">
+		<div class="layui-col-md9">
+			<div class="layui-card">
+			<div class="layui-card-body">
+			  <div class="layui-form-item">
+			    <label class="layui-form-label"><i class="required">*</i>文章标题：</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="title" required="" lay-verType="tips"  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input"/>
+			    </div>
+			  </div>
+			  <div class="layui-form-item layui-form-text">
+			    <label class="layui-form-label">文章摘要：</label>
+			    <div class="layui-input-block">
+			      <textarea name="brief" placeholder="请输入文章摘要" lay-verType="tips" class="layui-textarea"></textarea>
+			    </div>
+			  </div>
+			  <div class="layui-form-item layui-form-text">
+			    <label class="layui-form-label">文章内容：</label>
+			    <div class="layui-input-block">
+			      <textarea id="content" height="500" name="content" class="fsEditor"></textarea>
+			    </div>
+			  </div>
+			</div>
+			</div>
+		</div>
+		<div class="layui-col-md3">
+			<div class="layui-card">
+			<div class="layui-card-header"><i class="layui-icon">&#xe609;</i> 发布</div>
+			<div class="layui-card-body">
+			  <div class="layui-form-item">
+			    <div style="text-align: center;">
+			      <input type="checkbox" name="isHead" title="置顶" lay-skin="primary" value="1"/>
+			      <input type="checkbox" name="isHot" title="推荐" lay-skin="primary" value="1"/>
+			    </div>
+			  </div>
+			  <hr/>
+			  <div class="layui-form-item">
+			    <div style="text-align: center;">
+			      <button class="layui-btn layui-btn-blue" lay-submit="" lay-filter="submit" fs:authorize="" funcNo="S1094"><i class="layui-icon layui-icon-release"></i> 发布</button>
+			      <button class="layui-btn layui-btn-blue" lay-submit="" lay-filter="submit-save" fs:authorize="" funcNo="S1093"><i class="layui-icon layui-icon-add-circle-fine"></i> 保存</button>
+			    </div>
+			  </div>
+			</div>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+</body>
+</html>

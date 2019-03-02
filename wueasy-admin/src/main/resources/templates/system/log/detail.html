@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">  
+<div class="layui-card">
+<div class="layui-card-body">
+<form class="layui-form" isLoad="1" loadFuncNo="S1056">
+	<input type="hidden" name="id"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label">功能号：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="funcNo"  class="layui-input" disabled="disabled"/>
+    </div>
+    <label class="layui-form-label">名称：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="funcName" class="layui-input" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">版本：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="version"  class="layui-input" disabled="disabled"/>
+    </div>
+    <label class="layui-form-label">执行时间：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="datetime" class="layui-input" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">错误码：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="errorNo"  class="layui-input" disabled="disabled"/>
+    </div>
+    <label class="layui-form-label">错误消息：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="errorInfo" class="layui-input" disabled="disabled"/>
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">操作ip：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="ip"  class="layui-input" disabled="disabled"/>
+    </div>
+    <label class="layui-form-label">操作时间：</label>
+    <div class="layui-input-inline">
+      <input type="text" name="createdTime" class="layui-input" formatType="datetime" disabled="disabled"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">入参：</label>
+    <div class="layui-input-block">
+      <textarea name="inParam" class="layui-textarea" disabled="disabled"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">出参：</label>
+    <div class="layui-input-block">
+      <textarea name="outParam" class="layui-textarea" disabled="disabled"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">系统信息：</label>
+    <div class="layui-input-block">
+      <textarea name="systemInfo" class="layui-textarea" disabled="disabled"></textarea>
+    </div>
+  </div>
+  <hr/>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

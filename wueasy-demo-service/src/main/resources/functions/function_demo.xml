@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<functions>
+	<function id="DEMO1000" type="s" qps="1">
+		<resource>DemoService.test</resource>
+		<desc>测试</desc>
+	</function>
+	<function id="DEMO1001" type="s">
+		<resource>DemoService.query</resource>
+		<desc>查询分页</desc>
+	</function>
+	
+	<function id="DEMO1002" type="m">
+		<params>
+			<param id="name" name="名称" notEmpty="1" maxLength="255"/>
+			<param id="state" name="状态" defaultValue="0"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMapper.insert</resource>
+		<desc>新增</desc>
+	</function>
+	
+	<function id="DEMO1003" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" verifyType=""/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMapper.delete</resource>
+		<desc>删除</desc>
+	</function>
+	
+	<function id="DEMO1004" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" verifyType="Numeric"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMapper.findById</resource>
+		<desc>查询单个信息</desc>
+	</function>
+	
+	<function id="DEMO1005" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" verifyType="Numeric"/>
+			<param id="name" name="名称" notEmpty="1" maxLength="255"/>
+			<param id="state" name="状态" defaultValue="0"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMapper.update</resource>
+		<desc>编辑</desc>
+	</function>
+	
+	<function id="DEMO1006" type="m">
+		<resource>com.wueasy.demo.mapper.DemoAreaMapper.selectList</resource>
+		<desc>查询省市区信息</desc>
+	</function>
+	
+	<function id="DEMO1007" type="s">
+		<params>
+			<param id="_mode" name="模式" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1" maxLength="255"/>
+			<param id="state" name="状态" defaultValue="0"/>
+		</params>
+		<resource>DemoService.insertOrUpdate</resource>
+		<desc>新增或修改</desc>
+	</function>
+	
+	<function id="DEMO1008" type="s">
+		<resource>DemoFunctionService.add</resource>
+		<desc>新增功能号</desc>
+	</function>
+	<function id="DEMO1009" type="s">
+		<resource>DemoFunctionService.edit</resource>
+		<desc>修改功能号</desc>
+	</function>
+	
+	<function id="DEMO1010" type="s">
+		<resource>DemoFunctionService.queryFunctionPage</resource>
+		<desc>查询功能号分页</desc>
+	</function>
+	
+	<function id="DEMO1011" type="s">
+		<params>
+			<param id="funcNo" name="功能号" notEmpty="1"/>
+			<param id="funcName" name="名称" notEmpty="1"/>
+			<param id="funcType" name="类型" notEmpty="1"/>
+			<param id="type" name="分类" notEmpty="1"/>
+			<param id="version" name="版本号" defaultValue="1.0"/>
+			<param id="state" name="状态" defaultValue="0"/>
+			<param id="resource" name="资源信息" notEmpty="1"/>
+		</params>
+		<resource>DemoFunctionService.addFunction</resource>
+		<desc>新增功能号信息</desc>
+	</function>
+	
+	<function id="DEMO1012" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+			<param id="funcName" name="名称" notEmpty="1"/>
+			<param id="funcType" name="类型" notEmpty="1"/>
+			<param id="version" name="版本号" notEmpty="1"/>
+			<param id="state" name="状态" defaultValue="0"/>
+			<param id="resource" name="资源信息" notEmpty="1"/>
+		</params>
+		<resource>DemoFunctionService.updateFunction</resource>
+		<desc>编辑功能号信息</desc>
+	</function>
+	
+	<function id="DEMO1013" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.SysFunctionMapper.selectById</resource>
+		<desc>查询单个功能号信息</desc>
+	</function>
+	
+	<function id="DEMO1014" type="m">
+		<params>
+			<param id="funcId" name="功能号id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoFunctionParamMapper.queryList</resource>
+		<desc>查询功能号参数列表</desc>
+	</function>
+	
+	<function id="DEMO1015" type="s">
+		<params>
+			<param id="funcId" name="功能号id" notEmpty="1"/>
+			<param id="attribute" name="属性" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1"/>
+			<param id="type" name="类型" value="1"/>
+			<param id="orderline" name="排序值" value="#id"/>
+		</params>
+		<resource>DemoFunctionService.addFunctionParam</resource>
+		<desc>新增功能号参数</desc>
+	</function>
+	
+	<function id="DEMO1016" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+			<param id="attribute" name="参数" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1"/>
+			<param id="orderline" name="排序值" notEmpty="1"/>
+		</params>
+		<resource>DemoFunctionService.updateFunctionParam</resource>
+		<desc>编辑功能号参数</desc>
+	</function>
+	
+	<function id="DEMO1017" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoFunctionParamMapper.selectById</resource>
+		<desc>查询单个功能号参数</desc>
+	</function>
+	
+	<function id="DEMO1018" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoFunctionParamMapper.delete</resource>
+		<desc>删除功能号参数</desc>
+	</function>
+	
+	<function id="DEMO1019" type="s">
+		<resource>DemoMenuService.queryTreeList</resource>
+		<desc>查询菜单树</desc>
+	</function>
+	
+	<function id="DEMO1020" type="s">
+		<resource>DemoMenuService.findSysMenuByID</resource>
+		<desc>查询单个菜单详细信息</desc>
+	</function>
+	
+	
+	<function id="DEMO1021" type="s">
+		<params>
+			<param id="menuName" name="菜单名称" notEmpty="1" verifyType="" maxLength="256"/>
+			<param id="linkUrl" name="访问地址" verifyType="" maxLength="256"/>
+			<param id="parentId" name="父菜单" notEmpty="1" verifyType="" maxLength="20" defaultValue="0"/>
+			<param id="orderline" name="排序值" value="#menuId"/>
+			<param id="childrennum" name="子栏目数量" value="0"/>
+		</params>
+		<resource>DemoMenuService.addMenuInfo</resource>
+		<desc>新增菜单</desc>
+	</function>
+	
+	<function id="DEMO1022" type="s">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+			<param id="menuName" name="菜单名称" notEmpty="1" verifyType="" maxLength="256"/>
+			<param id="linkUrl" name="访问地址" verifyType="" maxLength="256"/>
+			<param id="parentId" name="父菜单" notEmpty="1" verifyType="" maxLength="20" defaultValue="0"/>
+		</params>
+		<resource>DemoMenuService.updateMenuInfo</resource>
+		<desc>修改菜单</desc>
+	</function>
+	
+	<function id="DEMO1023" type="s">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+		</params>
+		<resource>DemoMenuService.deleteMenuInfo</resource>
+		<desc>删除菜单</desc>
+	</function>
+	
+	<function id="DEMO1024" type="m">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMenuFunctionMapper.queryList</resource>
+		<desc>查询菜单功能列表</desc>
+	</function>
+	
+	<function id="DEMO1025" type="m">
+		<params>
+			<param id="menuId" name="菜单id" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1"/>
+			<param id="orderline" name="排序值" value="#id"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMenuFunctionMapper.insert</resource>
+		<desc>新增菜单功能</desc>
+	</function>
+	
+	<function id="DEMO1026" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+			<param id="name" name="名称" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMenuFunctionMapper.update</resource>
+		<desc>编辑菜单功能</desc>
+	</function>
+	
+	
+	<function id="DEMO1027" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMenuFunctionMapper.selectByPrimaryKey</resource>
+		<desc>查询菜单功能详细信息</desc>
+	</function>
+	
+	
+	<function id="DEMO1028" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.demo.mapper.DemoMenuFunctionMapper.delete</resource>
+		<desc>删除菜单功能</desc>
+	</function>
+	
+</functions>

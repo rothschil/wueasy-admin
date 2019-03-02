@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wueasy.demo.mapper.DemoMenuMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.demo.entity.DemoMenu">
+    <id column="menu_id" property="menuId" />
+    <result column="menu_name" property="menuName" />
+    <result column="description" property="description" />
+    <result column="state" property="state" />
+    <result column="parent_Id" property="parentId" />
+    <result column="link_url" property="linkUrl" />
+    <result column="logo_url" property="logoUrl" />
+    <result column="childrennum" property="childrennum" />
+    <result column="route" property="route" />
+    <result column="orderline" property="orderline" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    menu_id,  menu_name, description, state, parent_Id, link_url, logo_url, route, 
+    orderline,childrennum, created_by, created_time, modified_by, modified_time
+  </sql>
+  
+  <select id="queryList" resultMap="BaseResultMap">
+    select  menu_id,  menu_name , link_url,logo_url,parent_Id, route,childrennum from demo_menu
+    where state = '1' 
+    order by orderline asc
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+   select menu_id,  menu_name, description, state, parent_Id, link_url, logo_url, route, orderline,childrennum from demo_menu 
+   where 1=1 
+   <if test="parentId != null and parentId != ''">
+        and parent_Id = #{parentId}
+    </if>
+   order by orderline asc
+   
+  </select>
+  
+  
+  <select id="findSysMenuByID" resultMap="BaseResultMap">
+    select  menu_id,  menu_name, description, state, parent_Id, link_url,childrennum, logo_url,orderline from demo_menu 
+    where menu_id = #{menuId}
+  </select>
+  
+  
+  <select id="findSysMenuChildrennum" resultType="int">
+    select  count(1) from demo_menu 
+    where parent_Id = #{menuId}
+  </select>
+  
+  
+  <update id="updateChildrennum">
+    update demo_menu
+    set childrennum = #{childrennum}
+    where menu_id = #{menuId}
+  </update>
+  
+  
+  <delete id="delete">
+    delete from demo_menu
+    where menu_id = #{menuId}
+  </delete>
+  <insert id="insert">
+    insert into demo_menu ( menu_name, 
+      description, state, parent_Id, 
+      link_url, logo_url, route, 
+      orderline,childrennum,created_by, created_time, 
+      modified_by, modified_time)
+    values (#{menuName}, 
+      #{description}, #{state}, #{parentId}, 
+      #{linkUrl}, #{logoUrl}, #{route}, 
+      #{orderline},#{childrennum}, #{createdBy}, #{createdTime}, 
+      #{modifiedBy}, #{modifiedTime})
+  </insert>
+  
+  <update id="update">
+    update demo_menu
+    set 
+      menu_name = #{menuName},
+      description = #{description},
+      state = #{state},
+      parent_Id = #{parentId},
+      link_url = #{linkUrl},
+      logo_url = #{logoUrl},
+      route = #{route},
+      orderline = #{orderline},
+      modified_by = #{modifiedBy},
+      modified_time = #{modifiedTime}
+    where menu_id = #{menuId}
+  </update>
+</mapper>

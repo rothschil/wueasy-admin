@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+<div class="layui-card">
+<div class="layui-card-body">
+<form class="layui-form" isLoad="0">
+   <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>旧密码：</label>
+    <div class="layui-input-block">
+      <input type="password" name="oldPassword" required="" lay-verify="required|length" lay-verType="tips" placeholder="请输入旧密码" minLength="6" maxLength="30" autocomplete="off" class="layui-input fsCrypt"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>新密码：</label>
+    <div class="layui-input-block">
+      <input id="newPassword" type="password" name="newPassword" required="" lay-verType="tips" lay-verify="required|length" placeholder="请输入新密码" minLength="6" maxLength="30" autocomplete="off" class="layui-input fsCrypt"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label"><i class="required">*</i>确认密码：</label>
+    <div class="layui-input-block">
+      <input type="password" name="password2" required="" lay-verify="required|equals" lay-verType="tips" equalsId="newPassword" equalsMsg="两次密码不相等" placeholder="请输入确认新密码" autocomplete="off" class="layui-input fsCrypt"/>
+    </div>
+  </div>
+  <hr/>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn layui-btn-blue" lay-submit="" lay-filter="submit" funcNo="S1002"><i class="layui-icon layui-icon-edit"></i>修改密码</button>
+      <button type="button" class="layui-btn layui-btn-primary" function="close">关闭</button>
+    </div>
+  </div>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

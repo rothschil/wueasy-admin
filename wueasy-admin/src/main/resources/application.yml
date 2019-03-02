@@ -1,0 +1,104 @@
+# wueasy - A Java Distributed Rapid Development Platform.
+# Copyright (C) 2017-2019 wueasy.com
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#日志配置
+logging: 
+  pattern: 
+    console: "%d %-5level [%X{requestId} - %X{traceId} - %X{spanId}] [%thread]   %logger{36} - %msg%n"
+  file: ./logs/wueasy-admin-bus.log
+  level: 
+    root: INFO
+    com.wueasy : INFO
+    wueasy.function : INFO
+
+server:
+  port: 10100  #服务端口号
+  tomcat:
+    uri-encoding: UTF-8
+    min-spare-threads: 200 #初始化线程
+    max-threads: 2000
+  connection-timeout: 50000 #超时时间是5000ms
+  session:
+    cookie:
+      http-only: true
+    timeout: 1800
+    tracking-modes: cookie
+    
+spring: 
+  application:
+    name: wueasy-admin
+  profiles : 
+    active : dev #运行环境配置
+  jmx:
+    enabled: false
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+  tomcat: 
+    uri-encoding: UTF-8
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  aop:
+    auto: true
+    proxy-target-class: false
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ecache.xml
+wueasy:
+  crypt:
+    rsa:
+      publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDzlPObayOD1prtJloDYS2YCj/FXlN0PXnxiMjgHHBLWJ18KL58Q/SQCfx0aSFkU4nf5QAZeJDp+0ALzrtIk3Y4fUqSxoRTjOfheSM6e/HS66+97BOhw4iqxyYwoZDMAd4QSi+7sbhBWNYKnJFoWgjazvv1ZoUpzF5Wnh6n+WhPTQIDAQAB
+      privateKey: MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAPOU85trI4PWmu0mWgNhLZgKP8VeU3Q9efGIyOAccEtYnXwovnxD9JAJ/HRpIWRTid/lABl4kOn7QAvOu0iTdjh9SpLGhFOM5+F5Izp78dLrr73sE6HDiKrHJjChkMwB3hBKL7uxuEFY1gqckWhaCNrO+/VmhSnMXlaeHqf5aE9NAgMBAAECgYEA8ot9T2MNyDenqUEpHHhlmCGMgpF8dCDLDlFwBIkM4Fnq5zkDBGX+XnczJQ+SKn5sqb8zrCk702FV0uwV3RzI92GkJIsSC+l5l8oQ7Qn3QMuT3pbsvrjI9FmisQyu/2IKfU1Ee6lXQEmqvzVnRUxjS2NhByxPUi9SnNJCFIcOpQECQQD8gwAFLaY0Eh8cFBjtAqtJyBgFPd+adfLRSg2c+Tvlz2SKFHVzGJvhCnxTp5OE8ft5BAkUKsCuGB8WWqA6hTptAkEA9vJfC/kiyNfjaUmyDPO10XqlXXU9s7OVg91NmXUssxDIs8odLjTn7QvZOiVQufjU8ADHYufkQ1uwtHuwZuZcYQJBAOYiOlV92jkgvuunQWRZB2VSENpOHsk2cBvggvGqkLWMw5O4u6YvKnn6RX80fhUvOUJ8tA2GPV8tqr+Dzv4myC0CQQDoRxn33SNG3ypcwqDjZelDXKVmvvyGpwifu+1dxsWAuOzPj/DaoZD1ewuckbTY+KDyDwl8kro2UWxol19ZqpyBAkAwmZru/OA/jG2ZoFJNQwVu+C/GWNP6i3fq5ZFhiDNAPoaIHNAZBtoPkAQsPuBzPSsoDtELG5DtlezF3gFPE3m/
+  interceptor:
+    security:
+      enabled: true
+      visitor: /,/login,/logout,/error,/captcha-image,/fsbus/DEMO*,/upload #游客权限
+      login: /home,/menulist,/index,/fsbus/S1002,/user/**,/fsbus/D*,/frame/system-user-center-index,/frame/system-user-account-updatePwd #登录权限
+      permissions: /** #需要权限控制的地址，默认全部需要
+    verifyPwd:
+      enabled: true
+      url: 
+      funcNo: S1010
+    csrf:
+      enabled: true
+      notValidate: /,/index,/home,GET /login,/logout,/captcha-image,/frame/**,/download/**,/preview/**,/upload/**,/fsbus/DEMO*,/upload
+    rsa:
+      enabled: true
+      funcNo: S1002:oldPassword|newPassword|password2,S1010:newPassword|password2,S1004:password|password2
+    captcha: 
+      enabled: true
+      url: POST /login
+  download: 
+    excel:
+    - funcNo: S1092
+      tempPath: conf/temp/excel/loginLog.xls
+      fileName: 用户登录记录
+      fileExtName: xls
+  log : 
+    writeDb : 1 #是否输入db日志，1是，0否，默认0
+    sensitiveParam : password,loginPassword,newPassword,verifyPwd,oldPassword,password2  #敏感参数
+    notWriteFuncNo : S1055,S1056 #不输出日志的功能号
+    maxValueLength : 256 #日志最大长度配置

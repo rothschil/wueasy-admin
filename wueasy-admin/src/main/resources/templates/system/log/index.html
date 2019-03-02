@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+  <div class="layui-row layui-col-space1">
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-card">
+  	 		<div class="layui-card-body">
+			  	 <div class="layui-form-query">
+					<form class="layui-form" id="query_form">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-mid">功能号：</label>
+								<div class="layui-input-inline" style="width: 100px;">
+									<input type="text" name="funcNo" autocomplete="off" class="layui-input"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">名称：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<input type="text" name="funcName" autocomplete="off" class="layui-input"/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">时间：</label>
+								<div class="layui-input-inline" style="">
+									<input type="text" id="createDate" name="createDate" autocomplete="off" class="layui-input fsDate" dateType="datetime" dateRange="1" placeholder=" - "/>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<button class="layui-btn layui-btn-blue" type="button" function="query"><i class="layui-icon layui-icon-search"></i>查询</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<table id="fsDatagrid" lay-filter="fsDatagrid" fs:authorize="" class="fsDatagrid" funcNo="S1055" isPage="1" defaultForm="query_form" height="full-110"></table>
+		
+				<div class="fsDatagridCols">
+					<p type="numbers" title="#"/>
+				    <p checkbox="true"/>
+				    <p field="funcNo" title="功能号" width="100" sort="true"/>
+				    <p field="version" title="版本" width="80"/>
+				    <p field="funcName" title="名称" width="200"/>
+				    <p field="datetime" title="执行时间" width="100"/>
+				    <p field="errorNo" title="错误码" width="100"/>
+				    <p field="errorInfo" title="错误消息" width="300"/>
+				    <p field="ip" title="IP" width="150"/>
+				    <p field="createdTime" title="操作时间" width="180" formatType="datetime"/>
+				    <p fixed="right" align="center" toolbar="#barDemo" title="操作" width="100"/>
+				</div>
+				<script type="text/html" id="typeTpl">
+  					{{#  if(d.funcType == 'c'){ }}
+  					      功能号实现类
+					{{# } else if(d.funcType == 's'){ }}
+						service实现类
+					{{# } else if(d.funcType == 'm'){ }}
+						mapper实现类
+ 					{{#  } }}
+				</script>
+				<script type="text/html" id="barDemo">
+ 					 <a class="layui-btn layui-btn-xs layui-btn-blue" lay-event="top" fs:authorize="" th:topUrl="@{/frame/system-log-detail}" topUrl="/frame/system-log-detail" topWidth="800px" topHeight="460px" isMaximize="1" topTitle="查看日志详情" inputs="id:">查看详情</a>
+				</script>
+			</div>
+		</div> 	
+  	 </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:fs="http://www.wueasy.com">
+<head>
+	<head th:include="layout :: header" th:remove="tag"/>
+	<div th:include="layout :: frame" th:remove="tag"/>
+</head>
+<body class="layui-view-body">
+   <div class="layui-content">
+<div class="layui-card">
+<div class="layui-card-body">
+
+<div class="layui-row">
+	<form class="layui-form" isLoad="1">
+	<div class="layui-col-md3 layui-col-xs12" style="text-align: center;margin: 20px;">
+		<div class="layui-inline">
+			<img id="headImage" alt="" style="width: 200px;height: 200px;" th:src="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getHeadImage()}" src="" class="layui-circle"/>
+		</div>
+		<div style="margin: 20px;">
+			<button class="layui-btn layui-btn-primary" type="button" function="uploadHeadImage" fileElem="#headImage" onCallback="uploadImgage"><i class="layui-icon">&#xe60d;</i> 修改头像</button>
+		</div>
+	</div>
+	<div class="layui-col-md6 layui-col-xs12">
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width: 100px;">用户名：</label>
+		    <div class="layui-input-inline">
+		      <input type="text" autocomplete="off" disabled="disabled" class="layui-input " th:value="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getLoginNo()}"/>
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width: 100px;">姓名：</label>
+		    <div class="layui-input-inline">
+		      <input type="text" autocomplete="off" disabled="disabled" class="layui-input " th:value="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getUsername()}"/>
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width: 100px;">手机号码：</label>
+		    <div class="layui-input-inline">
+		      <input type="text" autocomplete="off" disabled="disabled" class="layui-input " th:value="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getPhone()}"/>
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width: 100px;">邮箱：</label>
+		    <div class="layui-input-inline">
+		      <input type="text" autocomplete="off" disabled="disabled" class="layui-input " th:value="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getEmail()}"/>
+		    </div>
+		  </div>
+		  <!-- <div class="layui-form-item">
+		    <label class="layui-form-label" style="width: 100px;">最后登录时间：</label>
+		    <div class="layui-input-inline">
+		      <input type="text" autocomplete="off" disabled="disabled" class="layui-input " th:value="${#dates.format(T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getLastTime(),'yyyy-MM-dd HH:mm:ss')}"/>
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label" style="width: 100px;">最后登录IP：</label>
+		    <div class="layui-input-inline">
+		      <input type="text" autocomplete="off" disabled="disabled" class="layui-input " th:value="${T(com.wueasy.base.web.util.SysUtil).getSession().getUser().getLastIp()}"/>
+		    </div>
+		  </div> -->
+	</div>
+	</form>
+</div>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+//上传回调事件
+layui.fsCallback.button.uploadImgage = function(elem,fsCommon,file){
+    //修改用户头像路径
+    fsCommon.invoke("/user/updateHeadImage",{"headImage":file["filePath"]},null,null);
+    
+    top.$("#topUserHeadImage").attr("src",file["filePath"]);
+}
+</script>
+</body>
+</html>

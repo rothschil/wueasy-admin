@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wueasy.demo.mapper.DemoMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.demo.entity.Demo">
+    <result column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="city" property="city" />
+    <result column="type" property="type" />
+    <result column="sex" property="sex" />
+    <result column="state" property="state" />
+    <result column="file_path" property="filePath" />
+    <result column="description" property="description" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+    <result column="area1" property="area1" />
+    <result column="area2" property="area2" />
+    <result column="area3" property="area3" />
+  </resultMap>
+  <insert id="insert">
+    insert into demo (name,type,city,sex,state,file_path,description,created_by,created_time,modified_by,modified_time,area1,area2,area3)
+    values (#{name},#{type},#{city},#{sex},#{state},#{filePath},#{description}, #{createdBy}, #{createdTime}, #{modifiedBy}, #{modifiedTime},#{area1},#{area2},#{area3})
+  </insert>
+  
+  <select id="queryPage" resultMap="BaseResultMap">
+  	
+    select  id,  name,type,city,sex,state,file_path,description,created_by,created_time,modified_by,modified_time,area1,area2,area3 from demo where 1=1 
+    <if test="id != null and id!=''">
+         and id = #{id}
+     </if>
+     
+     <if test="type != null and type !=''">
+         and type = #{type}
+     </if>
+     
+     <if test="name != null and name!=''">
+     	<bind name="pattern" value="'%' + _parameter.get('name') + '%'" />
+         and name  LIKE #{pattern}
+     </if>
+     
+     <if test="startDate != null and startDate!=''">
+         and created_time &gt;= #{startDate}
+     </if>
+     
+     <if test="endDate != null and endDate!=''">
+         and created_time &lt;= #{endDate}
+     </if>
+     
+     order by ${field} ${order}
+  </select>
+  
+  <delete id="delete">
+  	<if test="id != null and id!=''">
+  	<bind name="ids" value="_parameter.get('id').split(',')" />
+  		 delete from demo
+   		 where 
+   		 <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+            id = #{item}
+         </foreach>
+  	</if>
+   
+  </delete>
+  
+  
+  <select id="findById" resultMap="BaseResultMap">
+    select  id,  name,type,city,sex,state,file_path,description,created_by,created_time,modified_by,modified_time,area1,area2,area3 from demo where id = #{id}
+  </select>
+  
+  
+  <update id="update">
+    update demo
+    set name = #{name},city = #{city},sex = #{sex},state = #{state},description = #{description},created_time = #{createdTime},type=#{type},file_path=#{filePath},
+    modified_time = #{modifiedTime},modified_by = #{modifiedBy},area1=#{area1},area2=#{area2},area3=#{area3}
+    where id = #{id}
+  </update>
+  
+  
+</mapper>
