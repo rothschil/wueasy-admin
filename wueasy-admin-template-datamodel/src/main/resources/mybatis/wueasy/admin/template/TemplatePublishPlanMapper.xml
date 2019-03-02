@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.template.mapper.TemplatePublishPlanMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.template.entity.TemplatePublishPlan">
+    <id column="id" property="id" />
+    <result column="catalog_id" property="catalogId" />
+    <result column="site_id" property="siteId" />
+    <result column="cron" property="cron" />
+    <result column="recursion" property="recursion" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+  	id
+  	,catalog_id
+  	,site_id
+  	,cron
+  	,recursion
+  	,created_by
+  	,created_time
+  	,modified_by
+  	,modified_time
+  </sql>
+  
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    id
+  	,catalog_id
+  	,site_id
+  	,cron
+  	,recursion
+    from template_publish_plan where 
+     id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template_publish_plan where 1=1 
+      <if test="siteId != null and siteId != ''">
+        and site_id = #{siteId,typeHandler=LongTypeHandler}
+      </if>
+      <if test="recursion != null and recursion != ''">
+        and recursion = #{recursion}
+      </if>
+      order by id desc
+  </select>
+  
+  <delete id="delete">
+    delete from template_publish_plan
+    where 
+       id = #{id,typeHandler=LongTypeHandler}
+  </delete>
+  
+  
+  <delete id="deleteMultiple">
+    delete from template_publish_plan
+    where 
+    <bind name="ids" value="_parameter.get('id').split(',')" />
+    
+    <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+      id = #{item,typeHandler=LongTypeHandler}
+    </foreach>
+  </delete>
+  
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into template_publish_plan (
+  	catalog_id
+  	,site_id
+  	,cron
+  	,recursion
+  	,created_by
+  	,created_time
+  	,modified_by
+  	,modified_time
+    )
+    values (
+  	#{catalogId,typeHandler=LongTypeHandler}
+  	, #{siteId,typeHandler=LongTypeHandler}
+  	, #{cron}
+  	, #{recursion}
+  	, #{createdBy,typeHandler=LongTypeHandler}
+  	, #{createdTime}
+  	, #{modifiedBy,typeHandler=LongTypeHandler}
+  	, #{modifiedTime}
+    )
+  </insert>
+  
+  <update id="update">
+    update template_publish_plan
+    set 
+       catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+      , site_id = #{siteId,typeHandler=LongTypeHandler}
+      , cron = #{cron}
+      , recursion = #{recursion}
+      , modified_by = #{modifiedBy,typeHandler=LongTypeHandler}
+      , modified_time = #{modifiedTime}
+    where
+       id = #{id,typeHandler=LongTypeHandler}
+  </update>
+  
+  <select id="queryList" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template_publish_plan 
+      order by id asc
+  </select>
+  
+  
+</mapper>

@@ -55,16 +55,16 @@ $ip() 获取ip
  -->
 
 <functions>
-	<function id="D1001" type="m">
-		<resource>com.wueasy.admin.mapper.SysAuthDataModelMapper.queryList</resource>
-		<desc>查询数据权限模型列表</desc>
+	<function id="D1002" type="m">
+		<params>
+			<param id="state" name="状态" value="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateSiteMapper.query</resource>
+		<desc>查询站点列表</desc>
 	</function>
 	
-	<function id="D1004" type="s">
-		<params>
-			<param id="enumNo" name="类型" value="1" />
-		</params>
-		<resource>com.wueasy.admin.mapper.SysEnumValueMapper.queryValidDictList</resource>
+	<function id="D1003" type="m">
+		<resource>com.wueasy.admin.template.mapper.TemplateCatalogMapper.queryValid</resource>
 		<desc>查询模板栏目列表</desc>
 	</function>
 </functions>

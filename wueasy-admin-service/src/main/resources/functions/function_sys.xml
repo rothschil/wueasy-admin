@@ -911,126 +911,6 @@ $ip() 获取ip
 		<desc>导出用户登录日志</desc>
 	</function>
 	
-	<function id="S1093" type="s">
-		<params>
-			<param id="title" name="文章标题" notEmpty="1"/>
-			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
-			<param id="isHead" name="设为头条" defaultValue="0"/>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-			<param id="siteId" name="站点id" notEmpty="1"/>
-			<param id="state" name="状态" value="0"/>
-			<param id="createdTime" name="创建时间" value="$date()"/>
-			<param id="createdBy" name="创建人" value="$userId()"/>
-			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
-			<param id="modifiedBy" name="修改人" value="$userId()"/>
-		</params>
-		<resource>ArticleService.addArticle</resource>
-		<desc>保存文章信息</desc>
-	</function>
-	
-	<function id="S1094" type="s">
-		<params>
-			<param id="title" name="文章标题" notEmpty="1"/>
-			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
-			<param id="isHead" name="设为头条" defaultValue="0"/>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-			<param id="siteId" name="站点id" notEmpty="1"/>
-			<param id="state" name="状态" value="1"/>
-			<param id="createdTime" name="创建时间" value="$date()"/>
-			<param id="createdBy" name="创建人" value="$userId()"/>
-			<param id="publishDate" name="发布时间" value="#createdTime"/>
-			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
-			<param id="modifiedBy" name="修改人" value="$userId()"/>
-		</params>
-		<resource>ArticleService.addArticle</resource>
-		<desc>发布文章信息</desc>
-	</function>
-	
-	<function id="S1095" type="s">
-		<params>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-			<param id="title" name="文章标题" notEmpty="1"/>
-			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
-			<param id="isHead" name="设为头条" defaultValue="0"/>
-			<param id="modifiedTime" name="修改时间" value="$date()"/>
-			<param id="modifiedBy" name="修改人" value="$userId()"/>
-		</params>
-		<resource>ArticleService.updateArticle</resource>
-		<desc>修改文章信息</desc>
-	</function>
-	
-	<function id="S1096" type="m">
-		<params>
-			<param id="articleId" name="文章id" notEmpty="1"/>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-		</params>
-		<resource>com.wueasy.admin.mapper.SysArticleContentMapper.select</resource>
-		<desc>查询文章信息</desc>
-	</function>
-	
-	<function id="S1097" type="s">
-		<params>
-			<param id="articleId" name="文章id" notEmpty="1"/>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-		</params>
-		<resource>ArticleService.deleteArticle</resource>
-		<desc>删除文章信息</desc>
-	</function>
-	
-	<function id="S1098" type="m" isPage="1">
-		<params>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-		</params>
-		<resource>com.wueasy.admin.mapper.SysArticleMapper.query</resource>
-		<desc>查询文章列表</desc>
-	</function>
-	
-	<function id="S1099" type="s">
-		<params>
-			<param id="articleId" name="文章id" notEmpty="1"/>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-			<param id="state" name="状态" value="1"/>
-			<param id="publishDate" name="发布时间" value="$date()"/>
-		</params>
-		<resource>ArticleService.updateArticleState</resource>
-		<desc>发布文章</desc>
-	</function>
-	
-	<function id="S1100" type="s">
-		<params>
-			<param id="articleId" name="文章id" notEmpty="1"/>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-			<param id="state" name="状态" value="0"/>
-		</params>
-		<resource>ArticleService.updateArticleState</resource>
-		<desc>取消发布文章</desc>
-	</function>
-	
-	<function id="S1101" type="s">
-		<params>
-			<param id="isSystem" name="是否管理员" value="$isSystem()"/>
-			<param id="authDataStr" name="数据权限" value="$authData()"/>
-		</params>
-		<resource>ArticleService.queryCatalogList</resource>
-		<desc>查询文章栏目列表</desc>
-	</function>
-	
-	<function id="S1102" type="s">
-		<params>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-		</params>
-		<resource>ArticleService.publishCatalog</resource>
-		<desc>发布当前栏目文章</desc>
-	</function>
-	
-	<function id="S1103" type="s">
-		<params>
-			<param id="catalogId" name="栏目id" notEmpty="1"/>
-		</params>
-		<resource>ArticleService.publishCatalogRecursion</resource>
-		<desc>发布当前栏目及子栏目文章</desc>
-	</function>
-	
 	<function id="S1104" type="m">
 		<params>
 			<param id="userId" name="用户id" value="$userId()"/>
@@ -1045,7 +925,7 @@ $ip() 获取ip
 			<param id="modelId" name="模型id" defaultValue="0"/>
 			<param id="roleId" name="角色id" defaultValue="0" />
 		</params>
-		<resource>TemplateService.queryRoleDataPermission</resource>
+		<resource>SysAuthRoleDataService.queryRoleDataPermission</resource>
 		<desc>查询角色下数据权限列表</desc>
 	</function>
 	
@@ -1060,12 +940,12 @@ $ip() 获取ip
 			<param id="modifiedTime" name="修改时间" value="#createdTime" />
 			<param id="modifiedBy" name="修改人" value="$userId()" />
 		</params>
-		<resource>TemplateService.insertOrUpdateRoleDataPermission</resource>
+		<resource>SysAuthRoleDataService.insertOrUpdateRoleDataPermission</resource>
 		<desc>保存数据权限</desc>
 	</function>
 	
 	<function id="S1107" type="s">
-		<resource>TemplateService.queryAuthDataModel</resource>
+		<resource>SysAuthRoleDataService.queryAuthDataModel</resource>
 		<desc>查询数据权限模型列表</desc>
 	</function>
 </functions>

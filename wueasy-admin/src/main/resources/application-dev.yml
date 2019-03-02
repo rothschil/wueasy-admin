@@ -43,7 +43,7 @@ wueasy :
   datasource : 
     easyadmin : 
       mybatis:
-        basePackage: com.wueasy.*.mapper
+        basePackage: com.wueasy.**.mapper
         mapperLocations: classpath*:mybatis/wueasy/**/*.xml
       connection: 
         url : jdbc:mysql://localhost:3306/easy_data?useSSL=false&useUnicode=true&characterEncoding=utf-8

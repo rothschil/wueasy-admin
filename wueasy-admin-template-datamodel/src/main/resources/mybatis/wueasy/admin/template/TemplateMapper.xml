@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2018 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<mapper namespace="com.wueasy.admin.template.mapper.TemplateMapper">
+  <resultMap id="BaseResultMap" type="com.wueasy.admin.template.entity.Template">
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="catalog_id" property="catalogId" />
+    <result column="site_id" property="siteId" />
+    <result column="state" property="state" />
+    <result column="file_path" property="filePath" />
+    <result column="type" property="type" />
+    <result column="encoding" property="encoding" />
+    <result column="content" property="content" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+  	id
+  	,name
+  	,catalog_id
+  	,site_id
+  	,state
+  	,file_path
+  	,type
+  	,encoding
+  	,created_by
+  	,created_time
+  	,modified_by
+  	,modified_time
+  </sql>
+  
+  
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />,content
+    from template where 
+     id = #{id,typeHandler=LongTypeHandler}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template where catalog_id = #{catalogId,typeHandler=LongTypeHandler}
+      <if test="name != null and name != ''">
+      	<bind name="pattern_name" value="'%' + _parameter.get('name') + '%'" />
+         and name  LIKE #{pattern_name}
+      </if>
+      <if test="state != null and state != ''">
+        and state = #{state}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type}
+      </if>
+      
+      order by id asc
+  </select>
+  
+  <delete id="delete">
+    delete from template
+    where 
+       id = #{id,typeHandler=LongTypeHandler}
+  </delete>
+  
+  
+  <delete id="deleteMultiple">
+    delete from template
+    where 
+    <bind name="ids" value="_parameter.get('id').split(',')" />
+    
+    <foreach collection="ids" item="item" index="index" open="" close="" separator="OR">
+      id = #{item,typeHandler=LongTypeHandler}
+    </foreach>
+  </delete>
+  
+  
+  <insert id="insert">
+    insert into template (
+  	name
+  	,catalog_id
+  	,site_id
+  	,state
+  	,file_path
+  	,type
+  	,encoding
+  	,content
+  	,created_by
+  	,created_time
+  	,modified_by
+  	,modified_time
+    )
+    values (
+  	#{name}
+  	, #{catalogId,typeHandler=LongTypeHandler}
+  	, #{siteId,typeHandler=LongTypeHandler}
+  	, #{state}
+  	, #{filePath}
+  	, #{type}
+  	, #{encoding}
+  	, #{content}
+  	, #{createdBy,typeHandler=LongTypeHandler}
+  	, #{createdTime}
+  	, #{modifiedBy,typeHandler=LongTypeHandler}
+  	, #{modifiedTime}
+    )
+  </insert>
+  
+  <update id="update">
+    update template
+    set 
+       name = #{name}
+      , state = #{state}
+      , file_path = #{filePath}
+      , type = #{type}
+      , encoding = #{encoding}
+      , content = #{content}
+      , modified_by = #{modifiedBy,typeHandler=LongTypeHandler}
+      , modified_time = #{modifiedTime}
+    where
+       id = #{id,typeHandler=LongTypeHandler}
+  </update>
+  
+  <select id="queryCatalogTypeValidCount" resultType="java.lang.Integer">
+    SELECT count(1) from template where catalog_id = #{catalogId,typeHandler=LongTypeHandler} and type = #{type} and state = '1'
+  </select>
+  
+  <select id="selectValidByCatalogType" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from template where 
+     catalog_id = #{catalogId,typeHandler=LongTypeHandler} and type = #{type} and state = '1'
+  </select>
+  
+  <select id="queryTemplateByCatalogIdAndType" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />,content
+    from template where 
+     catalog_id = #{catalogId,typeHandler=LongTypeHandler} and type = #{type} and state='1'
+  </select>
+  
+  <select id="queryTemplateListByCatalogIdAndType" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />,content
+    from template where 
+     catalog_id = #{catalogId,typeHandler=LongTypeHandler} and type = #{type} and state='1'
+  </select>
+</mapper>

@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- 
+<![CDATA[
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2019 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+]]>
+-->
+<functions>
+
+	<function id="T1001" type="m" isPage="1">
+		<resource>com.wueasy.admin.template.mapper.TemplateSiteMapper.query</resource>
+		<desc>查询站点列表</desc>
+	</function>
+
+	<function id="T1002" type="s">
+		<params>
+			<param id="siteNo" name="站点编号" notEmpty="1" />
+			<param id="siteName" name="站点名称" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="createdTime" name="创建时间" value="$date()" />
+			<param id="createdBy" name="创建人" value="$userId()" />
+			<param id="modifiedTime" name="修改时间" value="#createdTime" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.insertSite</resource>
+		<desc>新增站点信息</desc>
+	</function>
+
+	<function id="T1003" type="s">
+		<params>
+			<param id="siteId" name="站点id" notEmpty="1" />
+			<param id="siteNo" name="站点编号" notEmpty="1" />
+			<param id="siteName" name="站点名称" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="modifiedTime" name="修改时间" value="$date()" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.updateSite</resource>
+		<desc>编辑站点信息</desc>
+	</function>
+
+	<function id="T1004" type="m">
+		<params>
+			<param id="siteId" name="站点id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateSiteMapper.select</resource>
+		<desc>查询站点详细信息</desc>
+	</function>
+
+	<function id="T1005" type="s">
+		<params>
+			<param id="siteId" name="站点id" notEmpty="1" />
+		</params>
+		<resource>TemplateService.deleteSite</resource>
+		<desc>删除站点信息</desc>
+	</function>
+
+	<function id="T1006" type="m">
+		<params>
+			<param id="state" name="状态" value="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateSiteMapper.query</resource>
+		<desc>查询站点列表</desc>
+	</function>
+
+	<function id="T1007" type="m" isPage="1">
+		<params>
+			<param id="siteId" name="站点id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateVarMapper.query</resource>
+		<desc>查询模板变量列表</desc>
+	</function>
+
+	<function id="T1008" type="s">
+		<params>
+			<param id="siteId" name="站点id" notEmpty="1" />
+			<param id="itemKey" name="变量属性" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="createdTime" name="创建时间" value="$date()" />
+			<param id="createdBy" name="创建人" value="$userId()" />
+			<param id="modifiedTime" name="修改时间" value="#createdTime" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.insertVar</resource>
+		<desc>新增模板变量</desc>
+	</function>
+
+	<function id="T1009" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+			<param id="siteId" name="站点id" notEmpty="1" />
+			<param id="itemKey" name="变量属性" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="modifiedTime" name="修改时间" value="$date()" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.updateVar</resource>
+		<desc>编辑模板变量</desc>
+	</function>
+
+	<function id="T1010" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateVarMapper.select</resource>
+		<desc>查询模板变量详细信息</desc>
+	</function>
+
+	<function id="T1011" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+		</params>
+		<resource>TemplateService.deleteVar</resource>
+		<desc>删除模板变量</desc>
+	</function>
+
+	<function id="T1012" type="m">
+		<resource>com.wueasy.admin.template.mapper.TemplateCatalogMapper.query</resource>
+		<desc>查询栏目列表</desc>
+	</function>
+
+
+	<function id="T1013" type="s">
+		<params>
+			<param id="catalogNo" name="栏目编号" notEmpty="1" />
+			<param id="catalogName" name="栏目名称" notEmpty="1" />
+			<param id="parentId" name="父栏目id" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="orderline" name="orderline" value="$timestamp()"/>
+			<param id="createdTime" name="创建时间" value="$date()" />
+			<param id="createdBy" name="创建人" value="$userId()" />
+			<param id="modifiedTime" name="修改时间" value="#createdTime" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.insertCatalog</resource>
+		<desc>新增栏目信息</desc>
+	</function>
+
+
+	<function id="T1014" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+			<param id="catalogNo" name="栏目编号" notEmpty="1" />
+			<param id="catalogName" name="栏目名称" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="modifiedTime" name="创建时间" value="$date()" />
+			<param id="modifiedBy" name="创建人" value="$userId()" />
+		</params>
+		<resource>TemplateService.updateCatalog</resource>
+		<desc>编辑栏目信息</desc>
+	</function>
+
+	<function id="T1015" type="m">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateCatalogMapper.select</resource>
+		<desc>查询栏目详细信息</desc>
+	</function>
+
+	<function id="T1016" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+		</params>
+		<resource>TemplateService.deleteCatalog</resource>
+		<desc>删除栏目信息</desc>
+	</function>
+
+	<function id="T1017" type="m">
+		<params>
+			<param id="siteId" name="站点id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateCatalogMapper.queryList</resource>
+		<desc>查询站点栏目列表</desc>
+	</function>
+
+	<function id="T1018" type="s">
+		<params>
+			<param id="catalogList" name="栏目" notEmpty="1" />
+		</params>
+		<resource>TemplateService.updateCatalogOrderline</resource>
+		<desc>修改栏目排序</desc>
+	</function>
+
+	<function id="T1019" type="m">
+		<resource>com.wueasy.admin.template.mapper.TemplateCatalogMapper.queryValid</resource>
+		<desc>查询模板栏目列表</desc>
+	</function>
+
+	<function id="T1020" type="m">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateMapper.query</resource>
+		<desc>查询栏目模板列表</desc>
+	</function>
+
+	<function id="T1021" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+			<param id="name" name="模板名称" notEmpty="1" />
+			<param id="type" name="模板类型" notEmpty="1" />
+			<param id="encoding" name="编码" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="content" name="模板内容" notEmpty="1" />
+			<param id="createdTime" name="创建时间" value="$date()" />
+			<param id="createdBy" name="创建人" value="$userId()" />
+			<param id="modifiedTime" name="修改时间" value="#createdTime" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.addTemplate</resource>
+		<desc>新增栏目模板信息</desc>
+	</function>
+
+	<function id="T1022" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+			<param id="name" name="模板名称" notEmpty="1" />
+			<param id="type" name="模板类型" notEmpty="1" />
+			<param id="encoding" name="编码" notEmpty="1" />
+			<param id="state" name="状态" defaultValue="0" />
+			<param id="content" name="模板内容" notEmpty="1" />
+			<param id="modifiedTime" name="创建时间" value="$date()" />
+			<param id="modifiedBy" name="创建人" value="$userId()" />
+		</params>
+		<resource>TemplateService.updateTemplate</resource>
+		<desc>修改栏目模板信息</desc>
+	</function>
+
+	<function id="T1023" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateMapper.select</resource>
+		<desc>查询栏目模板详细信息</desc>
+	</function>
+
+	<function id="T1024" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateMapper.delete</resource>
+		<desc>删除模板信息</desc>
+	</function>
+
+	<function id="T1025" type="m" isPage="1">
+		<resource>com.wueasy.admin.template.mapper.TemplatePublishPlanMapper.query</resource>
+		<desc>查询模板发布计划列表</desc>
+	</function>
+
+	<function id="T1026" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+			<param id="siteId" name="站点id" notEmpty="1" />
+			<param id="cron" name="cron表达式" notEmpty="1" />
+			<param id="recursion" name="是否发布子栏目 " defaultValue="0" />
+			<param id="createdTime" name="创建时间" value="$date()" />
+			<param id="createdBy" name="创建人" value="$userId()" />
+			<param id="modifiedTime" name="修改时间" value="#createdTime" />
+			<param id="modifiedBy" name="修改人" value="$userId()" />
+		</params>
+		<resource>TemplateService.addPublishPlan</resource>
+		<desc>新增模板发布计划</desc>
+	</function>
+
+	<function id="T1027" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1" />
+			<param id="siteId" name="站点id" notEmpty="1" />
+			<param id="cron" name="cron表达式" notEmpty="1" />
+			<param id="recursion" name="是否发布子栏目 " defaultValue="0" />
+			<param id="modifiedTime" name="创建时间" value="$date()" />
+			<param id="modifiedBy" name="创建人" value="$userId()" />
+		</params>
+		<resource>TemplateService.updatePublishPlan</resource>
+		<desc>修改栏目模板发布计划</desc>
+	</function>
+
+	<function id="T1028" type="m">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplatePublishPlanMapper.select</resource>
+		<desc>查询模板发布计划信息</desc>
+	</function>
+
+	<function id="T1029" type="s">
+		<params>
+			<param id="id" name="id" notEmpty="1" />
+		</params>
+		<resource>TemplateService.deletePublishPlan</resource>
+		<desc>删除模板发布计划信息</desc>
+	</function>
+	
+	<function id="S1093" type="s">
+		<params>
+			<param id="title" name="文章标题" notEmpty="1"/>
+			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
+			<param id="isHead" name="设为头条" defaultValue="0"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="siteId" name="站点id" notEmpty="1"/>
+			<param id="state" name="状态" value="0"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>ArticleService.addArticle</resource>
+		<desc>保存文章信息</desc>
+	</function>
+	
+	<function id="S1094" type="s">
+		<params>
+			<param id="title" name="文章标题" notEmpty="1"/>
+			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
+			<param id="isHead" name="设为头条" defaultValue="0"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="siteId" name="站点id" notEmpty="1"/>
+			<param id="state" name="状态" value="1"/>
+			<param id="createdTime" name="创建时间" value="$date()"/>
+			<param id="createdBy" name="创建人" value="$userId()"/>
+			<param id="publishDate" name="发布时间" value="#createdTime"/>
+			<param id="modifiedTime" name="修改时间" value="#createdTime"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>ArticleService.addArticle</resource>
+		<desc>发布文章信息</desc>
+	</function>
+	
+	<function id="S1095" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="title" name="文章标题" notEmpty="1"/>
+			<param id="isHot" name="是否推荐文章" defaultValue="0"/>
+			<param id="isHead" name="设为头条" defaultValue="0"/>
+			<param id="modifiedTime" name="修改时间" value="$date()"/>
+			<param id="modifiedBy" name="修改人" value="$userId()"/>
+		</params>
+		<resource>ArticleService.updateArticle</resource>
+		<desc>修改文章信息</desc>
+	</function>
+	
+	<function id="S1096" type="m">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateArticleContentMapper.select</resource>
+		<desc>查询文章信息</desc>
+	</function>
+	
+	<function id="S1097" type="s">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>ArticleService.deleteArticle</resource>
+		<desc>删除文章信息</desc>
+	</function>
+	
+	<function id="S1098" type="m" isPage="1">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>com.wueasy.admin.template.mapper.TemplateArticleMapper.query</resource>
+		<desc>查询文章列表</desc>
+	</function>
+	
+	<function id="S1099" type="s">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="state" name="状态" value="1"/>
+			<param id="publishDate" name="发布时间" value="$date()"/>
+		</params>
+		<resource>ArticleService.updateArticleState</resource>
+		<desc>发布文章</desc>
+	</function>
+	
+	<function id="S1100" type="s">
+		<params>
+			<param id="articleId" name="文章id" notEmpty="1"/>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+			<param id="state" name="状态" value="0"/>
+		</params>
+		<resource>ArticleService.updateArticleState</resource>
+		<desc>取消发布文章</desc>
+	</function>
+	
+	<function id="S1101" type="s">
+		<params>
+			<param id="isSystem" name="是否管理员" value="$isSystem()"/>
+			<param id="authDataStr" name="数据权限" value="$authData()"/>
+		</params>
+		<resource>ArticleService.queryCatalogList</resource>
+		<desc>查询文章栏目列表</desc>
+	</function>
+	
+	<function id="S1102" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>ArticleService.publishCatalog</resource>
+		<desc>发布当前栏目文章</desc>
+	</function>
+	
+	<function id="S1103" type="s">
+		<params>
+			<param id="catalogId" name="栏目id" notEmpty="1"/>
+		</params>
+		<resource>ArticleService.publishCatalogRecursion</resource>
+		<desc>发布当前栏目及子栏目文章</desc>
+	</function>
+
+</functions>
