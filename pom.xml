@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+   wueasy - A Java Distributed Rapid Development Platform.
+   Copyright (C) 2017-2019 wueasy.com
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as published
+   by the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
+
+   You should have received a copy of the GNU Affero General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wueasy</groupId>
+	<artifactId>wueasy</artifactId>
+    <version>1.1.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>wueasy-admin-datamodel</module>
+		<module>wueasy-admin-service</module>
+    </modules>
+
+    <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>1.8</java.version>
+		<skipTests>true</skipTests>
+	</properties>
+	
+    <licenses>
+		<license>
+			<name>GNU Affero General Public License v3.0</name>
+			<url>https://www.gnu.org/licenses/</url>
+		</license>
+	</licenses>
+	
+	<developers>
+    	<developer>
+			<name>fallsea</name>
+			<email>fallsea@wueasy.com</email>
+			<organization>wueasy</organization>
+			<organizationUrl>http://www.wueasy.com</organizationUrl>
+		</developer>
+	</developers>
+	
+	<scm>
+		<connection>scm:git:https://github.com/wueasy/wueasy-admin.git</connection>
+		<developerConnection>http://www.wueasy.com</developerConnection>
+		<url>https://github.com/wueasy/wueasy-admin</url>
+		<tag>1.2.0</tag>
+	</scm>
+</project>
