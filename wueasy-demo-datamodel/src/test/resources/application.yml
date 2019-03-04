@@ -1,6 +1,0 @@
-mybatis : 
-    config-location : classpath:mybatis/mybatis-config.xml
-    mapper-locations : classpath*:mybatis/wueasy/auto/*.xml
-spring : 
-    profiles : 
-        active : dev #运行环境配置
