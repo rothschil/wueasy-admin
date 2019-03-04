@@ -9,6 +9,9 @@
 
 > wueasy admin 是一个java分布式的后台管理系统。平台实现了通用的基础功能、 权限验证、 安全验证、基础功能， 为中小型企业提供稳定、 高效、 安全、 便捷的一体式框架。
 
+## 帮助中心
+
+遇到问题可以先通过帮助中心搜索或通过智能客服提问，[点击进入帮助中心](https://help-ccs.aliyun.com/help.htm?tntInstId=_1Bd0xM0&helpCode=SCE_00005152)
 
 ## 案例
 
@@ -28,6 +31,10 @@
 
   https://zipkin.wueasy.com
 
+
+## 使用文档
+
+[在线文档](https://www.wueasy.com/docs/wueasy-admin)
 
 ## 主要使用技术
 
@@ -75,6 +82,12 @@ ie9+
 
 * 免费使用：必须完全遵守 AGPLv3 的相关条款（开源源代码）
 * 商业使用：请联系 QQ `535412000` 或邮箱 `server@wueasy.com` 进行细节咨询
+
+## 正版授权查询
+
+wueasy产品提供在线授权查询，可以通过`授权编号`查询是否为官方正版产品。
+
+[https://www.wueasy.com/authorization.html](https://www.wueasy.com/authorization.html)
 
 ```java
 /*
