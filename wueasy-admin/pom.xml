@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.wueasy.admin</groupId>
 	<artifactId>wueasy-admin</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1.SNAPSHOT</version>
 	<packaging>jar</packaging>
   
    <parent>
@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>com.wueasy.admin</groupId>
 			<artifactId>wueasy-admin-service</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.1.SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.wueasy</groupId>
@@ -51,6 +51,11 @@
 			<groupId>com.wueasy</groupId>
 			<artifactId>wueasy-base-web</artifactId>
 			<version>${wueasy.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>42.2.5</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.thymeleaf</groupId>
