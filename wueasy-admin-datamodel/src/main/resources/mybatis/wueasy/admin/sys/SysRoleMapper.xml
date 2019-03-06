@@ -20,16 +20,16 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysRoleMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysRole">
-    <id column="role_id" jdbcType="BIGINT" property="roleId" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="route" jdbcType="VARCHAR" property="route" />
-    <result column="orderline" jdbcType="BIGINT" property="orderline" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
-    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <id column="role_id" property="roleId" />
+    <result column="role_name" property="roleName" />
+    <result column="parent_id" property="parentId" />
+    <result column="description" property="description" />
+    <result column="route" property="route" />
+    <result column="orderline" property="orderline" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
   </resultMap>
   <sql id="Base_Column_List">
     role_id, role_name, parent_id, description, route, orderline, created_by, created_time, 

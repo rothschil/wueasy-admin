@@ -20,12 +20,12 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysUserLoginLogMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysUserLoginLog">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="login_no" jdbcType="VARCHAR" property="loginNo" />
-    <result column="ip" jdbcType="VARCHAR" property="ip" />
-    <result column="type" jdbcType="CHAR" property="type" />
-    <result column="login_type" jdbcType="CHAR" property="loginType" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <id column="id" property="id" />
+    <result column="login_no" property="loginNo" />
+    <result column="ip" property="ip" />
+    <result column="type" property="type" />
+    <result column="login_type" property="loginType" />
+    <result column="created_time" property="createdTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, login_no, ip, type,login_type, created_time

@@ -20,9 +20,9 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysGroupMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysGroup">
-    <id column="group_id" jdbcType="BIGINT" property="groupId" />
-    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
-    <result column="font_icon" jdbcType="VARCHAR" property="fontIcon" />
+    <id column="group_id" property="groupId" />
+    <result column="group_name" property="groupName" />
+    <result column="font_icon" property="fontIcon" />
   </resultMap>
   <sql id="Base_Column_List">
     group_id, group_name, font_icon

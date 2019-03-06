@@ -20,16 +20,16 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysEnumTypeMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysEnumType">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="enum_no" jdbcType="VARCHAR" property="enumNo" />
-    <result column="enum_name" jdbcType="VARCHAR" property="enumName" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="is_system" jdbcType="CHAR" property="isSystem" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
-    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <id column="id" property="id" />
+    <result column="enum_no" property="enumNo" />
+    <result column="enum_name" property="enumName" />
+    <result column="parent_id" property="parentId" />
+    <result column="is_system" property="isSystem" />
+    <result column="description" property="description" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, enum_no, enum_name,parent_id,is_system, description, created_by, created_time, modified_by, 

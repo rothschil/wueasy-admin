@@ -20,17 +20,17 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.JobExecutionLogMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.JobExecutionLog">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="hostname" jdbcType="VARCHAR" property="hostname" />
-    <result column="ip" jdbcType="VARCHAR" property="ip" />
-    <result column="sharding_item" jdbcType="INTEGER" property="shardingItem" />
-    <result column="execution_source" jdbcType="VARCHAR" property="executionSource" />
-    <result column="failure_cause" jdbcType="VARCHAR" property="failureCause" />
-    <result column="is_success" jdbcType="INTEGER" property="isSuccess" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime" />
+    <id column="id" property="id" />
+    <result column="job_name" property="jobName" />
+    <result column="task_id" property="taskId" />
+    <result column="hostname" property="hostname" />
+    <result column="ip" property="ip" />
+    <result column="sharding_item" property="shardingItem" />
+    <result column="execution_source" property="executionSource" />
+    <result column="failure_cause" property="failureCause" />
+    <result column="is_success" property="isSuccess" />
+    <result column="start_time" property="startTime" />
+    <result column="complete_time" property="completeTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, job_name, task_id, hostname, ip, sharding_item, execution_source, failure_cause, 

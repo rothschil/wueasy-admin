@@ -20,23 +20,23 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysUserMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysUser">
-    <id column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="login_no" jdbcType="VARCHAR" property="loginNo" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="state" jdbcType="CHAR" property="state" />
-    <result column="is_system" jdbcType="CHAR" property="isSystem" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
-    <result column="login_count" jdbcType="BIGINT" property="loginCount" />
-    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
-    <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
-    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="head_image" jdbcType="VARCHAR" property="headImage" />
+    <id column="user_id" property="userId" />
+    <result column="login_no" property="loginNo" />
+    <result column="username" property="username" />
+    <result column="password" property="password" />
+    <result column="state" property="state" />
+    <result column="is_system" property="isSystem" />
+    <result column="salt" property="salt" />
+    <result column="login_count" property="loginCount" />
+    <result column="last_time" property="lastTime" />
+    <result column="last_ip" property="lastIp" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
+    <result column="phone" property="phone" />
+    <result column="email" property="email" />
+    <result column="head_image" property="headImage" />
   </resultMap>
   <sql id="Base_Column_List">
     user_id, login_no, username, password, state, is_system, salt, login_count, last_time, 

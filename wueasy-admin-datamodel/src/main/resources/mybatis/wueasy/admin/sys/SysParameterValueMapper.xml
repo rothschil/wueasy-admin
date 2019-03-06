@@ -20,18 +20,18 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysParameterValueMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysParameterValue">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="param_type_id" jdbcType="BIGINT" property="paramTypeId" />
-    <result column="item_value" jdbcType="VARCHAR" property="itemValue" />
-    <result column="item_key" jdbcType="VARCHAR" property="itemKey" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="state" jdbcType="CHAR" property="state" />
-    <result column="encrypt" jdbcType="CHAR" property="encrypt" />
-    <result column="orderline" jdbcType="BIGINT" property="orderline" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
-    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <id column="id" property="id" />
+    <result column="param_type_id" property="paramTypeId" />
+    <result column="item_value" property="itemValue" />
+    <result column="item_key" property="itemKey" />
+    <result column="description" property="description" />
+    <result column="state" property="state" />
+    <result column="encrypt" property="encrypt" />
+    <result column="orderline" property="orderline" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, param_type_id, item_value, item_key, description, state, encrypt, orderline, 

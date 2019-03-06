@@ -20,17 +20,17 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.JobStatusTraceLogMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.JobStatusTraceLog">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="job_name" jdbcType="VARCHAR" property="jobName" />
-    <result column="original_task_id" jdbcType="VARCHAR" property="originalTaskId" />
-    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
-    <result column="slave_id" jdbcType="VARCHAR" property="slaveId" />
-    <result column="source" jdbcType="VARCHAR" property="source" />
-    <result column="execution_type" jdbcType="VARCHAR" property="executionType" />
-    <result column="sharding_item" jdbcType="VARCHAR" property="shardingItem" />
-    <result column="state" jdbcType="VARCHAR" property="state" />
-    <result column="message" jdbcType="VARCHAR" property="message" />
-    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+    <id column="id" property="id" />
+    <result column="job_name" property="jobName" />
+    <result column="original_task_id" property="originalTaskId" />
+    <result column="task_id" property="taskId" />
+    <result column="slave_id" property="slaveId" />
+    <result column="source" property="source" />
+    <result column="execution_type" property="executionType" />
+    <result column="sharding_item" property="shardingItem" />
+    <result column="state" property="state" />
+    <result column="message" property="message" />
+    <result column="creation_time" property="creationTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, job_name, original_task_id, task_id, slave_id, source, execution_type, sharding_item, 

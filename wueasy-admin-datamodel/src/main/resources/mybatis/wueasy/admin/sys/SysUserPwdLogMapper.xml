@@ -20,12 +20,12 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysUserPwdLogMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysUserPwdLog">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
-    <result column="type" jdbcType="CHAR" property="type" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="password" property="password" />
+    <result column="salt" property="salt" />
+    <result column="type" property="type" />
+    <result column="created_time" property="createdTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_id, password, salt, type, created_time

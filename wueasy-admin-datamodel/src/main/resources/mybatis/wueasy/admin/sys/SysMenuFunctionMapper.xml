@@ -20,16 +20,16 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysMenuFunctionMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysMenuFunction">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
-    <result column="funcs" jdbcType="VARCHAR" property="funcs" />
-    <result column="orderline" jdbcType="BIGINT" property="orderline" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
-    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <id column="id" property="id" />
+    <result column="menu_id" property="menuId" />
+    <result column="name" property="name" />
+    <result column="link_url" property="linkUrl" />
+    <result column="funcs" property="funcs" />
+    <result column="orderline" property="orderline" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
   </resultMap>
   <sql id="Base_Column_List">
     id, menu_id, name, link_url, funcs, orderline, created_by, created_time, modified_by, 

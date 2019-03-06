@@ -20,12 +20,12 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysRolePermissionMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysRolePermission">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="role_id" jdbcType="BIGINT" property="roleId" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="modified_by" jdbcType="BIGINT" property="modifiedBy" />
-    <result column="modified_time" jdbcType="TIMESTAMP" property="modifiedTime" />
+    <id column="id" property="id" />
+    <result column="role_id" property="roleId" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="modified_by" property="modifiedBy" />
+    <result column="modified_time" property="modifiedTime" />
     <result column="menu_ids" property="menuIds" />
     <result column="menu_function_ids" property="menuFunctionIds" />
   </resultMap>

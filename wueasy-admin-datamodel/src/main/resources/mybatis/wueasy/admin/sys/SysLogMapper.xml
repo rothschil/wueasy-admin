@@ -20,19 +20,19 @@
 -->
 <mapper namespace="com.wueasy.admin.mapper.SysLogMapper">
   <resultMap id="BaseResultMap" type="com.wueasy.admin.entity.SysLog">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="func_no" jdbcType="VARCHAR" property="funcNo" />
-    <result column="version" jdbcType="VARCHAR" property="version" />
-    <result column="func_name" jdbcType="VARCHAR" property="funcName" />
-    <result column="datetime" jdbcType="BIGINT" property="datetime" />
-    <result column="request_id" jdbcType="VARCHAR" property="requestId" />
-    <result column="ip" jdbcType="VARCHAR" property="ip" />
-    <result column="error_no" jdbcType="BIGINT" property="errorNo" />
-    <result column="error_info" jdbcType="VARCHAR" property="errorInfo" />
-    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="in_param" jdbcType="LONGVARCHAR" property="inParam" />
-    <result column="out_param" jdbcType="LONGVARCHAR" property="outParam" />
+    <id column="id" property="id" />
+    <result column="func_no" property="funcNo" />
+    <result column="version" property="version" />
+    <result column="func_name" property="funcName" />
+    <result column="datetime" property="datetime" />
+    <result column="request_id" property="requestId" />
+    <result column="ip" property="ip" />
+    <result column="error_no" property="errorNo" />
+    <result column="error_info" property="errorInfo" />
+    <result column="created_by" property="createdBy" />
+    <result column="created_time" property="createdTime" />
+    <result column="in_param" property="inParam" />
+    <result column="out_param" property="outParam" />
     <result column="system_info" property="systemInfo" />
   </resultMap>
   
