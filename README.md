@@ -1,11 +1,12 @@
 [![](https://img.shields.io/github/stars/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/stargazers)
 [![](https://img.shields.io/github/forks/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/network/members)
 [![](https://img.shields.io/github/release/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/releases)
-[![](https://maven-badges.herokuapp.com/maven-central/com.wueasy.admin/wueasy-admin-service/badge.svg)](https://mvnrepository.com/search?q=wueasy-admin-service)
+[![](https://maven-badges.herokuapp.com/maven-central/com.wueasy.admin/wueasy-admin-service/badge.svg)](https://mvnrepository.com/artifact/com.wueasy.admin)
 [![](https://img.shields.io/github/issues/wueasy/wueasy-admin.svg)](https://github.com/wueasy/wueasy-admin/issues)
 [![](https://img.shields.io/badge/License-AGPL3.0-yellow.svg?style=flat-square)](https://github.com/wueasy/wueasy-admin/blob/master/LICENSE)
 [![star](https://gitee.com/wueasy/wueasy-admin/badge/star.svg?theme=dark)](https://gitee.com/wueasy/wueasy-admin/stargazers)
 [![fork](https://gitee.com/wueasy/wueasy-admin/badge/fork.svg?theme=dark)](https://gitee.com/wueasy/wueasy-admin/members)
+
 
 > wueasy admin 是一个java分布式的后台管理系统。平台实现了通用的基础功能、 权限验证、 安全验证、基础功能， 为中小型企业提供稳定、 高效、 安全、 便捷的一体式框架。
 
@@ -49,7 +50,7 @@
 * `JDK 1.8`
 * `MAVEN 3.x`
 * `ZooKeeper 3.4.13`
-* `Mysql 5.7+`、`PostgreSQL 10.0+` 、`SQL Server 2008+` 、`MariaDB 10.0+`
+* `Mysql 5.7+`、`SQL Server 2008+` 、`MariaDB 10.0+`
 
 ## 特性
 
@@ -72,7 +73,7 @@
 
 ## 版本
 
-版本已经发布[maven中心仓库](https://mvnrepository.com/search?q=com.wueasy.admin)，可以直接引用使用。
+版本已经发布[maven中心仓库](https://mvnrepository.com/artifact/com.wueasy.admin)，可以直接引用使用。
 
 ## 浏览器兼容性
 
