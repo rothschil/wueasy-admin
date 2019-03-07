@@ -50,7 +50,7 @@
 * `JDK 1.8`
 * `MAVEN 3.x`
 * `ZooKeeper 3.4.13`
-* `Mysql 5.7+`、`SQL Server 2008+` 、`MariaDB 10.0+`
+* `Mysql 5.7+`、`PostgreSQL 10.0+` 、`MariaDB 10.0+`
 
 ## 特性
 
